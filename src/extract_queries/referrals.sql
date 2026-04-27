@@ -1,4 +1,17 @@
+IF OBJECT_ID('TempDB..#temp_referrals') IS NOT NULL DROP TABLE #temp_referrals
+
+DECLARE @EndRP INT;
+DECLARE @StartRP INT;
+ 
+SET @EndRP = (SELECT MAX(UniqMonthID)
+              FROM [Reporting_MESH_MHSDS].[MHS101Referral_Published])
+ 
+SET @StartRP = (@EndRP - 1)
+
 SELECT Distinct(REF.[RecordNumber])
+      ,REF.[UniqMonthID]
+      ,SF.[ReportingPeriodStartDate]
+      ,SF.[ReportingPeriodEndDate]
       ,REF.[AgeServReferDischDate]
       ,REF.[AgeServReferRecDate]
       ,REF.[ClinRespPriorityType]
@@ -20,7 +33,6 @@ SELECT Distinct(REF.[RecordNumber])
       ,REF.[ServiceRequestId]
       ,REF.[SourceOfReferralMH]
       ,REF.[SpecialisedMHServiceCode]
-      ,REF.[UniqMonthID]
       ,REF.[UniqServReqID]
       ,REF.[UniqSubmissionID]
       ,REF.[Der_Financial_Year]
@@ -34,7 +46,18 @@ SELECT Distinct(REF.[RecordNumber])
       ,REF.[UniqCareProfTeamLocalID]
       ,MPI.[LADistrictAuth]
       ,SERVTD.[ServTeamTypeMH]
-  FROM [Reporting_MESH_MHSDS].[MHS101Referral_Published] AS REF
+      ,ROW_NUMBER() OVER(PARTITION BY REF.[UniqServReqID], REF.[ReferralRequestReceivedDate] ORDER BY REF.[UniqMonthID]) AS [New_Order]
+      ,CASE WHEN REF.[ReferralRequestReceivedDate] <= SF.[ReportingPeriodEndDate] AND REF.[ReferralRequestReceivedDate] >= SF.[ReportingPeriodStartDate] THEN 1
+            ELSE 0 END AS [New_referral]
+      ,ROW_NUMBER() OVER(PARTITION BY REF.[UniqServReqID], REF.[ServDischDate] ORDER BY REF.[UniqMonthID]) AS [Closed_Order]
+      ,CASE WHEN REF.[ServDischDate] <= SF.[ReportingPeriodEndDate] AND REF.[ServDischDate] >= SF.[ReportingPeriodStartDate] THEN 1
+            ELSE 0 END AS [Closed_referral]
+INTO #temp_referrals
+FROM [Reporting_MESH_MHSDS].[MHS101Referral_Published] AS REF
+
+    INNER JOIN [Reporting_MESH_MHSDS].[MHSDS_SubmissionFlags_Published] AS SF
+        ON REF.[NHSEUniqSubmissionID] = SF.[NHSEUniqSubmissionID]
+        AND SF.[Der_IsLatest] = 'Y'
         
     LEFT JOIN [Reporting_MESH_MHSDS].[MHS001MPI_Published] AS MPI
 		ON REF.[RecordNumber] = MPI.[RecordNumber]
@@ -42,11 +65,15 @@ SELECT Distinct(REF.[RecordNumber])
     LEFT JOIN [Reporting_MESH_MHSDS].[MHS902ServiceTeamDetails_Published] as SERVTD
         ON REF.[UniqCareProfTeamLocalID] = SERVTD.[UniqCareProfTeamLocalID]
 
-  WHERE REF.[UniqMonthID] = (SELECT max([UniqMonthID])
-                                FROM [Reporting_MESH_MHSDS].[MHS101Referral_Published])
+WHERE REF.[UniqMonthID] BETWEEN @StartRP AND @EndRP
         AND REF.[OrgIDProv] = 'RV5'
         AND REF.[PrimReasonReferralMH] = 12
         AND SERVTD.[ServTeamTypeMH] = 'C10'
-        AND REF.[ReferralRequestReceivedDate] BETWEEN '01 February 2026' AND '28 February 2026'
         AND REF.[AgeServReferRecDate] >= 12
         AND MPI.[LADistrictAuth] LIKE ('E%')
+
+
+SELECT *
+FROM #temp_referrals
+WHERE [New_Order] = 1
+      AND [New_referral] = 1
