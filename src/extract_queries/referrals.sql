@@ -6,7 +6,7 @@ DECLARE @StartRP INT;
 SET @EndRP = (SELECT MAX(UniqMonthID)
               FROM [Reporting_MESH_MHSDS].[MHS101Referral_Published])
  
-SET @StartRP = (@EndRP - 1)
+SET @StartRP = (@EndRP - 11)
 
 SELECT Distinct(REF.[RecordNumber])
       ,REF.[UniqMonthID]
@@ -33,6 +33,7 @@ SELECT Distinct(REF.[RecordNumber])
       ,REF.[ServiceRequestId]
       ,REF.[SourceOfReferralMH]
       ,REF.[SpecialisedMHServiceCode]
+      ,COALESCE(SERV.[ServTeamTypeRefToMH],SERVTD.[ServTeamTypeMH]) AS ServTeamTypeRefToMH
       ,REF.[UniqServReqID]
       ,REF.[UniqSubmissionID]
       ,REF.[Der_Financial_Year]
@@ -47,17 +48,20 @@ SELECT Distinct(REF.[RecordNumber])
       ,MPI.[LADistrictAuth]
       ,SERVTD.[ServTeamTypeMH]
       ,ROW_NUMBER() OVER(PARTITION BY REF.[UniqServReqID], REF.[ReferralRequestReceivedDate] ORDER BY REF.[UniqMonthID]) AS [New_Order]
-      ,CASE WHEN REF.[ReferralRequestReceivedDate] <= SF.[ReportingPeriodEndDate] AND REF.[ReferralRequestReceivedDate] >= SF.[ReportingPeriodStartDate] THEN 1
+      ,CASE WHEN REF.[ReferralRequestReceivedDate] BETWEEN SF.[ReportingPeriodStartDate] AND SF.[ReportingPeriodEndDate] THEN 1
             ELSE 0 END AS [New_referral]
       ,ROW_NUMBER() OVER(PARTITION BY REF.[UniqServReqID], REF.[ServDischDate] ORDER BY REF.[UniqMonthID]) AS [Closed_Order]
-      ,CASE WHEN REF.[ServDischDate] <= SF.[ReportingPeriodEndDate] AND REF.[ServDischDate] >= SF.[ReportingPeriodStartDate] THEN 1
+      ,CASE WHEN REF.[ServDischDate] BETWEEN SF.[ReportingPeriodStartDate] AND SF.[ReportingPeriodEndDate] THEN 1
             ELSE 0 END AS [Closed_referral]
-INTO #temp_referrals
-FROM [Reporting_MESH_MHSDS].[MHS101Referral_Published] AS REF
+  INTO #temp_referrals
+  FROM [Reporting_MESH_MHSDS].[MHS101Referral_Published] AS REF
 
     INNER JOIN [Reporting_MESH_MHSDS].[MHSDS_SubmissionFlags_Published] AS SF
         ON REF.[NHSEUniqSubmissionID] = SF.[NHSEUniqSubmissionID]
         AND SF.[Der_IsLatest] = 'Y'
+   
+    LEFT JOIN [Reporting_MESH_MHSDS].[MHS102ServiceTypeReferredTo_Published] AS  SERV
+        ON REF.[UniqServReqID] = SERV.[UniqServReqID] AND REF.[RecordNumber] = SERV.[RecordNumber]   
         
     LEFT JOIN [Reporting_MESH_MHSDS].[MHS001MPI_Published] AS MPI
 		ON REF.[RecordNumber] = MPI.[RecordNumber]
@@ -65,15 +69,17 @@ FROM [Reporting_MESH_MHSDS].[MHS101Referral_Published] AS REF
     LEFT JOIN [Reporting_MESH_MHSDS].[MHS902ServiceTeamDetails_Published] as SERVTD
         ON REF.[UniqCareProfTeamLocalID] = SERVTD.[UniqCareProfTeamLocalID]
 
-WHERE REF.[UniqMonthID] BETWEEN @StartRP AND @EndRP
+  WHERE REF.[UniqMonthID] BETWEEN @StartRP AND @EndRP
         AND REF.[OrgIDProv] = 'RV5'
         AND REF.[PrimReasonReferralMH] = 12
-        AND SERVTD.[ServTeamTypeMH] = 'C10'
+        AND (SERV.[ServTeamTypeRefToMH] = 'C10' OR SERVTD.[ServTeamTypeMH] = 'C10')
         AND REF.[AgeServReferRecDate] >= 12
-        AND MPI.[LADistrictAuth] LIKE ('E%')
+--        AND MPI.[LADistrictAuth] LIKE ('E%')
 
 
-SELECT *
+SELECT ReportingPeriodEndDate
+        ,SUM(New_referral) AS [New_Referrals]
 FROM #temp_referrals
 WHERE [New_Order] = 1
-      AND [New_referral] = 1
+GROUP BY ReportingPeriodEndDate
+ORDER BY ReportingPeriodEndDate
