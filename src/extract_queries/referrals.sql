@@ -25,6 +25,12 @@ SELECT Distinct(REF.[RecordNumber])
       ,REF.[OrgIDComm]
       ,REF.[OrgIDProv]
       ,REF.[Person_ID]
+      ,MPI.[EthnicCategory]
+      ,MPI.[EthnicCategory2021]
+      ,CASE WHEN MPI.GenderIDCode IN ('1','2','3','4','X','Z') THEN MPI.GenderIDCode ELSE MPI.[Gender] END AS Gender
+      ,MPI.[ElectoralWard]
+      ,MPI.[LADistrictAuth]
+      ,MPI.[LSOA2011]
       ,REF.[PrimReasonReferralMH]
       ,REF.[RecordEndDate]
       ,REF.[RecordStartDate]
@@ -45,7 +51,6 @@ SELECT Distinct(REF.[RecordNumber])
       ,REF.[ReferRejectionDate]
       ,REF.[ReferRejectReason]
       ,REF.[UniqCareProfTeamLocalID]
-      ,MPI.[LADistrictAuth]
       ,SERVTD.[ServTeamTypeMH]
       ,ROW_NUMBER() OVER(PARTITION BY REF.[UniqServReqID], REF.[ReferralRequestReceivedDate] ORDER BY REF.[UniqMonthID]) AS [New_Order]
       ,CASE WHEN REF.[ReferralRequestReceivedDate] BETWEEN SF.[ReportingPeriodStartDate] AND SF.[ReportingPeriodEndDate] THEN 1
@@ -68,18 +73,27 @@ SELECT Distinct(REF.[RecordNumber])
 
     LEFT JOIN [Reporting_MESH_MHSDS].[MHS902ServiceTeamDetails_Published] as SERVTD
         ON REF.[UniqCareProfTeamLocalID] = SERVTD.[UniqCareProfTeamLocalID]
+        AND REF.[NHSEUniqSubmissionID] = SERVTD.[NHSEUniqSubmissionID]
+        AND REF.[UniqMonthID] = SERVTD.[UniqMonthID]
 
   WHERE REF.[UniqMonthID] BETWEEN @StartRP AND @EndRP
         AND REF.[OrgIDProv] = 'RV5'
         AND REF.[PrimReasonReferralMH] = 12
         AND (SERV.[ServTeamTypeRefToMH] = 'C10' OR SERVTD.[ServTeamTypeMH] = 'C10')
         AND REF.[AgeServReferRecDate] >= 12
---        AND MPI.[LADistrictAuth] LIKE ('E%')
 
 
 SELECT ReportingPeriodEndDate
         ,SUM(New_referral) AS [New_Referrals]
 FROM #temp_referrals
 WHERE [New_Order] = 1
+GROUP BY ReportingPeriodEndDate
+ORDER BY ReportingPeriodEndDate
+
+
+SELECT ReportingPeriodEndDate
+        ,SUM(Closed_referral) AS [Closed_Referrals]
+FROM #temp_referrals
+WHERE [Closed_Order] = 1
 GROUP BY ReportingPeriodEndDate
 ORDER BY ReportingPeriodEndDate
