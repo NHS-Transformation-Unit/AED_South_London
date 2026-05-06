@@ -66,7 +66,8 @@ SELECT Distinct(REF.[RecordNumber])
         AND SF.[Der_IsLatest] = 'Y'
    
     LEFT JOIN [Reporting_MESH_MHSDS].[MHS102ServiceTypeReferredTo_Published] AS  SERV
-        ON REF.[UniqServReqID] = SERV.[UniqServReqID] AND REF.[RecordNumber] = SERV.[RecordNumber]   
+        ON REF.[UniqServReqID] = SERV.[UniqServReqID] 
+        AND REF.[RecordNumber] = SERV.[RecordNumber]   
         
     LEFT JOIN [Reporting_MESH_MHSDS].[MHS001MPI_Published] AS MPI
 		ON REF.[RecordNumber] = MPI.[RecordNumber]
@@ -79,6 +80,7 @@ SELECT Distinct(REF.[RecordNumber])
     LEFT JOIN [Reporting_MESH_MHSDS].[MHS604PrimDiag_Published] AS DIAG
         ON REF.[UniqServReqID] = DIAG.[UniqServReqID]
         AND REF.[RecordNumber] = DIAG.[RecordNumber]
+        AND DIAG.[CodedDiagTimestampDatetime] BETWEEN REF.[ReferralRequestReceivedDate] AND REF.[ServDischDate]
 
   WHERE REF.[UniqMonthID] BETWEEN @StartRP AND @EndRP
         AND REF.[OrgIDProv] = 'RV5'
