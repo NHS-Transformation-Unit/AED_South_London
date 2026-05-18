@@ -78,22 +78,5 @@ SELECT Distinct(REF.[RecordNumber])
 
   WHERE REF.[UniqMonthID] BETWEEN @StartRP AND @EndRP
         AND REF.[OrgIDProv] = 'RV5'
-        AND REF.[PrimReasonReferralMH] = 12
-        AND (SERV.[ServTeamTypeRefToMH] = 'C10' OR SERVTD.[ServTeamTypeMH] = 'C10')
+        AND (REF.[PrimReasonReferralMH] = 12 OR (SERV.[ServTeamTypeRefToMH] = 'C10' OR SERVTD.[ServTeamTypeMH] = 'C10'))
         AND REF.[AgeServReferRecDate] >= 12
-
-
-SELECT ReportingPeriodEndDate
-        ,SUM(New_referral) AS [New_Referrals]
-FROM #temp_referrals
-WHERE [New_Order] = 1
-GROUP BY ReportingPeriodEndDate
-ORDER BY ReportingPeriodEndDate
-
-
-SELECT ReportingPeriodEndDate
-        ,SUM(Closed_referral) AS [Closed_Referrals]
-FROM #temp_referrals
-WHERE [Closed_Order] = 1
-GROUP BY ReportingPeriodEndDate
-ORDER BY ReportingPeriodEndDate
