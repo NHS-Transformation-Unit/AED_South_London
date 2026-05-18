@@ -51,3 +51,7 @@ rsconnect/
 #
 data/rds
 data/dq
+
+# Excel files
+*.xlsx
+*.csv
