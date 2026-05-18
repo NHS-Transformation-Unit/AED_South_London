@@ -3,7 +3,7 @@
 
 pop_age <- population_data |>
   group_by(`Upper tier local authorities`,
-           `Age (9 categories)`) |>
+           `Age (86 categories)`) |>
   summarise('population' = sum(`Observation`, na.rm = TRUE))
 
 
