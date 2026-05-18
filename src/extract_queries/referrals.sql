@@ -77,6 +77,6 @@ SELECT Distinct(REF.[RecordNumber])
         AND REF.[UniqMonthID] = SERVTD.[UniqMonthID]
 
   WHERE REF.[UniqMonthID] BETWEEN @StartRP AND @EndRP
-        AND REF.[OrgIDProv] = 'RV5'
+        AND REF.[OrgIDProv] IN ('RV5', 'RQY', 'RPG')
         AND (REF.[PrimReasonReferralMH] = 12 OR (SERV.[ServTeamTypeRefToMH] = 'C10' OR SERVTD.[ServTeamTypeMH] = 'C10'))
         AND REF.[AgeServReferRecDate] >= 12
