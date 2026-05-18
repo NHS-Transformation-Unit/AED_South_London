@@ -30,6 +30,8 @@ SELECT Distinct(REF.[RecordNumber])
       ,MPI.[ElectoralWard]
       ,MPI.[LADistrictAuth]
       ,MPI.[LSOA2011]
+      ,LA.[LAD16CD]
+      ,LA.[LAD16NM]
       ,REF.[PrimReasonReferralMH]
       ,REF.[RecordEndDate]
       ,REF.[RecordStartDate]
@@ -68,11 +70,14 @@ SELECT Distinct(REF.[RecordNumber])
         ON REF.[UniqServReqID] = SERV.[UniqServReqID] AND REF.[RecordNumber] = SERV.[RecordNumber]   
         
     LEFT JOIN [Reporting_MESH_MHSDS].[MHS001MPI_Published] AS MPI
-		    ON REF.[RecordNumber] = MPI.[RecordNumber]
-		    
+		ON REF.[RecordNumber] = MPI.[RecordNumber]
+
     LEFT JOIN [UKHD_Data_Dictionary].[Ethnic_Category_Code_SCD] AS ETH
         ON MPI.[EthnicCategory] = ETH.[Main_Code_Text]
         AND ETH.[Is_Latest] = 1
+
+    LEFT JOIN [Internal_Reference].[LSOAs_to_Higher_Geographies] AS LA
+        ON MPI.[LADistrictAuth] = LA.[LAD16CD]
 
     LEFT JOIN [Reporting_MESH_MHSDS].[MHS902ServiceTeamDetails_Published] as SERVTD
         ON REF.[UniqCareProfTeamLocalID] = SERVTD.[UniqCareProfTeamLocalID]
@@ -80,6 +85,7 @@ SELECT Distinct(REF.[RecordNumber])
         AND REF.[UniqMonthID] = SERVTD.[UniqMonthID]
 
   WHERE REF.[UniqMonthID] BETWEEN @StartRP AND @EndRP
-        AND REF.[OrgIDProv] IN ('RV5', 'RQY', 'RPG')
+        AND REF.[OrgIDProv] = 'RV5'
         AND (REF.[PrimReasonReferralMH] = 12 OR (SERV.[ServTeamTypeRefToMH] = 'C10' OR SERVTD.[ServTeamTypeMH] = 'C10'))
         AND REF.[AgeServReferRecDate] >= 12
+        
