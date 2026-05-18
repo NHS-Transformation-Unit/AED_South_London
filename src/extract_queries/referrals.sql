@@ -25,8 +25,7 @@ SELECT Distinct(REF.[RecordNumber])
       ,REF.[OrgIDComm]
       ,REF.[OrgIDProv]
       ,REF.[Person_ID]
-      ,MPI.[EthnicCategory]
-      ,MPI.[EthnicCategory2021]
+      ,ETH.[Main_Description_60_Chars] AS [Ethnic_Category_Main_Desc]
       ,CASE WHEN MPI.GenderIDCode IN ('1','2','3','4','X','Z') THEN MPI.GenderIDCode ELSE MPI.[Gender] END AS Gender
       ,MPI.[ElectoralWard]
       ,MPI.[LADistrictAuth]
@@ -69,7 +68,11 @@ SELECT Distinct(REF.[RecordNumber])
         ON REF.[UniqServReqID] = SERV.[UniqServReqID] AND REF.[RecordNumber] = SERV.[RecordNumber]   
         
     LEFT JOIN [Reporting_MESH_MHSDS].[MHS001MPI_Published] AS MPI
-		ON REF.[RecordNumber] = MPI.[RecordNumber]
+		    ON REF.[RecordNumber] = MPI.[RecordNumber]
+		    
+    LEFT JOIN [UKHD_Data_Dictionary].[Ethnic_Category_Code_SCD] AS ETH
+        ON MPI.[EthnicCategory] = ETH.[Main_Code_Text]
+        AND ETH.[Is_Latest] = 1
 
     LEFT JOIN [Reporting_MESH_MHSDS].[MHS902ServiceTeamDetails_Published] as SERVTD
         ON REF.[UniqCareProfTeamLocalID] = SERVTD.[UniqCareProfTeamLocalID]
