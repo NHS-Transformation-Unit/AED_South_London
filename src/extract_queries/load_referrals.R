@@ -12,7 +12,7 @@ ref_new <- DBI::dbGetQuery(conn = con,
                            statement = read_file(
                              here("src",
                                   "extract_queries",
-                                  "load_referrals.sql")))
+                                  "new_referrals.sql")))
 
 
 # Drop Temps --------------------------------------------------------------
