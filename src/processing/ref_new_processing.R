@@ -20,9 +20,12 @@ ref_new_proc <- ref_new |>
 ref_new_age_LA <- ref_new_proc |>
   group_by(LAD16NM,
            Age_band) |>
-  summarise('Referrals' = sum(New_referral, na.rm = TRUE),
-            'Mean' = mean(New_referral, na.rm = TRUE),
-            'SD' = sd(New_referral, na.rm = TRUE),
+  summarise('Referrals' = sum(New_referral, na.rm = TRUE))
+
+ref_new_age_LA_stat <- ref_new_age_LA |>
+  group_by(LAD16NM) |>
+  summarise('Mean' = mean(Referrals, na.rm = TRUE),
+            'SD' = sd(Referrals, na.rm = TRUE),
             'Error' = SD/sqrt(Referrals),
             'low_error' = `Mean` - `Error`,
             'high_error' = `Mean` + `Error`)
@@ -31,13 +34,16 @@ ref_new_age_tot <- ref_new_proc |>
   mutate("Total" = "Total") |>
   group_by(Total,
            Age_band) |>
-  summarise('Referrals' = sum(New_referral, na.rm = TRUE),
-            'Mean' = mean(New_referral, na.rm = TRUE),
-            'SD' = sd(New_referral, na.rm = TRUE),
+  summarise('Referrals' = sum(New_referral, na.rm = TRUE)) |>
+  rename("LAD16NM" = "Total")
+
+ref_new_age_tot_stat <- ref_new_age_tot |>
+  group_by(LAD16NM) |>
+  summarise('Mean' = mean(Referrals, na.rm = TRUE),
+            'SD' = sd(Referrals, na.rm = TRUE),
             'Error' = SD/sqrt(Referrals),
             'low_error' = `Mean` - `Error`,
-            'high_error' = `Mean` + `Error`) |>
-  rename("LAD16NM" = "Total")
+            'high_error' = `Mean` + `Error`)
 
 ref_new_age <- rbind(ref_new_age_LA,ref_new_age_tot)
 
