@@ -26,7 +26,12 @@ ref_new_age_tot <- ref_new_proc |>
   mutate("Total" = "Total") |>
   group_by(Total,
            Age_band) |>
-  summarise('Referrals' = sum(New_referral, na.rm = TRUE)) |>
+  summarise('Referrals' = sum(New_referral, na.rm = TRUE),
+            'Mean' = mean(New_referral, na.rm = TRUE),
+            'SD' = sd(New_referral, na.rm = TRUE),
+            'Error' = SD/sqrt(Referrals),
+            'low_error' = `Mean` - `Error`,
+            'high_error' = `Mean` + `Error`) |>
   rename("LAD16NM" = "Total")
 
 ref_new_age <- rbind(ref_new_age_LA,ref_new_age_tot)
