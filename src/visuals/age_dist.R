@@ -14,7 +14,7 @@ ggplot(plot_age, aes(x = Age_band,
   geom_errorbar(data = subset(plot_age, Series == "Ref_per"),
                 aes(ymin = Percent - Confidence,
                     ymax = Percent + Confidence),
-                position = position_dodge(width = 0.8),
+                position = position_nudge(x = 0.2),
                 width = 0.2) +
   facet_wrap(~ `Upper tier local authorities`) +
   scale_fill_manual(values = c("Ref_per" = "blue",
@@ -47,7 +47,7 @@ ggplot(plot_LON_age, aes(x = Age_band,
   geom_errorbar(data = subset(plot_LON_age, Series == "Ref_per"),
                 aes(ymin = Percent - Confidence,
                     ymax = Percent + Confidence),
-                position = position_dodge(width = 0.8),
+                position = position_nudge(x = 0.2),
                 width = 0.2) +
   scale_fill_manual(values = c("Ref_per" = "blue",
                                "Pop_per" = "red"),
