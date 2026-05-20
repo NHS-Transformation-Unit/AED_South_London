@@ -22,57 +22,45 @@ ref_new_age_LA <- ref_new_proc |>
            Age_band) |>
   summarise('Referrals' = sum(New_referral, na.rm = TRUE))
 
-ref_new_age_LA_stat <- ref_new_age_LA |>
-  group_by(LAD16NM) |>
-  summarise('Mean' = mean(Referrals, na.rm = TRUE),
-            'SD' = sd(Referrals, na.rm = TRUE),
-            'Error' = SD/sqrt(Referrals),
-            'low_error' = `Mean` - `Error`,
-            'high_error' = `Mean` + `Error`)
-
 ref_new_age_tot <- ref_new_proc |>
   mutate("Total" = "London") |>
   group_by(Total,
            Age_band) |>
   summarise('Referrals' = sum(New_referral, na.rm = TRUE))
 
-ref_new_age_tot_stat <- ref_new_age_tot |>
-  group_by(LAD16NM) |>
-  summarise('Mean' = mean(Referrals, na.rm = TRUE),
-            'SD' = sd(Referrals, na.rm = TRUE),
-            'Error' = SD/sqrt(Referrals),
-            'low_error' = `Mean` - `Error`,
-            'high_error' = `Mean` + `Error`)
-
-ref_new_age <- rbind(ref_new_age_LA,ref_new_age_tot)
-
 
 # Ethnicity banding of population
 
-ref_new_eth <- ref_new_proc |>
+ref_new_eth_LA <- ref_new_proc |>
   group_by(LAD16NM,
+           Ethnic_Category_Main_Desc) |>
+  summarise('Referrals' = sum(New_referral, na.rm = TRUE))
+
+ref_new_eth_tot <- ref_new_proc |>
+  mutate("Total" = "London") |>
+  group_by(Total,
            Ethnic_Category_Main_Desc) |>
   summarise('Referrals' = sum(New_referral, na.rm = TRUE))
 
 
 
-
-
-# Percentage and Errors ---------------------------------------------------
+# Totals ------------------------------------------------------------------
 
 ref_new_LA <- ref_new_proc |>
   group_by(LAD16NM) |>
   summarise('LAD_total' = sum(New_referral, na.rm = TRUE))
 
-ref_new_LA_per <- left_join(ref_new_age_LA,ref_new_LA,by = c('LAD16NM'='LAD16NM')) |>
-  mutate('Percentage' = Referrals/LAD_total,
-         'Confidence' = Percentage - (((2*Referrals) + (1.96^2) - (1.96*sqrt((1.96^2) + (4*Referrals*(1-Percentage)))))/(2*(LAD_total+(1.96^2)))))
-
-
 ref_new_tot <- ref_new_proc |>
   mutate("Total" = "London") |>
   group_by(Total) |>
   summarise('LAD_total' = sum(New_referral, na.rm = TRUE))
+
+
+# Age - Percentage and Errors ---------------------------------------------------
+
+ref_new_LA_per <- left_join(ref_new_age_LA,ref_new_LA,by = c('LAD16NM'='LAD16NM')) |>
+  mutate('Percentage' = Referrals/LAD_total,
+         'Confidence' = Percentage - (((2*Referrals) + (1.96^2) - (1.96*sqrt((1.96^2) + (4*Referrals*(1-Percentage)))))/(2*(LAD_total+(1.96^2)))))
 
 ref_new_tot_per <- left_join(ref_new_age_tot,ref_new_tot,by = c('Total'='Total')) |>
   mutate('Percentage' = Referrals/LAD_total,
@@ -81,3 +69,19 @@ ref_new_tot_per <- left_join(ref_new_age_tot,ref_new_tot,by = c('Total'='Total')
 
 
 ref_new_per <- rbind(ref_new_LA_per, ref_new_tot_per)
+
+
+# Ethnicity - Percentage and Errors ----------------------------------------
+
+ref_new_eth_LA_per <- left_join(ref_new_eth_LA,ref_new_LA,by = c('LAD16NM'='LAD16NM')) |>
+  mutate('Percentage' = Referrals/LAD_total,
+         'Confidence' = Percentage - (((2*Referrals) + (1.96^2) - (1.96*sqrt((1.96^2) + (4*Referrals*(1-Percentage)))))/(2*(LAD_total+(1.96^2)))))
+
+ref_new_eth_tot_per <- left_join(ref_new_eth_tot,ref_new_tot,by = c('Total'='Total')) |>
+  mutate('Percentage' = Referrals/LAD_total,
+         'Confidence' = Percentage - (((2*Referrals) + (1.96^2) - (1.96*sqrt((1.96^2) + (4*Referrals*(1-Percentage)))))/(2*(LAD_total+(1.96^2))))) |>
+  rename("LAD16NM" = "Total")
+
+
+ref_new_eth_per <- rbind(ref_new_eth_LA_per, ref_new_eth_tot_per)
+
