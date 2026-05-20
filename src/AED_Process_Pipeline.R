@@ -20,6 +20,11 @@ source(paste0(here(),"/src/load/load_population.R"))
 source(paste0(here(),"/src/processing/ref_new_processing.R"))
 source(paste0(here(),"/src/processing/population_processing.R"))
 
-## merge processed data into a single dataframe
+## Merge processed data into a single dataframe
 
 source(paste0(here(),"/src/processing/merge_data.R"))
+
+## Generate visuals
+
+source(paste0(here(),"/src/visuals/age_dist.R"))
+
