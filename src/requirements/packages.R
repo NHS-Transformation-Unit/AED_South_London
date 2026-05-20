@@ -7,7 +7,9 @@ dq_packages <- c("readxl",
                    "odbc",
                    "DBI",
                    "readr",
-                   "dplyr")
+                   "dplyr",
+                   "tidyr",
+                   "ggplot2")
 
 # load_packages function --------------------------------------------------
 
