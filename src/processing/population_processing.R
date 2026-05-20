@@ -40,14 +40,14 @@ pop_age_tot <- pop_proc |>
 pop_tot <- pop_proc |>
   mutate("Total" = "London") |>
   group_by(Total) |>
-  summarise('London_Population' = sum(`Observation`, na.rm = TRUE)) |>
+  summarise('LAD_Population' = sum(`Observation`, na.rm = TRUE)) |>
   rename("Upper tier local authorities" = "Total")
 
 pop_tot_per <- left_join(pop_age_tot, pop_tot, by = c('Upper tier local authorities' = 'Upper tier local authorities')) |>
-  mutate("Percentage" = Population/London_Population)
+  mutate("Percentage" = Population/LAD_Population)
 
 
-pop_age <- rbind(pop_age_LA,pop_age_tot)
+pop_age_per <- rbind(pop_LA_per,pop_tot_per)
 
 
 # Ethnicity banding of population
