@@ -31,7 +31,7 @@ ref_new_age_LA_stat <- ref_new_age_LA |>
             'high_error' = `Mean` + `Error`)
 
 ref_new_age_tot <- ref_new_proc |>
-  mutate("Total" = "Total") |>
+  mutate("Total" = "London") |>
   group_by(Total,
            Age_band) |>
   summarise('Referrals' = sum(New_referral, na.rm = TRUE))
@@ -70,10 +70,14 @@ ref_new_LA_per <- left_join(ref_new_age_LA,ref_new_LA,by = c('LAD16NM'='LAD16NM'
 
 
 ref_new_tot <- ref_new_proc |>
-  mutate("Total" = "Total") |>
+  mutate("Total" = "London") |>
   group_by(Total) |>
-  summarise('London_total' = sum(New_referral, na.rm = TRUE))
+  summarise('LAD_total' = sum(New_referral, na.rm = TRUE))
 
 ref_new_tot_per <- left_join(ref_new_age_tot,ref_new_tot,by = c('Total'='Total')) |>
-  mutate('Percentage' = Referrals/London_total,
-         'Confidence' = Percentage - (((2*Referrals) + (1.96^2) - (1.96*sqrt((1.96^2) + (4*Referrals*(1-Percentage)))))/(2*(London_total+(1.96^2)))))
+  mutate('Percentage' = Referrals/LAD_total,
+         'Confidence' = Percentage - (((2*Referrals) + (1.96^2) - (1.96*sqrt((1.96^2) + (4*Referrals*(1-Percentage)))))/(2*(LAD_total+(1.96^2))))) |>
+  rename("LAD16NM" = "Total")
+
+
+ref_new_per <- rbind(ref_new_LA_per, ref_new_tot_per)
