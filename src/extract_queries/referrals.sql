@@ -6,7 +6,7 @@ DECLARE @StartRP INT;
 SET @EndRP = (SELECT MAX(UniqMonthID)
               FROM [Reporting_MESH_MHSDS].[MHS101Referral_Published])
  
-SET @StartRP = (@EndRP - 11)
+SET @StartRP = (@EndRP - 35)
 
 SELECT Distinct(REF.[RecordNumber])
       ,REF.[UniqMonthID]
@@ -88,4 +88,18 @@ SELECT Distinct(REF.[RecordNumber])
         AND REF.[OrgIDProv] = 'RV5'
         AND (REF.[PrimReasonReferralMH] = 12 OR (SERV.[ServTeamTypeRefToMH] = 'C10' OR SERVTD.[ServTeamTypeMH] = 'C10'))
         AND REF.[AgeServReferRecDate] >= 12
+        AND LA.[LAD16CD] IN ('E09000004', -- Bexley
+                             'E09000006', -- Bromley
+                             'E09000008', -- Croydon
+                             'E09000011', -- Greenwich
+                             'E09000021', -- Kingston upon Thames
+                             'E09000022', -- Lambeth
+                             'E09000023', -- Lewisham
+                             'E09000024', -- Merton
+                             'E09000027', -- Richmond
+                             'E09000028', -- Southwark
+                             'E09000029', -- Sutton
+                             'E09000032') -- Wandsworth
+                             
+                             
         
