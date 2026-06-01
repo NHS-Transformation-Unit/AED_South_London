@@ -1,5 +1,6 @@
 # Script for running all processing scripts for the AED population comparison pipeline
 
+install.packages("here")
 library(here)
 
 ## Loading necessary packages for processing scripts
