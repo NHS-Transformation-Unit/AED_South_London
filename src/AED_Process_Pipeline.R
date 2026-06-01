@@ -28,4 +28,5 @@ source(paste0(here(),"/src/processing/merge_data.R"))
 ## Generate visuals
 
 source(paste0(here(),"/src/visuals/age_dist.R"))
+source(paste0(here(),"/src/visuals/eth_dist.R"))
 
