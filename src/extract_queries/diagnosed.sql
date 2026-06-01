@@ -6,7 +6,7 @@ DECLARE @StartRP INT;
 SET @EndRP = (SELECT MAX(UniqMonthID)
               FROM [Reporting_MESH_MHSDS].[MHS101Referral_Published])
  
-SET @StartRP = (@EndRP - 11)
+SET @StartRP = (@EndRP - 35)
 
 
 SELECT Distinct(REF.[RecordNumber])
@@ -41,7 +41,7 @@ SELECT Distinct(REF.[RecordNumber])
       ,REF.[SourceOfReferralMH]
       ,REF.[SpecialisedMHServiceCode]
       ,DIAG.[PrimDiag]
-      ,ROW_NUMBER() OVER(PARTITION BY DIAG.[PrimDiag], REF.[ReferralRequestReceivedDate] ORDER BY REF.[UniqMonthID]) AS [Diag_Order]
+      ,ROW_NUMBER() OVER(PARTITION BY DIAG.[PrimDiag], REF.[ReferralRequestReceivedDate] ORDER BY DIAG.[CodedDiagTimestampDatetime]) AS [Diag_Order]
       ,CASE WHEN REF.[ReferralRequestReceivedDate] BETWEEN SF.[ReportingPeriodStartDate] AND SF.[ReportingPeriodEndDate] THEN 1
         ELSE 0 END AS [New_referral]
 
