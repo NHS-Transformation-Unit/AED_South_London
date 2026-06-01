@@ -51,12 +51,12 @@ ggplot(plot_LON_age, aes(x = Age_band,
                 width = 0.2) +
   scale_fill_manual(values = c("Ref_per" = "blue",
                                "Pop_per" = "red"),
-                    labels = c("London population distribution",
+                    labels = c("South London population distribution",
                                "New referrals")) +
   labs(x = "Age band",
        y = "Percentage",
        fill = "",
-       title = "London total") +
+       title = "South London total") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   theme(axis.text.x = element_text(angle = 90,
                                    vjust = 0.5,
