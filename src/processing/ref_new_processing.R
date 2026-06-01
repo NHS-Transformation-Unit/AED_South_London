@@ -3,8 +3,8 @@
 
 ref_new_proc <- ref_new |>
   mutate('Age_band' = case_when(AgeServReferRecDate < 12 ~ 'Under 12',
-                                AgeServReferRecDate < 19 ~ '12 to 18',
-                                AgeServReferRecDate < 26 ~ '19 to 25',
+                                AgeServReferRecDate < 18 ~ '12 to 17',
+                                AgeServReferRecDate < 26 ~ '18 to 25',
                                 AgeServReferRecDate < 36 ~ '26 to 35',
                                 AgeServReferRecDate < 46 ~ '36 to 45',
                                 AgeServReferRecDate < 56 ~ '46 to 55',
