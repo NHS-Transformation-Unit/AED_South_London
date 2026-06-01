@@ -12,7 +12,25 @@ ref_new_proc <- ref_new |>
                                 AgeServReferRecDate < 76 ~ '66 to 75',
                                 AgeServReferRecDate < 86 ~ '76 to 85',
                                 AgeServReferRecDate > 85 ~ 'Over 85',
-                                TRUE ~ 'NA'))
+                                TRUE ~ 'NA'),
+         'Ethnic_group' = case_when(Ethnic_Category_Main_Desc == 'British' ~ 'White: English, Welsh, Scottish, Northern Irish or British',
+                                    Ethnic_Category_Main_Desc == 'White and Asian' ~ 'Asian, Asian British or Asian Welsh',
+                                    Ethnic_Category_Main_Desc == 'Chinese' ~ 'Asian, Asian British or Asian Welsh',
+                                    Ethnic_Category_Main_Desc == 'Any other Asian background' ~ 'Asian, Asian British or Asian Welsh',
+                                    Ethnic_Category_Main_Desc == 'Caribbean' ~ 'Black, Black British, Black Welsh, Caribbean or African',
+                                    Ethnic_Category_Main_Desc == 'African' ~ 'Black, Black British, Black Welsh, Caribbean or African',
+                                    Ethnic_Category_Main_Desc == 'White and Black African' ~ 'Black, Black British, Black Welsh, Caribbean or African',
+                                    Ethnic_Category_Main_Desc == 'White and Black Caribbean' ~ 'Black, Black British, Black Welsh, Caribbean or African',
+                                    Ethnic_Category_Main_Desc == 'Any other Black background' ~ 'Black, Black British, Black Welsh, Caribbean or African',
+                                    Ethnic_Category_Main_Desc == 'Any other mixed background' ~ 'Mixed or Multiple ethnic groups',
+                                    Ethnic_Category_Main_Desc == 'Irish' ~ 'White: Irish',
+                                    Ethnic_Category_Main_Desc == 'Any other white background' ~ 'White: Gypsy or Irish Traveller, Roma or Other White',
+                                    Ethnic_Category_Main_Desc == 'Bangladeshi' ~ 'Other ethnic group',
+                                    Ethnic_Category_Main_Desc == 'Indian' ~ 'Other ethnic group',
+                                    Ethnic_Category_Main_Desc == 'Pakistani' ~ 'Other ethnic group',
+                                    Ethnic_Category_Main_Desc == 'Any other ethnic group' ~ 'Other ethnic group',
+                                    Ethnic_Category_Main_Desc == 'Not stated' ~ 'Does not apply',
+                                    Ethnic_Category_Main_Desc == 'Not known' ~ 'Does not apply'))
 
 
 # Age banding of population
@@ -33,13 +51,13 @@ ref_new_age_tot <- ref_new_proc |>
 
 ref_new_eth_LA <- ref_new_proc |>
   group_by(LAD16NM,
-           Ethnic_Category_Main_Desc) |>
+           Ethnic_group) |>
   summarise('Referrals' = sum(New_referral, na.rm = TRUE))
 
 ref_new_eth_tot <- ref_new_proc |>
   mutate("Total" = "London") |>
   group_by(Total,
-           Ethnic_Category_Main_Desc) |>
+           Ethnic_group) |>
   summarise('Referrals' = sum(New_referral, na.rm = TRUE))
 
 
