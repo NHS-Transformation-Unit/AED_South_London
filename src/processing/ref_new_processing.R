@@ -79,7 +79,7 @@ ref_new_eth_tot <- ref_new_proc |>
 # Diagnosis grouping of population
 
 ref_new_diag <- ref_new_proc |>
-  group_by(PrimDiag,
+  group_by(PrimaryDiag,
            Description) |>
   summarise('Referrals' = sum(New_referral, na.rm = TRUE)) |>
   mutate('Diagnosis' = case_when(Referrals < 300 ~ 'Other diagnosis',
