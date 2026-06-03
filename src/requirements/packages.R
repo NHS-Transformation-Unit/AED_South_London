@@ -10,6 +10,7 @@ dq_packages <- c("readxl",
                   "dplyr",
                   "tidyr",
                   "stringr",
+                  "knitr",
                   "ggplot2")
 
 # load_packages function --------------------------------------------------
