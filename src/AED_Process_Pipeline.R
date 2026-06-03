@@ -22,11 +22,12 @@ source(paste0(here(),"/src/load/load_deprivation.R"))
 
 source(paste0(here(),"/src/config/tu_ggplot_theme.R"))
 source(paste0(here(),"/src/config/palette.R"))
+
 source(paste0(here(),"/src/processing/ref_new_processing.R"))
 source(paste0(here(),"/src/processing/population_processing.R"))
 source(paste0(here(),"/src/processing/deprivation_processing.R"))
 
-## Merge processed data into a single dataframe
+## Merge processed data into  single data frames for each exploration area
 
 source(paste0(here(),"/src/processing/merge_data.R"))
 
