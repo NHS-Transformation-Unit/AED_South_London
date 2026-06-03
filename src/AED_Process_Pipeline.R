@@ -16,11 +16,13 @@ source(paste0(here(),"/src/config/connection.R"))
 source(paste0(here(),"/src/load/load_referrals.R"))
 # source(paste0(here(),"/src/load/load_rds.R"))
 source(paste0(here(),"/src/load/load_population.R"))
+source(paste0(here(),"/src/load/load_deprivation.R"))
 
 ## Process the loaded data
 
 source(paste0(here(),"/src/processing/ref_new_processing.R"))
 source(paste0(here(),"/src/processing/population_processing.R"))
+source(paste0(here(),"/src/processing/deprivation_processing.R"))
 
 ## Merge processed data into a single dataframe
 
@@ -29,5 +31,6 @@ source(paste0(here(),"/src/processing/merge_data.R"))
 ## Generate visuals
 
 source(paste0(here(),"/src/visuals/age_dist.R"))
+source(paste0(here(),"/src/visuals/dep_dist.R"))
 source(paste0(here(),"/src/visuals/eth_dist.R"))
 
