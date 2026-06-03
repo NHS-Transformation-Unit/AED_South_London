@@ -14,6 +14,7 @@ source(paste0(here(),"/src/config/connection.R"))
 ## Load in the referral and population data
 
 source(paste0(here(),"/src/load/load_referrals.R"))
+# source(paste0(here(),"/src/load/load_rds.R"))
 source(paste0(here(),"/src/load/load_population.R"))
 
 ## Process the loaded data
