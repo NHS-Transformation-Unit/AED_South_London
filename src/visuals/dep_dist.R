@@ -26,9 +26,8 @@ ggplot(plot_dep, aes(x = `IMD Decile`,
        y = "Percentage",
        title = "South London Boroughs") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  scale_x_continuous(limits = c(1,10), breaks = 1:10) +
-  theme(selected_theme(palette_tu[1]),
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+  scale_x_continuous(breaks = seq(1, 10, by = 1)) +
+  theme(selected_theme(palette_tu[1]))
 
 
 # Deprivation band for London distribution
@@ -57,7 +56,6 @@ ggplot(plot_LON_dep, aes(x = `IMD Decile`,
        y = "Percentage",
        title = "South London total") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  scale_x_continuous(limits = c(1,10), breaks = 1:10) +
-  theme(selected_theme(palette_tu[1]),
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+  scale_x_continuous(breaks = seq(1, 10, by = 1)) +
+  theme(selected_theme(palette_tu[1]))
 
