@@ -76,6 +76,21 @@ ref_new_eth_tot <- ref_new_proc |>
   summarise('Referrals' = sum(New_referral, na.rm = TRUE))
 
 
+# Diagnosis grouping of population
+
+ref_new_diag <- ref_new_proc |>
+  group_by(PrimDiag,
+           Description) |>
+  summarise('Referrals' = sum(New_referral, na.rm = TRUE)) |>
+  mutate('Diagnosis' = case_when(Referrals < 300 ~ 'Other diagnosis',
+                                 TRUE ~ Description)) |>
+  group_by(Diagnosis) |>
+  summarise('Diagnosed' = sum(Referrals,na.rm = TRUE)) |>
+  mutate(colour = colorRampPalette(palette_tu)(n()),
+         colour = replace(colour, which.max(Diagnosed),"grey"))
+
+
+
 # Totals ------------------------------------------------------------------
 
 ref_new_LA <- ref_new_proc |>
