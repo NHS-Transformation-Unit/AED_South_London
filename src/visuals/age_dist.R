@@ -26,7 +26,9 @@ ggplot(plot_age, aes(x = Age_band,
        y = "Percentage",
        title = "South London Boroughs") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  theme(selected_theme(palette_tu[1]))
+  scale_x_discrete(labels = function(Diagnosis) str_wrap(Diagnosis, width = 20)) +
+  theme(selected_theme(palette_tu[1]),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
 
 # Age band for London distribution
