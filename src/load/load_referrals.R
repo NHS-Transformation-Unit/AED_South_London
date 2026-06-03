@@ -18,4 +18,4 @@ ref_new <- DBI::dbGetQuery(conn = con,
 # Drop Temps --------------------------------------------------------------
 
 DBI::dbExecute(conn = con,
-               statement = "DROP TABLE #temp_referrals")
+               statement = "DROP TABLE #temp_new_refs_diags")
