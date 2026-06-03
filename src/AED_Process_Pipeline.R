@@ -20,6 +20,8 @@ source(paste0(here(),"/src/load/load_deprivation.R"))
 
 ## Process the loaded data
 
+source(paste0(here(),"/src/config/tu_ggplot_theme.R"))
+source(paste0(here(),"/src/config/palette.R"))
 source(paste0(here(),"/src/processing/ref_new_processing.R"))
 source(paste0(here(),"/src/processing/population_processing.R"))
 source(paste0(here(),"/src/processing/deprivation_processing.R"))
@@ -29,8 +31,7 @@ source(paste0(here(),"/src/processing/deprivation_processing.R"))
 source(paste0(here(),"/src/processing/merge_data.R"))
 
 ## Generate visuals
-source(paste0(here(),"/src/config/tu_ggplot_theme.R"))
-source(paste0(here(),"/src/config/palette.R"))
+
 source(paste0(here(),"/src/visuals/age_dist.R"))
 source(paste0(here(),"/src/visuals/diag_dist.R"))
 source(paste0(here(),"/src/visuals/dep_dist.R"))
