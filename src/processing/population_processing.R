@@ -1,5 +1,5 @@
 
-# Add age bands to referrals
+# Add age bands to population
 
 pop_proc <- population_data |>
   mutate('Age_band' = case_when(`Age (86 categories) Code` < 12 ~ 'Under 12',
