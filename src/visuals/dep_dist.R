@@ -27,7 +27,6 @@ ggplot(plot_dep, aes(x = `IMD Decile`,
        title = "South London Boroughs") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   scale_x_continuous(limits = c(1,10), breaks = 1:10) +
-  scale_x_discrete(labels = function(Diagnosis) str_wrap(Diagnosis, width = 20)) +
   theme(selected_theme(palette_tu[1]),
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
@@ -59,7 +58,6 @@ ggplot(plot_LON_dep, aes(x = `IMD Decile`,
        title = "South London total") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   scale_x_continuous(limits = c(1,10), breaks = 1:10) +
-  scale_x_discrete(labels = function(Diagnosis) str_wrap(Diagnosis, width = 20)) +
   theme(selected_theme(palette_tu[1]),
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
