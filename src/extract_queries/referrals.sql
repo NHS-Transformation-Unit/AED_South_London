@@ -33,7 +33,7 @@ SELECT Distinct(REF.[RecordNumber])
       ,MPI.[ElectoralWard]
       ,MPI.[LADistrictAuth]
       ,MPI.[LSOA2011]
-      ,IMD.[IMD19]
+      ,IMD.[IMD19dec]
       ,LA.[LAD16CD]
       ,LA.[LAD16NM]
       ,CASE WHEN LA.[LAD16CD] IN ('E09000004', -- Bexley
@@ -96,7 +96,7 @@ SELECT Distinct(REF.[RecordNumber])
         LEFT JOIN [Internal_Reference].[LSOAs_to_Higher_Geographies] AS LA
             ON MPI.[LADistrictAuth] = LA.[LAD16CD]
             
-        LEFT JOIN [Internal_Reference].[lsoa11_mapperMarch2026] AS IMD
+        LEFT JOIN [Internal_Hierarchies].[lsoa11_mapperMarch2026] AS IMD
             ON MPI.[LSOA2011] = IMD.[LSOA11]
 
     LEFT JOIN [Reporting_MESH_MHSDS].[MHS902ServiceTeamDetails_Published] as SERVTD
@@ -132,6 +132,7 @@ DROP TABLE #temp_referrals
 
 SELECT nref.*
       ,DIAG.[PrimDiag]
+      ,DIAGDESC.[Description]
       ,DIAG.[CodedDiagTimeStamp]
       ,ROW_NUMBER () OVER(PARTITION BY nref.[UniqServReqID], nref.[ReferralRequestReceivedDate] ORDER BY ABS(DATEDIFF(D,nref.[ReferralRequestReceivedDate],DIAG.[CodedDiagTimeStamp])) ASC) AS [EarliestDiag]
       ,ROW_NUMBER () OVER(PARTITION BY nref.[UniqServReqID], nref.[ReferralRequestReceivedDate] ORDER BY ABS(DATEDIFF(D,nref.[ReferralRequestReceivedDate],DIAG.[CodedDiagTimeStamp])) DESC) AS [LatestDiag]
@@ -142,7 +143,11 @@ LEFT JOIN [Reporting_MESH_MHSDS].[MHS604PrimDiag_Published] AS DIAG
 ON nref.[Der_Person_ID] = DIAG.[Der_Person_ID]
 AND DIAG.[CodedDiagTimeStamp] >= nref.[ReferralRequestReceivedDate]
 
---DROP TABLE #temp_new_refs
+    LEFT JOIN [UKHD_ICD10].[Codes_And_Titles_And_MetaData] AS DIAGDESC
+        ON DIAG.[PrimDiag] = DIAGDESC.[Alt_Code]
+        AND DIAGDESC.[ICD_Version] = 'ICD10 5th Edition'
+
+DROP TABLE #temp_new_refs
 
 SELECT * 
 FROM #temp_new_refs_diags
