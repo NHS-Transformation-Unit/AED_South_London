@@ -33,6 +33,7 @@ SELECT Distinct(REF.[RecordNumber])
       ,MPI.[ElectoralWard]
       ,MPI.[LADistrictAuth]
       ,MPI.[LSOA2011]
+      ,IMD.[IMD19]
       ,LA.[LAD16CD]
       ,LA.[LAD16NM]
       ,CASE WHEN LA.[LAD16CD] IN ('E09000004', -- Bexley
@@ -86,14 +87,17 @@ SELECT Distinct(REF.[RecordNumber])
         ON REF.[UniqServReqID] = SERV.[UniqServReqID] AND REF.[RecordNumber] = SERV.[RecordNumber]   
         
     LEFT JOIN [Reporting_MESH_MHSDS].[MHS001MPI_Published] AS MPI
-		ON REF.[RecordNumber] = MPI.[RecordNumber]
+		    ON REF.[RecordNumber] = MPI.[RecordNumber]
 
-    LEFT JOIN [UKHD_Data_Dictionary].[Ethnic_Category_Code_SCD] AS ETH
-        ON MPI.[EthnicCategory] = ETH.[Main_Code_Text]
-        AND ETH.[Is_Latest] = 1
+        LEFT JOIN [UKHD_Data_Dictionary].[Ethnic_Category_Code_SCD] AS ETH
+            ON MPI.[EthnicCategory] = ETH.[Main_Code_Text]
+            AND ETH.[Is_Latest] = 1
 
-    LEFT JOIN [Internal_Reference].[LSOAs_to_Higher_Geographies] AS LA
-        ON MPI.[LADistrictAuth] = LA.[LAD16CD]
+        LEFT JOIN [Internal_Reference].[LSOAs_to_Higher_Geographies] AS LA
+            ON MPI.[LADistrictAuth] = LA.[LAD16CD]
+            
+        LEFT JOIN [Internal_Reference].[lsoa11_mapperMarch2026] AS IMD
+            ON MPI.[LSOA2011] = IMD.[LSOA11]
 
     LEFT JOIN [Reporting_MESH_MHSDS].[MHS902ServiceTeamDetails_Published] as SERVTD
         ON REF.[UniqCareProfTeamLocalID] = SERVTD.[UniqCareProfTeamLocalID]
