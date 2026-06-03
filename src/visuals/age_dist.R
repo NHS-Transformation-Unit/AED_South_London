@@ -1,7 +1,7 @@
 
 # Age band by LAD distribution
 
-plot_age <- unified_age_per |>
+plot_age <- unified_age_LA_per |>
   pivot_longer(cols = c(Pop_per, Ref_per),
                names_to = "Series",
                values_to = "Percent")
@@ -18,8 +18,8 @@ ggplot(plot_age, aes(x = Age_band,
                 width = 0.2) +
   facet_wrap(~ `Upper tier local authorities`) +
   scale_fill_manual(name = "Population Group",
-                    values = c("Ref_per" = palette_tu[4],
-                               "Pop_per" = palette_tu[2]),
+                    values = c("Ref_per" = palette_tu[2],
+                               "Pop_per" = palette_tu[3]),
                     labels = c("Borough population distribution",
                                "New referrals")) +
   labs(x = "Age band",
@@ -47,8 +47,8 @@ ggplot(plot_LON_age, aes(x = Age_band,
                 position = position_nudge(x = 0.2),
                 width = 0.2) +
   scale_fill_manual(name = "Population Group",
-                    values = c("Ref_per" = palette_tu[4],
-                               "Pop_per" = palette_tu[2]),
+                    values = c("Ref_per" = palette_tu[2],
+                               "Pop_per" = palette_tu[3]),
                     labels = c("South London population distribution",
                                "New referrals")) +
   labs(x = "Age band",
