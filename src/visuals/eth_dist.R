@@ -1,7 +1,7 @@
 
 # Ethnic group by LAD distribution
 
-plot_eth <- unified_eth_per |>
+plot_eth <- unified_eth_LA_per |>
   pivot_longer(cols = c(Pop_per, Ref_per),
                names_to = "Series",
                values_to = "Percent")
@@ -18,8 +18,8 @@ ggplot(plot_eth, aes(x = `Ethnic group (8 categories)`,
                 width = 0.2) +
   facet_wrap(~ `Upper tier local authorities`) +
   scale_fill_manual(name = "Population Group",
-                    values = c("Ref_per" = palette_tu[5],
-                               "Pop_per" = palette_tu[3]),
+                    values = c("Ref_per" = palette_tu[6],
+                               "Pop_per" = palette_tu[7]),
                     labels = c("Borough population distribution",
                                "New referrals")) +
   labs(x = "Ethnic group",
@@ -48,8 +48,8 @@ ggplot(plot_LON_eth, aes(x = `Ethnic group (8 categories)`,
                 position = position_nudge(x = 0.2),
                 width = 0.2) +
   scale_fill_manual(name = "Population Group",
-                    values = c("Ref_per" = palette_tu[5],
-                               "Pop_per" = palette_tu[3]),
+                    values = c("Ref_per" = palette_tu[6],
+                               "Pop_per" = palette_tu[7]),
                     labels = c("South London population distribution",
                                "New referrals")) +
   labs(x = "Ethnic group",
