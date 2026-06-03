@@ -132,7 +132,6 @@ DROP TABLE #temp_referrals
 
 SELECT nref.*
       ,REPLACE(DIAG.[PrimDiag],'.','') AS [PrimaryDiag]
-      ,DIAGDESC.[Description]
       ,DIAG.[CodedDiagTimeStamp]
       ,ROW_NUMBER () OVER(PARTITION BY nref.[UniqServReqID], nref.[ReferralRequestReceivedDate] ORDER BY ABS(DATEDIFF(D,nref.[ReferralRequestReceivedDate],DIAG.[CodedDiagTimeStamp])) ASC) AS [EarliestDiag]
       ,ROW_NUMBER () OVER(PARTITION BY nref.[UniqServReqID], nref.[ReferralRequestReceivedDate] ORDER BY ABS(DATEDIFF(D,nref.[ReferralRequestReceivedDate],DIAG.[CodedDiagTimeStamp])) DESC) AS [LatestDiag]
@@ -142,10 +141,6 @@ FROM #temp_new_refs as nref
 LEFT JOIN [Reporting_MESH_MHSDS].[MHS604PrimDiag_Published] AS DIAG
 ON nref.[Der_Person_ID] = DIAG.[Der_Person_ID]
 AND DIAG.[CodedDiagTimeStamp] >= nref.[ReferralRequestReceivedDate]
-
-    LEFT JOIN [UKHD_ICD10].[Codes_And_Titles_And_MetaData] AS DIAGDESC
-        ON DIAG.[PrimDiag] = DIAGDESC.[Alt_Code]
-        AND DIAGDESC.[ICD_Version] = 'ICD10 5th Edition'
 
 DROP TABLE #temp_new_refs
 
