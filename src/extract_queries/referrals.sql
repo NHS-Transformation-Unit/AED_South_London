@@ -1,4 +1,6 @@
 IF OBJECT_ID('TempDB..#temp_referrals') IS NOT NULL DROP TABLE #temp_referrals
+IF OBJECT_ID('TempDB..#temp_new_refs') IS NOT NULL DROP TABLE #temp_new_refs
+IF OBJECT_ID('TempDB..#temp_new_refs') IS NOT NULL DROP TABLE #temp_new_refs_diags
 
 DECLARE @EndRP INT;
 DECLARE @StartRP INT;
@@ -24,6 +26,7 @@ SELECT Distinct(REF.[RecordNumber])
       ,REF.[NHSServAgreeLineID]
       ,REF.[OrgIDComm]
       ,REF.[OrgIDProv]
+      ,CASE WHEN REF.[OrgIDProv] IN ('RV5', 'RPG', 'RQY') THEN 'SL Provider' ELSE 'Non-SL Provider' END AS [SL_Provider_Flag]
       ,REF.[Person_ID]
       ,ETH.[Main_Description_60_Chars] AS [Ethnic_Category_Main_Desc]
       ,CASE WHEN MPI.GenderIDCode IN ('1','2','3','4','X','Z') THEN MPI.GenderIDCode ELSE MPI.[Gender] END AS Gender
@@ -32,6 +35,19 @@ SELECT Distinct(REF.[RecordNumber])
       ,MPI.[LSOA2011]
       ,LA.[LAD16CD]
       ,LA.[LAD16NM]
+      ,CASE WHEN LA.[LAD16CD] IN ('E09000004', -- Bexley
+                             'E09000006', -- Bromley
+                             'E09000008', -- Croydon
+                             'E09000011', -- Greenwich
+                             'E09000021', -- Kingston upon Thames
+                             'E09000022', -- Lambeth
+                             'E09000023', -- Lewisham
+                             'E09000024', -- Merton
+                             'E09000027', -- Richmond
+                             'E09000028', -- Southwark
+                             'E09000029', -- Sutton
+                             'E09000032') -- Wandsworth
+                             THEN 'SL Resident' ELSE 'Non-SL Resident' END AS [SL_Resident_Flag]
       ,REF.[PrimReasonReferralMH]
       ,REF.[RecordEndDate]
       ,REF.[RecordStartDate]
@@ -85,10 +101,9 @@ SELECT Distinct(REF.[RecordNumber])
         AND REF.[UniqMonthID] = SERVTD.[UniqMonthID]
 
   WHERE REF.[UniqMonthID] BETWEEN @StartRP AND @EndRP
-        AND REF.[OrgIDProv] = 'RV5'
-        AND (REF.[PrimReasonReferralMH] = 12 OR (SERV.[ServTeamTypeRefToMH] = 'C10' OR SERVTD.[ServTeamTypeMH] = 'C10'))
+        AND (REF.[PrimReasonReferralMH] = '12' OR (SERV.[ServTeamTypeRefToMH] = 'C10' OR SERVTD.[ServTeamTypeMH] = 'C10'))
         AND REF.[AgeServReferRecDate] >= 12
-        AND LA.[LAD16CD] IN ('E09000004', -- Bexley
+        AND (LA.[LAD16CD] IN ('E09000004', -- Bexley
                              'E09000006', -- Bromley
                              'E09000008', -- Croydon
                              'E09000011', -- Greenwich
@@ -100,6 +115,30 @@ SELECT Distinct(REF.[RecordNumber])
                              'E09000028', -- Southwark
                              'E09000029', -- Sutton
                              'E09000032') -- Wandsworth
+
+                OR REF.[OrgIDProv] IN ('RV5', 'RPG', 'RQY')
+                )
                              
-                             
-        
+SELECT *
+INTO #temp_new_refs
+FROM #temp_referrals
+WHERE [New_Order] = 1
+
+DROP TABLE #temp_referrals
+
+SELECT nref.*
+      ,DIAG.[PrimDiag]
+      ,DIAG.[CodedDiagTimeStamp]
+      ,ROW_NUMBER () OVER(PARTITION BY nref.[UniqServReqID], nref.[ReferralRequestReceivedDate] ORDER BY ABS(DATEDIFF(D,nref.[ReferralRequestReceivedDate],DIAG.[CodedDiagTimeStamp])) ASC) AS [EarliestDiag]
+      ,ROW_NUMBER () OVER(PARTITION BY nref.[UniqServReqID], nref.[ReferralRequestReceivedDate] ORDER BY ABS(DATEDIFF(D,nref.[ReferralRequestReceivedDate],DIAG.[CodedDiagTimeStamp])) DESC) AS [LatestDiag]
+INTO #temp_new_refs_diags
+FROM #temp_new_refs as nref
+
+LEFT JOIN [Reporting_MESH_MHSDS].[MHS604PrimDiag_Published] AS DIAG
+ON nref.[Der_Person_ID] = DIAG.[Der_Person_ID]
+AND DIAG.[CodedDiagTimeStamp] >= nref.[ReferralRequestReceivedDate]
+
+DROP TABLE #temp_new_refs
+
+SELECT * FROM #temp_new_refs_diags
+WHERE [EarliestDiag] = 1
