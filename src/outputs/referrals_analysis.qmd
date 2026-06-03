@@ -1,0 +1,95 @@
+---
+title: "Analysis of Adult Eating Disorders Referrals - South London"
+author: "<a href='https://github.com/SiWickham/'>Simon Wickham</a><br><a href='https://github.com/ASW-Analyst/'>Andy Wilson</a><br><a href='https://transformationunit.nhs.uk/'>NHS Transformation Unit</a>"
+date: "06/03/2026"
+date-format: "DD MMMM YYYY"
+format: 
+  html:
+    toc: true
+    toc-depth: 2
+    toc-location: left
+    self-contained: true
+    css: ../config/tu_theme.css
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  out.width = '100%'
+)
+library(here)
+
+```
+
+```{r tu logo, echo = FALSE}
+
+htmltools::img(src = knitr::image_uri(paste0(here(), "/images/TU_logo_large.png")), 
+               alt = 'logo', 
+               style = 'position:absolute; top:0; right:5%; padding:10px;',
+               width = "180px",
+               heigth = "180px")
+
+```
+
+# Introduction
+***
+
+::: {.callout-tip}
+## Executive Summary
+Bullet points of key findings
+
+:::
+
+Introduction to purpose of the analysis, datasets used, key caveats.
+
+## Methodology
+
+
+## Referral Volumes
+Analysis of referral numbers each year and calculate the rate per population. Include analysis of percentage of referrals rejected. Heatmap of percentage of admissions for each SL borough to SL provider or going out of area.
+
+<br>
+
+# Deomgraphics
+***
+
+## Age
+
+- South London age profile compared to age of population. Chart and table.
+- Tabs for borough level
+
+## Ethnicity
+
+- South London age profile compared to ethnicity of population. Chart and table.
+- Tabs for borough level
+
+## Deprivation
+
+- South London age profile compared to ethnicity of population. Chart and table.
+- Tabs for borough level
+
+<br>
+
+# Diagnoses
+***
+
+## Methodology
+
+::: {.callut-warning}
+## Data Quality
+Warning about the high percentage of referrals with no diagnosis matched.
+
+
+:::
+
+## Breakdown of diagnoses
+- ICD-10 sub-chapter
+- Possible breakdown at borough if reasonable
+- Large sub-chapter breakdown to individual ICD
+
+
+
+
+
