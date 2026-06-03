@@ -17,19 +17,16 @@ ggplot(plot_age, aes(x = Age_band,
                 position = position_nudge(x = 0.2),
                 width = 0.2) +
   facet_wrap(~ `Upper tier local authorities`) +
-  scale_fill_manual(values = c("Ref_per" = "blue",
-                               "Pop_per" = "red"),
+  scale_fill_manual(name = "Population Group",
+                    values = c("Ref_per" = palette_tu[4],
+                               "Pop_per" = palette_tu[2]),
                     labels = c("Borough population distribution",
                                "New referrals")) +
   labs(x = "Age band",
        y = "Percentage",
-       fill = "",
        title = "South London Boroughs") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  theme(axis.text.x = element_text(angle = 90,
-                                   vjust = 0.5,
-                                   hjust = 1))
-
+  theme(selected_theme(palette_tu[1]))
 
 
 # Age band for London distribution
@@ -49,16 +46,14 @@ ggplot(plot_LON_age, aes(x = Age_band,
                     ymax = Percent + Confidence),
                 position = position_nudge(x = 0.2),
                 width = 0.2) +
-  scale_fill_manual(values = c("Ref_per" = "blue",
-                               "Pop_per" = "red"),
+  scale_fill_manual(name = "Population Group",
+                    values = c("Ref_per" = palette_tu[4],
+                               "Pop_per" = palette_tu[2]),
                     labels = c("South London population distribution",
                                "New referrals")) +
   labs(x = "Age band",
        y = "Percentage",
-       fill = "",
        title = "South London total") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  theme(axis.text.x = element_text(angle = 90,
-                                   vjust = 0.5,
-                                   hjust = 1))
+  theme(selected_theme(palette_tu[1]))
 
