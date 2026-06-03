@@ -138,7 +138,8 @@ LEFT JOIN [Reporting_MESH_MHSDS].[MHS604PrimDiag_Published] AS DIAG
 ON nref.[Der_Person_ID] = DIAG.[Der_Person_ID]
 AND DIAG.[CodedDiagTimeStamp] >= nref.[ReferralRequestReceivedDate]
 
-DROP TABLE #temp_new_refs
+--DROP TABLE #temp_new_refs
 
-SELECT * FROM #temp_new_refs_diags
+SELECT * 
+FROM #temp_new_refs_diags
 WHERE [EarliestDiag] = 1

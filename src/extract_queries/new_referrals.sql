@@ -1,4 +1,4 @@
 
-SELECT *
-FROM #temp_referrals
-WHERE [New_Order] = 1
+SELECT * 
+FROM #temp_new_refs_diags
+WHERE [EarliestDiag] = 1
