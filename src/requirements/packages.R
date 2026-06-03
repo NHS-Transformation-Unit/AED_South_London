@@ -3,13 +3,14 @@
 # DQ Packages -------------------------------------------------------------
 
 dq_packages <- c("readxl",
-                   "here",
-                   "odbc",
-                   "DBI",
-                   "readr",
-                   "dplyr",
-                   "tidyr",
-                   "ggplot2")
+                  "here",
+                  "odbc",
+                  "DBI",
+                  "readr",
+                  "dplyr",
+                  "tidyr",
+                  "stringr",
+                  "ggplot2")
 
 # load_packages function --------------------------------------------------
 
