@@ -5,7 +5,7 @@ library(here)
 
 ## Loading necessary packages for processing scripts
 
-source(paste0(here(),"/src/requirements/packages.R"))
+source(paste0(here(),"/src/requirements/pipeline_packages.R"))
 
 ## Connects to UDAL
 
