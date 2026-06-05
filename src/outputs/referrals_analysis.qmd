@@ -88,8 +88,7 @@ Lon_age
 ### Data table
 ```{r London age table}
 
-kable(unified_age_LON_per,
-      caption = "South London aggregate statistics")
+Lon_age_tbl
 ```
 
 :::
@@ -109,8 +108,7 @@ LA_age
 ### Data table
 ```{r Borough age table}
 
-kable(unified_age_LA_per,
-      caption = "South London aggregate statistics")
+LA_age_tbl
 ```
 
 :::
@@ -137,8 +135,7 @@ Lon_eth
 ### Data table
 ```{r London ethnicity table}
 
-kable(unified_eth_LON_per,
-      caption = "South London aggregate statistics")
+Lon_eth_tbl
 ```
 
 :::
@@ -158,8 +155,7 @@ LA_eth
 ### Data table
 ```{r Borough ethnicity table}
 
-kable(unified_eth_LA_per,
-      caption = "South London aggregate statistics")
+LA_eth_tbl
 ```
 
 :::
@@ -186,8 +182,7 @@ Lon_dep
 ### Data table
 ```{r London deprivation table}
 
-kable(unified_dep_LON_per,
-      caption = "South London aggregate statistics")
+Lon_dep_tbl
 ```
 
 :::
@@ -207,8 +202,7 @@ LA_dep
 ### Data table
 ```{r Borough deprivation table}
 
-kable(unified_dep_LA_per,
-      caption = "South London aggregate statistics")
+LA_dep_tbl
 ```
 
 :::
