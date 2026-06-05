@@ -19,9 +19,8 @@ source(paste0(here(),"/src/load/load_population.R"))
 source(paste0(here(),"/src/load/load_deprivation.R"))
 
 ## Process the loaded data
-
-source(paste0(here(),"/src/config/tu_ggplot_theme.R"))
 source(paste0(here(),"/src/config/palette.R"))
+source(paste0(here(),"/src/config/tu_ggplot_theme.R"))
 
 source(paste0(here(),"/src/processing/ref_new_processing.R"))
 source(paste0(here(),"/src/processing/population_processing.R"))
