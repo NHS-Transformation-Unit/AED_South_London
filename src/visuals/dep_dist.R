@@ -6,9 +6,9 @@ plot_dep <- unified_dep_LA_per |>
                names_to = "Series",
                values_to = "Percent")
 
-ggplot(plot_dep, aes(x = `IMD Decile`,
-                     y = Percent,
-                     fill = Series)) +
+LA_dep <- ggplot(plot_dep, aes(x = `IMD Decile`,
+                               y = Percent,
+                               fill = Series)) +
   geom_col(position = position_dodge(width = 0.8),
            width = 0.7) +
   geom_errorbar(data = subset(plot_dep, Series == "Ref_per"),
@@ -20,14 +20,17 @@ ggplot(plot_dep, aes(x = `IMD Decile`,
   scale_fill_manual(name = "Population Group",
                     values = c("Ref_per" = palette_tu[4],
                                "Pop_per" = palette_tu[5]),
-                    labels = c("Borough population distribution",
+                    labels = c("Population",
                                "New referrals")) +
   labs(x = "IMD Decile",
        y = "Percentage",
-       title = "South London Boroughs") +
+       title = "Distribution of South London Boroughs referrals compared to the area population",
+       subtitle = "Referrals received between May 2023 and April 2026",
+       caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   scale_x_continuous(breaks = seq(1, 10, by = 1)) +
-  theme(selected_theme(palette_tu[1]))
+  theme(selected_theme(palette_tu[1]),
+        legend.position = "bottom")
 
 
 # Deprivation band for London distribution
@@ -37,9 +40,9 @@ plot_LON_dep <- unified_dep_LON_per |>
                names_to = "Series",
                values_to = "Percent")
 
-ggplot(plot_LON_dep, aes(x = `IMD Decile`,
-                         y = Percent,
-                         fill = Series)) +
+Lon_dep <- ggplot(plot_LON_dep, aes(x = `IMD Decile`,
+                                    y = Percent,
+                                    fill = Series)) +
   geom_col(position = position_dodge(width = 0.8),
            width = 0.7) +
   geom_errorbar(data = subset(plot_LON_dep, Series == "Ref_per"),
@@ -50,12 +53,16 @@ ggplot(plot_LON_dep, aes(x = `IMD Decile`,
   scale_fill_manual(name = "Population Group",
                     values = c("Ref_per" = palette_tu[4],
                                "Pop_per" = palette_tu[5]),
-                    labels = c("South London population distribution",
+                    labels = c("Population",
                                "New referrals")) +
   labs(x = "IMD Decile",
        y = "Percentage",
-       title = "South London total") +
+       title = "Distribution of South London total referrals compared to the area population",
+       subtitle = "Referrals received between May 2023 and April 2026",
+       caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   scale_x_continuous(breaks = seq(1, 10, by = 1)) +
-  theme(selected_theme(palette_tu[1]))
+  theme(selected_theme(palette_tu[1]),
+        legend.position = "bottom") +
+  coord_flip()
 
