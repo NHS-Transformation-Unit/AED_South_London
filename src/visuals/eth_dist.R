@@ -31,12 +31,12 @@ LA_eth <- ggplot(plot_eth, aes(x = `Ethnic group (8 categories)`,
        subtitle = "Referrals received between May 2023 and April 2026",
        caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  scale_x_discrete(labels = function(Diagnosis) str_wrap(Diagnosis, width = 20)) +
+  scale_x_discrete(labels = function(Diagnosis) str_wrap(Diagnosis, width = 40)) +
   theme(text = element_text(family = "Franklin Gothic Book"),
         strip.background = element_rect(fill = palette_tu[1]),
         strip.text = element_text(colour = "black", size = 10),
-        axis.text = element_text(size = 10),
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.text = element_text(size = 8),
+        axis.text.x = element_text(angle = 0, vjust = 0.5, hjust = 1),
         axis.title = element_text(size = 10),
         plot.title = element_text(size = 12, color = palette_tu[1]),
         plot.subtitle = element_text(size = 10),

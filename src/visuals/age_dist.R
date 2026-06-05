@@ -19,7 +19,7 @@ LA_age <- ggplot(plot_age, aes(x = Age_band,
                 position = position_nudge(x = 0.2),
                 width = 0.2) +
   facet_wrap(~ `Upper tier local authorities`,
-             ncol = 3) +
+             ncol = 4) +
   scale_fill_manual(name = "Population Group",
                     values = c("Ref_per" = palette_tu[2],
                                "Pop_per" = palette_tu[3]),
@@ -30,7 +30,8 @@ LA_age <- ggplot(plot_age, aes(x = Age_band,
        title = "Distribution of South London Boroughs referrals compared to the area population",
        subtitle = "Referrals received between May 2023 and April 2026",
        caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                     breaks = seq(0, 0.8, by = 0.2)) +
   scale_x_discrete(labels = function(Diagnosis) str_wrap(Diagnosis, width = 20)) +
   theme(text = element_text(family = "Franklin Gothic Book"),
         strip.background = element_rect(fill = palette_tu[1]),

@@ -19,7 +19,7 @@ LA_dep <- ggplot(plot_dep, aes(x = `IMD Decile`,
                 position = position_nudge(x = 0.2),
                 width = 0.2) +
   facet_wrap(~ `Upper tier local authorities`,
-             ncol = 3) +
+             ncol = 4) +
   scale_fill_manual(name = "Population Group",
                     values = c("Ref_per" = palette_tu[4],
                                "Pop_per" = palette_tu[5]),
@@ -30,8 +30,9 @@ LA_dep <- ggplot(plot_dep, aes(x = `IMD Decile`,
        title = "Distribution of South London Boroughs referrals compared to the area population",
        subtitle = "Referrals received between May 2023 and April 2026",
        caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  scale_x_continuous(breaks = seq(1, 10, by = 1)) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                     breaks = seq(0, 0.4, by = 0.2)) +
+  scale_x_continuous(breaks = seq(1, 10, by = 2)) +
   theme(text = element_text(family = "Franklin Gothic Book"),
         strip.background = element_rect(fill = palette_tu[1]),
         strip.text = element_text(colour = "black", size = 10),
