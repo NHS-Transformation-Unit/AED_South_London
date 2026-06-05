@@ -67,6 +67,8 @@ SELECT Distinct(REF.[RecordNumber])
       ,REF.[CareProfTeamLocalID]
       ,REF.[ReferClosReason]
       ,REF.[ReferRejectionDate]
+      ,CASE WHEN REF.[ReferRejectionDate] IS NULL THEN 0
+            ELSE 1 END AS [Rejected_Flag]
       ,REF.[ReferRejectReason]
       ,REF.[UniqCareProfTeamLocalID]
       ,SERVTD.[ServTeamTypeMH]
