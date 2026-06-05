@@ -37,11 +37,15 @@ ref_new_proc <- ref_new |>
 # Age banding of population
 
 ref_new_age_LA <- ref_new_proc |>
+  filter(SL_Resident_Flag == 'SL Resident',
+         Rejected_Flag == 0) |>
   group_by(LAD16NM,
            Age_band) |>
   summarise('Referrals' = sum(New_referral, na.rm = TRUE))
 
 ref_new_age_tot <- ref_new_proc |>
+  filter(SL_Resident_Flag == 'SL Resident',
+         Rejected_Flag == 0) |>
   mutate("Total" = "London") |>
   group_by(Total,
            Age_band) |>
@@ -51,11 +55,15 @@ ref_new_age_tot <- ref_new_proc |>
 # Deprivation banding of population
 
 ref_new_dep_LA <- ref_new_proc |>
+  filter(SL_Resident_Flag == 'SL Resident',
+         Rejected_Flag == 0) |>
   group_by(LAD16NM,
            IMD19dec) |>
   summarise('Referrals' = sum(New_referral, na.rm = TRUE))
 
 ref_new_dep_tot <- ref_new_proc |>
+  filter(SL_Resident_Flag == 'SL Resident',
+         Rejected_Flag == 0) |>
   mutate("Total" = "London") |>
   group_by(Total,
            IMD19dec) |>
@@ -65,11 +73,15 @@ ref_new_dep_tot <- ref_new_proc |>
 # Ethnicity banding of population
 
 ref_new_eth_LA <- ref_new_proc |>
+  filter(SL_Resident_Flag == 'SL Resident',
+         Rejected_Flag == 0) |>
   group_by(LAD16NM,
            Ethnic_group) |>
   summarise('Referrals' = sum(New_referral, na.rm = TRUE))
 
 ref_new_eth_tot <- ref_new_proc |>
+  filter(SL_Resident_Flag == 'SL Resident',
+         Rejected_Flag == 0) |>
   mutate("Total" = "London") |>
   group_by(Total,
            Ethnic_group) |>
@@ -79,6 +91,7 @@ ref_new_eth_tot <- ref_new_proc |>
 # Diagnosis grouping of population
 
 ref_new_diag <- ref_new_proc |>
+  filter(Rejected_Flag == 0) |>
   group_by(PrimaryDiag,
            Description) |>
   summarise('Referrals' = sum(New_referral, na.rm = TRUE)) |>
@@ -94,10 +107,14 @@ ref_new_diag <- ref_new_proc |>
 # Totals ------------------------------------------------------------------
 
 ref_new_LA <- ref_new_proc |>
+  filter(SL_Resident_Flag == 'SL Resident',
+         Rejected_Flag == 0) |>
   group_by(LAD16NM) |>
   summarise('LAD_total' = sum(New_referral, na.rm = TRUE))
 
 ref_new_tot <- ref_new_proc |>
+  filter(SL_Resident_Flag == 'SL Resident',
+         Rejected_Flag == 0) |>
   mutate("Total" = "London") |>
   group_by(Total) |>
   summarise('LAD_total' = sum(New_referral, na.rm = TRUE))
