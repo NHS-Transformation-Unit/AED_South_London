@@ -18,7 +18,8 @@ LA_eth <- ggplot(plot_eth, aes(x = `Ethnic group (8 categories)`,
                     ymax = Percent + Confidence),
                 position = position_nudge(x = 0.2),
                 width = 0.2) +
-  facet_wrap(~ `Upper tier local authorities`) +
+  facet_wrap(~ `Upper tier local authorities`,
+             ncol = 3) +
   scale_fill_manual(name = "Population Group",
                     values = c("Ref_per" = palette_tu[6],
                                "Pop_per" = palette_tu[7]),
@@ -36,20 +37,22 @@ LA_eth <- ggplot(plot_eth, aes(x = `Ethnic group (8 categories)`,
         strip.text = element_text(colour = "black", size = 10),
         axis.text = element_text(size = 10),
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
-        axis.title = element_text(size = 11),
-        plot.title = element_text(size = 16, color = palette_tu[1]),
-        plot.subtitle = element_text(size = 12),
+        axis.title = element_text(size = 10),
+        plot.title = element_text(size = 12, color = palette_tu[1]),
+        plot.subtitle = element_text(size = 10),
         panel.background = element_rect(fill = "#ffffff"),
         panel.grid.major.y = element_line(color = "#cecece", linewidth = 0.1),
         panel.grid.minor.y = element_blank(),
         axis.line = element_line(color = "#000000"),
         legend.position = "bottom",
-        legend.text = element_text(size = 7.5))
+        legend.text = element_text(size = 7.5)) +
+  coord_flip()
 
 
 # Ethnic group by LA table
 
 LA_eth_tbl <- unified_eth_LA_per |>
+  ungroup() |>
   gt() |>
   fmt_percent(columns = c(Pop_per, Ref_per),
               decimals = 1) |>
@@ -97,9 +100,9 @@ Lon_eth <- ggplot(plot_LON_eth, aes(x = `Ethnic group (8 categories)`,
   theme(text = element_text(family = "Franklin Gothic Book"),
         axis.text = element_text(size = 10),
         axis.text.x = element_text(angle = 0, vjust = 0.5, hjust = 1),
-        axis.title = element_text(size = 11),
-        plot.title = element_text(size = 16, color = palette_tu[1]),
-        plot.subtitle = element_text(size = 12),
+        axis.title = element_text(size = 10),
+        plot.title = element_text(size = 12, color = palette_tu[1]),
+        plot.subtitle = element_text(size = 10),
         panel.background = element_rect(fill = "#ffffff"),
         panel.grid.major.y = element_line(color = "#cecece", linewidth = 0.1),
         panel.grid.minor.y = element_blank(),
@@ -112,6 +115,7 @@ Lon_eth <- ggplot(plot_LON_eth, aes(x = `Ethnic group (8 categories)`,
 # Ethnic group for London table
 
 Lon_eth_tbl <- unified_eth_LON_per |>
+  ungroup() |>
   gt() |>
   fmt_percent(columns = c(Pop_per, Ref_per),
               decimals = 1) |>
