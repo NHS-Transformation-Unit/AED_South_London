@@ -6,9 +6,9 @@ plot_age <- unified_age_LA_per |>
                names_to = "Series",
                values_to = "Percent")
 
-ggplot(plot_age, aes(x = Age_band,
-                     y = Percent,
-                     fill = Series)) +
+LA_age <- ggplot(plot_age, aes(x = Age_band,
+                               y = Percent,
+                               fill = Series)) +
   geom_col(position = position_dodge(width = 0.8),
            width = 0.7) +
   geom_errorbar(data = subset(plot_age, Series == "Ref_per"),
@@ -20,15 +20,17 @@ ggplot(plot_age, aes(x = Age_band,
   scale_fill_manual(name = "Population Group",
                     values = c("Ref_per" = palette_tu[2],
                                "Pop_per" = palette_tu[3]),
-                    labels = c("Borough population distribution",
+                    labels = c("Population",
                                "New referrals")) +
   labs(x = "Age band",
        y = "Percentage",
-       title = "South London Boroughs") +
+       title = "Distribution of South London Boroughs referrals compared to the area population",
+       subtitle = "Referrals received between May 2023 and April 2026",
+       caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   scale_x_discrete(labels = function(Diagnosis) str_wrap(Diagnosis, width = 20)) +
   theme(selected_theme(palette_tu[1]),
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+        legend.position = "bottom")
 
 
 # Age band for London distribution
@@ -38,9 +40,9 @@ plot_LON_age <- unified_age_LON_per |>
                names_to = "Series",
                values_to = "Percent")
 
-ggplot(plot_LON_age, aes(x = Age_band,
-                         y = Percent,
-                         fill = Series)) +
+Lon_age <- ggplot(plot_LON_age, aes(x = Age_band,
+                                    y = Percent,
+                                    fill = Series)) +
   geom_col(position = position_dodge(width = 0.8),
            width = 0.7) +
   geom_errorbar(data = subset(plot_LON_age, Series == "Ref_per"),
@@ -51,11 +53,15 @@ ggplot(plot_LON_age, aes(x = Age_band,
   scale_fill_manual(name = "Population Group",
                     values = c("Ref_per" = palette_tu[2],
                                "Pop_per" = palette_tu[3]),
-                    labels = c("South London population distribution",
+                    labels = c("Population",
                                "New referrals")) +
   labs(x = "Age band",
        y = "Percentage",
-       title = "South London total") +
+       title = "Distribution of South London total referrals compared to the area population",
+       subtitle = "Referrals received between May 2023 and April 2026",
+       caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  theme(selected_theme(palette_tu[1]))
+  theme(selected_theme(palette_tu[1]),
+        legend.position = "bottom") +
+  coord_flip()
 
