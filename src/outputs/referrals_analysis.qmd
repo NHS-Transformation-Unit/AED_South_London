@@ -21,6 +21,7 @@ knitr::opts_chunk$set(
 )
 library(here)
 
+source(paste0(here(),"/src/AED_Process_Pipeline.R"))
 ```
 
 ```{r tu logo, echo = FALSE}
@@ -33,9 +34,6 @@ htmltools::img(src = knitr::image_uri(paste0(here(), "/images/TU_logo_large.png"
 
 ```
 
-```{r}
-source(paste0(here(),"/src/AED_Process_Pipeline.R"))
-```
 
 # Introduction
 ***
@@ -43,10 +41,10 @@ source(paste0(here(),"/src/AED_Process_Pipeline.R"))
 ::: {.callout-tip}
 ## Executive Summary
 
-- Age at referral is skewed toward to lower age band, with patients age 12-17 being the highest groupf of referrals. This is significantly different to the population for this age band.
-- Ethnicity distribution of referrals shows a vastly different distribution to the population, so further exploration of this is necessary.
-- Deprivation of the population largely follows the proportion of referrals received by decile. The exception being decile 10 which shows no referrals received.
-- A large proportion of referrals don't have a diagnosis. For those that do, Anorexia Nervosa is the most diagnosed condition.
+- Age at referral is skewed toward to lower age band, with patients age 12-17 being the highest group of referrals. This is significantly different to the population for this age band.
+- Ethnicity distribution of referrals shows a vastly different distribution to the population, so further exploration of this is necessary. There is an associated barrier in interpreting this, as 23% of referrals do not have a recorded ethnicity.
+- Deprivation of the population largely follows the proportion of referrals received by decile.
+- A large proportion of referrals don't have a diagnosis, 45.7% of all referrals included. For those that do, Anorexia Nervosa is the most diagnosed condition at 15.4% of all referrals, 28.3% of all referrals with a diagnosis.
 
 :::
 
@@ -54,7 +52,7 @@ The NHS Transformation Unit have been commissioned by South London Mental Health
 
 Referrals data has been collected from the Mental Health Services Data Set, and includes the demographic identifiers of age, ethnicity and deprivation decile for each patient.
 
-Population data has been taken from the Office of National Statistics (ONS). This provides the population breakdown at each of the mentioned demographic indicators.
+Population data has been taken from the [Office of National Statistics (ONS)](https://www.ons.gov.uk/datasets/create/filter-outputs/5c83361b-583d-43dc-8e9e-2ebfc035256d#get-data). This provides the population breakdown at each of the mentioned demographic indicators.
 
 
 ## Methodology
@@ -81,34 +79,14 @@ The referrals data is heavily skewed to the younger age range, with 41% of refer
 :::{.panel-tabset}
 
 ### Comparative bar chart
-```{r}
+```{r London age distribution}
 
-ggplot(plot_LON_age, aes(x = Age_band,
-                         y = Percent,
-                         fill = Series)) +
-  geom_col(position = position_dodge(width = 0.8),
-           width = 0.7) +
-  geom_errorbar(data = subset(plot_LON_age, Series == "Ref_per"),
-                aes(ymin = Percent - Confidence,
-                    ymax = Percent + Confidence),
-                position = position_nudge(x = 0.2),
-                width = 0.2) +
-  scale_fill_manual(name = "Population Group",
-                    values = c("Ref_per" = palette_tu[2],
-                               "Pop_per" = palette_tu[3]),
-                    labels = c("South London population distribution",
-                               "New referrals")) +
-  labs(x = "Age band",
-       y = "Percentage",
-       title = "South London total") +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  theme(selected_theme(palette_tu[1]))
+Lon_age
 
 ```
 
 ### Data table
-```{r}
-library(knitr)
+```{r London age table}
 
 kable(unified_age_LON_per,
       caption = "South London aggregate statistics")
@@ -122,35 +100,14 @@ The South London distribution is replicated at the borough level.
 :::{.panel-tabset}
 
 ### Comparative bar chart
-```{r}
+```{r Borough age distribution}
 
-ggplot(plot_age, aes(x = Age_band,
-                     y = Percent,
-                     fill = Series)) +
-  geom_col(position = position_dodge(width = 0.8),
-           width = 0.7) +
-  geom_errorbar(data = subset(plot_age, Series == "Ref_per"),
-                aes(ymin = Percent - Confidence,
-                    ymax = Percent + Confidence),
-                position = position_nudge(x = 0.2),
-                width = 0.2) +
-  facet_wrap(~ `Upper tier local authorities`) +
-  scale_fill_manual(name = "Population Group",
-                    values = c("Ref_per" = palette_tu[2],
-                               "Pop_per" = palette_tu[3]),
-                    labels = c("Borough population distribution",
-                               "New referrals")) +
-  labs(x = "Age band",
-       y = "Percentage",
-       title = "South London Boroughs") +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  theme(selected_theme(palette_tu[1]))
+LA_age
 
 ```
 
 ### Data table
-```{r}
-library(knitr)
+```{r Borough age table}
 
 kable(unified_age_LA_per,
       caption = "South London aggregate statistics")
@@ -171,34 +128,14 @@ The referrals data is significantly different to the population data. This is po
 :::{.panel-tabset}
 
 ### Comparative bar chart
-```{r}
+```{r London ethnicity distribution}
 
-ggplot(plot_LON_eth, aes(x = `Ethnic group (8 categories)`,
-                         y = Percent,
-                         fill = Series)) +
-  geom_col(position = position_dodge(width = 0.8),
-           width = 0.7) +
-  geom_errorbar(data = subset(plot_LON_eth, Series == "Ref_per"),
-                aes(ymin = Percent - Confidence,
-                    ymax = Percent + Confidence),
-                position = position_nudge(x = 0.2),
-                width = 0.2) +
-  scale_fill_manual(name = "Population Group",
-                    values = c("Ref_per" = palette_tu[6],
-                               "Pop_per" = palette_tu[7]),
-                    labels = c("South London population distribution",
-                               "New referrals")) +
-  labs(x = "Ethnic group",
-       y = "Percentage",
-       title = "South London total") +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  theme(selected_theme(palette_tu[1]))
+Lon_eth
 
 ```
 
 ### Data table
-```{r}
-library(knitr)
+```{r London ethnicity table}
 
 kable(unified_eth_LON_per,
       caption = "South London aggregate statistics")
@@ -212,35 +149,14 @@ The South London distribution is replicated at the borough level.
 :::{.panel-tabset}
 
 ### Comparative bar chart
-```{r}
+```{r Borough ethnicity distribution}
 
-ggplot(plot_eth, aes(x = `Ethnic group (8 categories)`,
-                     y = Percent,
-                     fill = Series)) +
-  geom_col(position = position_dodge(width = 0.8),
-           width = 0.7) +
-  geom_errorbar(data = subset(plot_eth, Series == "Ref_per"),
-                aes(ymin = Percent - Confidence,
-                    ymax = Percent + Confidence),
-                position = position_nudge(x = 0.2),
-                width = 0.2) +
-  facet_wrap(~ `Upper tier local authorities`) +
-  scale_fill_manual(name = "Population Group",
-                    values = c("Ref_per" = palette_tu[6],
-                               "Pop_per" = palette_tu[7]),
-                    labels = c("Borough population distribution",
-                               "New referrals")) +
-  labs(x = "Ethnic group",
-       y = "Percentage",
-       title = "South London Boroughs") +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  theme(selected_theme(palette_tu[1]))
+LA_eth
 
 ```
 
 ### Data table
-```{r}
-library(knitr)
+```{r Borough ethnicity table}
 
 kable(unified_eth_LA_per,
       caption = "South London aggregate statistics")
@@ -256,40 +172,19 @@ kable(unified_eth_LA_per,
 :::{.panel-tabset}
 
 ## South London
-The referrals data roughly follows the pattern of the population, with slight deviations. The only exception is that decile 10 has a large volumn of population but no referrals.
+The referrals data roughly follows the pattern of the population, with slight deviations. The only exception is that decile 10 has a large volume of population but no referrals.
 
 :::{.panel-tabset}
 
 ### Comparative bar chart
-```{r}
+```{r London deprivation distribution}
 
-ggplot(plot_LON_dep, aes(x = `IMD Decile`,
-                         y = Percent,
-                         fill = Series)) +
-  geom_col(position = position_dodge(width = 0.8),
-           width = 0.7) +
-  geom_errorbar(data = subset(plot_LON_dep, Series == "Ref_per"),
-                aes(ymin = Percent - Confidence,
-                    ymax = Percent + Confidence),
-                position = position_nudge(x = 0.2),
-                width = 0.2) +
-  scale_fill_manual(name = "Population Group",
-                    values = c("Ref_per" = palette_tu[4],
-                               "Pop_per" = palette_tu[5]),
-                    labels = c("South London population distribution",
-                               "New referrals")) +
-  labs(x = "IMD Decile",
-       y = "Percentage",
-       title = "South London total") +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  scale_x_continuous(limits = c(1,10), breaks = 1:10) +
-  theme(selected_theme(palette_tu[1]))
+Lon_dep
 
 ```
 
 ### Data table
-```{r}
-library(knitr)
+```{r London deprivation table}
 
 kable(unified_dep_LON_per,
       caption = "South London aggregate statistics")
@@ -303,36 +198,14 @@ The South London distribution is replicated at the borough level.
 :::{.panel-tabset}
 
 ### Comparative bar chart
-```{r}
+```{r Borough deprivation distribution}
 
-ggplot(plot_dep, aes(x = `IMD Decile`,
-                     y = Percent,
-                     fill = Series)) +
-  geom_col(position = position_dodge(width = 0.8),
-           width = 0.7) +
-  geom_errorbar(data = subset(plot_dep, Series == "Ref_per"),
-                aes(ymin = Percent - Confidence,
-                    ymax = Percent + Confidence),
-                position = position_nudge(x = 0.2),
-                width = 0.2) +
-  facet_wrap(~ `Upper tier local authorities`) +
-  scale_fill_manual(name = "Population Group",
-                    values = c("Ref_per" = palette_tu[4],
-                               "Pop_per" = palette_tu[5]),
-                    labels = c("Borough population distribution",
-                               "New referrals")) +
-  labs(x = "IMD Decile",
-       y = "Percentage",
-       title = "South London Boroughs") +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  scale_x_continuous(limits = c(1,10), breaks = 1:10) +
-  theme(selected_theme(palette_tu[1]))
+LA_dep
 
 ```
 
 ### Data table
-```{r}
-library(knitr)
+```{r Borough deprivation table}
 
 kable(unified_dep_LA_per,
       caption = "South London aggregate statistics")
@@ -351,7 +224,7 @@ kable(unified_dep_LA_per,
 
 ::: {.callout-warning}
 ## Data Quality
-A high volume of referrals do not receive a diagnosis.
+A total of 45.7% of referrals do not receive a diagnosis.
 
 
 :::
@@ -359,17 +232,9 @@ A high volume of referrals do not receive a diagnosis.
 ## Breakdown of diagnoses
 At the South London level, there are a portion of referrals that do not have an associated diagnosis. For all others, the most frequent diagnosis given is Anorexia Nervosa. There are a cohort of referrals that receive a diagnosis not related to AED, which are grouped under "Other Diagnosis".
 
-```{r}
+```{r Diagnosis}
 
-ggplot(ref_new_diag, aes(x = reorder(Diagnosis,Diagnosed),
-                         y = Diagnosed,
-                         fill = colour)) +
-  geom_col() +
-  scale_fill_identity() +
-  labs(x = "Diagnosis description",
-       y = "Number of diagnoses",
-       title = "South London") +
-  theme(selected_theme(palette_tu[1]))
+Ref_diag
 ```
 
 
