@@ -15,9 +15,9 @@ Ref_diag <- ggplot(ref_new_diag, aes(x = reorder(Diagnosis,Diagnosed),
   theme(text = element_text(family = "Franklin Gothic Book"),
         axis.text = element_text(size = 10),
         axis.text.x = element_text(angle = 0, vjust = 0.5, hjust = 1),
-        axis.title = element_text(size = 11),
-        plot.title = element_text(size = 16, color = palette_tu[1]),
-        plot.subtitle = element_text(size = 12),
+        axis.title = element_text(size = 10),
+        plot.title = element_text(size = 12, color = palette_tu[1]),
+        plot.subtitle = element_text(size = 10),
         panel.background = element_rect(fill = "#ffffff"),
         panel.grid.major.y = element_line(color = "#cecece", linewidth = 0.1),
         panel.grid.minor.y = element_blank(),
@@ -30,6 +30,7 @@ Ref_diag <- ggplot(ref_new_diag, aes(x = reorder(Diagnosis,Diagnosed),
 # Diagnosis table
 
 ref_diag_tbl <- ref_new_diag |>
+  ungroup() |>
   gt() |>
   tab_header(title = "Diagnosis of referrals") |>
   tab_style(style = list(cell_fill(color = palette_tu[1])),
