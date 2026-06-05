@@ -12,4 +12,5 @@ Ref_diag <- ggplot(ref_new_diag, aes(x = reorder(Diagnosis,Diagnosed),
        title = "Diagnosis received for all patients referred",
        subtitle = "Referrals received between May 2023 and April 2026",
        caption = "Source: Mental Health Services Data Set") +
-  theme(selected_theme(palette_tu[1]))
+  theme(selected_theme(palette_tu[1])) +
+  coord_flip()
