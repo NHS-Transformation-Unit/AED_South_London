@@ -1,4 +1,6 @@
 
+# Borough -----------------------------------------------------------------
+
 # Deprivation band by LAD distribution
 
 plot_dep <- unified_dep_LA_per |>
@@ -29,9 +31,39 @@ LA_dep <- ggplot(plot_dep, aes(x = `IMD Decile`,
        caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   scale_x_continuous(breaks = seq(1, 10, by = 1)) +
-  theme(selected_theme(palette_tu[1]),
-        legend.position = "bottom")
+  theme(text = element_text(family = "Franklin Gothic Book"),
+        strip.background = element_rect(fill = palette_tu[1]),
+        strip.text = element_text(colour = "black", size = 10),
+        axis.text = element_text(size = 10),
+        axis.text.x = element_text(angle = 0, vjust = 0.5, hjust = 1),
+        axis.title = element_text(size = 11),
+        plot.title = element_text(size = 16, color = palette_tu[1]),
+        plot.subtitle = element_text(size = 12),
+        panel.background = element_rect(fill = "#ffffff"),
+        panel.grid.major.y = element_line(color = "#cecece", linewidth = 0.1),
+        panel.grid.minor.y = element_blank(),
+        axis.line = element_line(color = "#000000"),
+        legend.position = "bottom",
+        legend.text = element_text(size = 7.5))
 
+
+# Deprivation band by LA table
+
+LA_dep_tbl <- unified_dep_LA_per |>
+  gt() |>
+  fmt_percent(columns = c(Pop_per, Ref_per),
+              decimals = 1) |>
+  cols_hide(columns = Confidence) |>
+  cols_label(`Upper tier local authorities` = "Borough",
+             `IMD Decile` = "IMD Decile",
+             Pop_per = "Population",
+             Ref_per = "Referrals") |>
+  tab_header(title = "Distribution of South London Boroughs referrals compared to the area population") |>
+  tab_style(style = list(cell_fill(color = palette_tu[1])),
+            locations = cells_column_labels(everything()))
+
+
+# South London -------------------------------------------------------------
 
 # Deprivation band for London distribution
 
@@ -62,7 +94,33 @@ Lon_dep <- ggplot(plot_LON_dep, aes(x = `IMD Decile`,
        caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   scale_x_continuous(breaks = seq(1, 10, by = 1)) +
-  theme(selected_theme(palette_tu[1]),
-        legend.position = "bottom") +
+  theme(text = element_text(family = "Franklin Gothic Book"),
+        axis.text = element_text(size = 10),
+        axis.text.x = element_text(angle = 0, vjust = 0.5, hjust = 1),
+        axis.title = element_text(size = 11),
+        plot.title = element_text(size = 16, color = palette_tu[1]),
+        plot.subtitle = element_text(size = 12),
+        panel.background = element_rect(fill = "#ffffff"),
+        panel.grid.major.y = element_line(color = "#cecece", linewidth = 0.1),
+        panel.grid.minor.y = element_blank(),
+        axis.line = element_line(color = "#000000"),
+        legend.position = "bottom",
+        legend.text = element_text(size = 7.5)) +
   coord_flip()
 
+
+# Deprivation band for London table
+
+Lon_dep_tbl <- unified_dep_LON_per |>
+  gt() |>
+  fmt_percent(columns = c(Pop_per,
+                          Ref_per),
+              decimals = 1) |>
+  cols_hide(columns = c(Confidence,
+                        `Upper tier local authorities`)) |>
+  cols_label(`IMD Decile` = "IMD Decile",
+             Pop_per = "Population",
+             Ref_per = "Referrals") |>
+  tab_header(title = "Distribution of South London total referrals compared to the area population") |>
+  tab_style(style = list(cell_fill(color = palette_tu[1])),
+            locations = cells_column_labels(everything()))
