@@ -1,16 +1,19 @@
 
 # Borough -----------------------------------------------------------------
 
+plot_LA_age <- function(df, borough) {
+
 # Age band by LAD distribution
 
-plot_age <- unified_age_LA_per |>
+plot_age <- df |>
+  filter(`Upper tier local authorities` == borough) |>
   pivot_longer(cols = c(Pop_per, Ref_per),
                names_to = "Series",
                values_to = "Percent")
 
-LA_age <- ggplot(plot_age, aes(x = Age_band,
-                               y = Percent,
-                               fill = Series)) +
+ggplot(plot_age, aes(x = Age_band,
+                     y = Percent,
+                     fill = Series)) +
   geom_col(position = position_dodge(width = 0.8),
            width = 0.7) +
   geom_errorbar(data = subset(plot_age, Series == "Ref_per"),
@@ -18,8 +21,6 @@ LA_age <- ggplot(plot_age, aes(x = Age_band,
                     ymax = Percent + Confidence),
                 position = position_nudge(x = 0.2),
                 width = 0.2) +
-  facet_wrap(~ `Upper tier local authorities`,
-             ncol = 4) +
   scale_fill_manual(name = "Population Group",
                     values = c("Ref_per" = palette_tu[2],
                                "Pop_per" = palette_tu[3]),
@@ -27,12 +28,11 @@ LA_age <- ggplot(plot_age, aes(x = Age_band,
                                "New referrals")) +
   labs(x = "Age band",
        y = "Percentage",
-       title = "Distribution of South London Boroughs referrals compared to the area population",
+       title = paste0("Distribution of ", borough," referrals compared to the area population"),
        subtitle = "Referrals received between May 2023 and April 2026",
        caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
-                     breaks = seq(0, 0.8, by = 0.2)) +
-  scale_x_discrete(labels = function(Diagnosis) str_wrap(Diagnosis, width = 20)) +
+                     breaks = seq(0, 0.8, by = 0.1)) +
   theme(text = element_text(family = "Franklin Gothic Book"),
         strip.background = element_rect(fill = palette_tu[1]),
         strip.text = element_text(colour = "black", size = 10),
@@ -48,23 +48,33 @@ LA_age <- ggplot(plot_age, aes(x = Age_band,
         legend.position = "bottom",
         legend.text = element_text(size = 7.5)) +
   coord_flip()
+}
 
 
 # Age band by LA table
 
 LA_age_tbl <- unified_age_LA_per |>
   ungroup() |>
-  gt() |>
-  fmt_percent(columns = c(Pop_per, Ref_per),
-              decimals = 1) |>
-  cols_hide(columns = Confidence) |>
-  cols_label(`Upper tier local authorities` = "Borough",
-             Age_band = "Age band",
-             Pop_per = "Population",
-             Ref_per = "Referrals") |>
-  tab_header(title = "Distribution of South London Boroughs referrals compared to the area population") |>
-  tab_style(style = list(cell_fill(color = palette_tu[1])),
-            locations = cells_column_labels(everything()))
+  select(`Upper tier local authorities`,
+         Age_band,
+         Pop_per,
+         Ref_per) |>
+  rename(Borough = `Upper tier local authorities`,
+         `Age band` = Age_band,
+         Population = Pop_per,
+         Referrals = Ref_per) |>
+  datatable(caption = "Distribution of South London Boroughs referrals compared to the area population",
+            rownames = FALSE,
+            options = list(initComplete = JS(sprintf("function(settings, json) {
+                                                                                $(this.api().table().header()).find('th').css({
+                                                                                'background-color': '%s',
+                                                                                'color': 'white'
+                                                                                });
+                                                     }",
+                                                     palette_tu[1])))) |>
+  formatPercentage(columns = c("Population",
+                               "Referrals"),
+                   digits = 1)
 
 
 # South London ------------------------------------------------------------
@@ -116,14 +126,21 @@ Lon_age <- ggplot(plot_LON_age, aes(x = Age_band,
 
 Lon_age_tbl <- unified_age_LON_per |>
   ungroup() |>
-  gt() |>
-  fmt_percent(columns = c(Pop_per, Ref_per),
-              decimals = 1) |>
-  cols_hide(columns = c(Confidence,
-                        `Upper tier local authorities`)) |>
-  cols_label(Age_band = "Age band",
-             Pop_per = "Population",
-             Ref_per = "Referrals") |>
-  tab_header(title = "Distribution of South London total referrals compared to the area population") |>
-  tab_style(style = list(cell_fill(color = palette_tu[1])),
-            locations = cells_column_labels(everything()))
+  select(Age_band,
+         Pop_per,
+         Ref_per) |>
+  rename(`Age band` = Age_band,
+         Population = Pop_per,
+         Referrals = Ref_per) |>
+  datatable(caption = "Distribution of South London referrals compared to the area population",
+            rownames = FALSE,
+            options = list(initComplete = JS(sprintf("function(settings, json) {
+                                                                                $(this.api().table().header()).find('th').css({
+                                                                                'background-color': '%s',
+                                                                                'color': 'white'
+                                                                                });
+                                                     }",
+                                                     palette_tu[1])))) |>
+  formatPercentage(columns = c("Population",
+                               "Referrals"),
+                   digits = 1)
