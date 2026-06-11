@@ -12,7 +12,9 @@ pipeline_packages <- c("readxl",
               "stringr",
               "knitr",
               "ggplot2",
-              "gt")
+              "gt",
+              "DT",
+              "scales")
 
 # load_packages function --------------------------------------------------
 
