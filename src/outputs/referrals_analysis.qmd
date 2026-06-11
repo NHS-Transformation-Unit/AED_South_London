@@ -1,7 +1,7 @@
 ---
 title: "Analysis of Adult Eating Disorders Referrals - South London"
 author: "<a href='https://github.com/SiWickham/'>Simon Wickham</a><br><a href='https://github.com/ASW-Analyst/'>Andy Wilson</a><br><a href='https://transformationunit.nhs.uk/'>NHS Transformation Unit</a>"
-date: "06/03/2026"
+date: "06/11/2026"
 date-format: "DD MMMM YYYY"
 format: 
   html:
@@ -50,14 +50,18 @@ htmltools::img(src = knitr::image_uri(paste0(here(), "/images/TU_logo_large.png"
 
 The NHS Transformation Unit have been commissioned by South London Mental Health Partnership to explore the referrals received into the Adult Eating Disorders service. The purpose was to assess the referrals received and how representative they are of the South London population.
 
-Referrals data has been collected from the Mental Health Services Data Set, and includes the demographic identifiers of age, ethnicity and deprivation decile for each patient.
+Referrals data has been collected from the Mental Health Services Data Set (MHSDS), and includes the demographic identifiers of age, ethnicity and deprivation decile for each patient.
 
-Population data has been taken from the [Office of National Statistics (ONS)](https://www.ons.gov.uk/datasets/create/filter-outputs/5c83361b-583d-43dc-8e9e-2ebfc035256d#get-data). This provides the population breakdown at each of the mentioned demographic indicators.
+Population data has been taken from the [Office of National Statistics (ONS)](https://www.ons.gov.uk/datasets/create/filter-outputs/5c83361b-583d-43dc-8e9e-2ebfc035256d#get-data). This provides the population breakdown at each of the mentioned demographic indicators. The latest population figures available are from 2023.
 
 
 ## Methodology
 
+The primary source of information is the `MHS101Referrals_Published` table in MHSDS, which contains all details relating to a patient referral. This is joined to `MHS001MPI_Published` table to include demographic data, and to `MHS102ServiceTypeReferredTo_Published` table and `MHS902ServiceTeamDetails_Published` table to include only AED referrals. New referrals are then identified in this.
 
+To include diagnosis, the new referrals are joined to `MHS604PrimDiag_Published`. This may include multiple diagnoses across different submission periods. The data join therefore includes a parameter where the diagnosis used is the one closest to the referral received date.
+
+<br>
 
 ## Referral Volumes
 Analysis of referral numbers each year and calculate the rate per population. Include analysis of percentage of referrals rejected. Heatmap of percentage of admissions for each SL borough to SL provider or going out of area.
@@ -94,21 +98,98 @@ Lon_age_tbl
 :::
 
 ## Boroughs
-The South London distribution is replicated at the borough level.
+The South London distribution is replicated at the borough level. The population distributions for Lambeth and Southwark differ from the South London profile, as their highest referral age band is 18-25.
 
 :::{.panel-tabset}
-
-### Comparative bar chart
-```{r Borough age distribution}
-
-LA_age
-
-```
 
 ### Data table
 ```{r Borough age table}
 
 LA_age_tbl
+```
+
+### Bexley chart
+```{r Borough age distribution_Bexley}
+
+plot_LA_age(unified_age_LA_per, "Bexley")
+
+```
+
+### Bromley chart
+```{r Borough age distribution_Bromley}
+
+plot_LA_age(unified_age_LA_per, "Bromley")
+
+```
+
+### Croydon chart
+```{r Borough age distribution_Croydon}
+
+plot_LA_age(unified_age_LA_per, "Croydon")
+
+```
+
+### Greenwich chart
+```{r Borough age distribution_Greenwich}
+
+plot_LA_age(unified_age_LA_per, "Greenwich")
+
+```
+
+### Kingston upon Thames chart
+```{r Borough age distribution_Kingston upon Thames}
+
+plot_LA_age(unified_age_LA_per, "Kingston upon Thames")
+
+```
+
+### Lambeth chart
+```{r Borough age distribution_Lambeth}
+
+plot_LA_age(unified_age_LA_per, "Lambeth")
+
+```
+
+### Lewisham chart
+```{r Borough age distribution_Lewisham}
+
+plot_LA_age(unified_age_LA_per, "Lewisham")
+
+```
+
+### Merton chart
+```{r Borough age distribution_Merton}
+
+plot_LA_age(unified_age_LA_per, "Merton")
+
+```
+
+### Richmond upon Thames chart
+```{r Borough age distribution_Richmond upon Thames}
+
+plot_LA_age(unified_age_LA_per, "Richmond upon Thames")
+
+```
+
+### Southwark chart
+```{r Borough age distribution_Southwark}
+
+plot_LA_age(unified_age_LA_per, "Southwark")
+
+```
+
+### Sutton chart
+```{r Borough age distribution_Sutton}
+
+plot_LA_age(unified_age_LA_per, "Sutton")
+
+```
+
+### Wandsworth chart
+```{r Borough age distribution_Wandsworth}
+
+plot_LA_age(unified_age_LA_per, "Wandsworth")
+
 ```
 
 :::
@@ -121,7 +202,7 @@ LA_age_tbl
 :::{.panel-tabset}
 
 ## South London
-The referrals data is significantly different to the population data. This is possibly down to the aggregation of ethnicity groups which needs further exploration.
+The referrals data is significantly different to the population data. This is likely due to there being no recorded ethnic group for 22.5% of the South London referrals.
 
 :::{.panel-tabset}
 
@@ -141,21 +222,98 @@ Lon_eth_tbl
 :::
 
 ## Boroughs
-The South London distribution is replicated at the borough level.
+The South London distribution is replicated at the borough level. Wandsworth has the highest proportion of referrals without a recorded ethnicity, 38.6%, while Southwark has the lowest, 14.2%.
 
 :::{.panel-tabset}
-
-### Comparative bar chart
-```{r Borough ethnicity distribution}
-
-LA_eth
-
-```
 
 ### Data table
 ```{r Borough ethnicity table}
 
 LA_eth_tbl
+```
+
+### Bexley chart
+```{r Borough ethnicity distribution_Bexley}
+
+plot_LA_eth(unified_eth_LA_per, "Bexley")
+
+```
+
+### Bromley chart
+```{r Borough ethnicity distribution_Bromley}
+
+plot_LA_eth(unified_eth_LA_per, "Bromley")
+
+```
+
+### Croydon chart
+```{r Borough ethnicity distribution_Croydon}
+
+plot_LA_eth(unified_eth_LA_per, "Croydon")
+
+```
+
+### Greenwich chart
+```{r Borough ethnicity distribution_Greenwich}
+
+plot_LA_eth(unified_eth_LA_per, "Greenwich")
+
+```
+
+### Kingston upon Thames chart
+```{r Borough ethnicity distribution_Kingston upon Thames}
+
+plot_LA_eth(unified_eth_LA_per, "Kingston upon Thames")
+
+```
+
+### Lambeth chart
+```{r Borough ethnicity distribution_Lambeth}
+
+plot_LA_eth(unified_eth_LA_per, "Lambeth")
+
+```
+
+### Lewisham chart
+```{r Borough ethnicity distribution_Lewisham}
+
+plot_LA_eth(unified_eth_LA_per, "Lewisham")
+
+```
+
+### Merton chart
+```{r Borough ethnicity distribution_Merton}
+
+plot_LA_eth(unified_eth_LA_per, "Merton")
+
+```
+
+### Richmond upon Thames chart
+```{r Borough ethnicity distribution_Richmond upon Thames}
+
+plot_LA_eth(unified_eth_LA_per, "Richmond upon Thames")
+
+```
+
+### Southwark chart
+```{r Borough ethnicity distribution_Southwark}
+
+plot_LA_eth(unified_eth_LA_per, "Southwark")
+
+```
+
+### Sutton chart
+```{r Borough ethnicity distribution_Sutton}
+
+plot_LA_eth(unified_eth_LA_per, "Sutton")
+
+```
+
+### Wandsworth chart
+```{r Borough ethnicity distribution_Wandsworth}
+
+plot_LA_eth(unified_eth_LA_per, "Wandsworth")
+
 ```
 
 :::
@@ -168,7 +326,7 @@ LA_eth_tbl
 :::{.panel-tabset}
 
 ## South London
-The referrals data roughly follows the pattern of the population, with slight deviations. The only exception is that decile 10 has a large volume of population but no referrals.
+The referrals data roughly follows the pattern of the population, with slight deviations.
 
 :::{.panel-tabset}
 
@@ -188,21 +346,108 @@ Lon_dep_tbl
 :::
 
 ## Boroughs
-The South London distribution is replicated at the borough level.
+The South London distribution is replicated at the borough level. For the most part, each borough follows a distribution for referrals relative to its population, however some boroughs have a stand out decile that is significantly different to the population:
+<br>
+- Bexley decile 5
+<br>
+- Lambeth decile 2
+<br>
+- Merton decile 8
+<br>
+- Richmond decile 8
+<br>
+- Wandsworth decile 4
 
 :::{.panel-tabset}
-
-### Comparative bar chart
-```{r Borough deprivation distribution}
-
-LA_dep
-
-```
 
 ### Data table
 ```{r Borough deprivation table}
 
 LA_dep_tbl
+```
+
+### Bexley chart
+```{r Borough deprivation distribution_Bexley}
+
+plot_LA_dep(unified_dep_LA_per, "Bexley")
+
+```
+
+### Bromley chart
+```{r Borough deprivation distribution_Bromley}
+
+plot_LA_dep(unified_dep_LA_per, "Bromley")
+
+```
+
+### Croydon chart
+```{r Borough deprivation distribution_Croydon}
+
+plot_LA_dep(unified_dep_LA_per, "Croydon")
+
+```
+
+### Greenwich chart
+```{r Borough deprivation distribution_Greenwich}
+
+plot_LA_dep(unified_dep_LA_per, "Greenwich")
+
+```
+
+### Kingston upon Thames chart
+```{r Borough deprivation distribution_Kingston upon Thames}
+
+plot_LA_dep(unified_dep_LA_per, "Kingston upon Thames")
+
+```
+
+### Lambeth chart
+```{r Borough deprivation distribution_Lambeth}
+
+plot_LA_dep(unified_dep_LA_per, "Lambeth")
+
+```
+
+### Lewisham chart
+```{r Borough deprivation distribution_Lewisham}
+
+plot_LA_dep(unified_dep_LA_per, "Lewisham")
+
+```
+
+### Merton chart
+```{r Borough deprivation distribution_Merton}
+
+plot_LA_dep(unified_dep_LA_per, "Merton")
+
+```
+
+### Richmond upon Thames chart
+```{r Borough deprivation distribution_Richmond upon Thames}
+
+plot_LA_dep(unified_dep_LA_per, "Richmond upon Thames")
+
+```
+
+### Southwark chart
+```{r Borough deprivation distribution_Southwark}
+
+plot_LA_dep(unified_dep_LA_per, "Southwark")
+
+```
+
+### Sutton chart
+```{r Borough deprivation distribution_Sutton}
+
+plot_LA_dep(unified_dep_LA_per, "Sutton")
+
+```
+
+### Wandsworth chart
+```{r Borough deprivation distribution_Wandsworth}
+
+plot_LA_dep(unified_dep_LA_per, "Wandsworth")
+
 ```
 
 :::
@@ -229,9 +474,6 @@ At the South London level, there are a portion of referrals that do not have an 
 ```{r Diagnosis}
 
 Ref_diag
+
 ```
-
-
-
-
 
