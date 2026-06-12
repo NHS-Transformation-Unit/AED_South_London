@@ -28,7 +28,7 @@ ggplot(plot_eth, aes(x = `Ethnic group (8 categories)`,
                                "New referrals")) +
   labs(x = "Ethnic group",
        y = "Percentage",
-       title = paste0("Distribution of ", borough," referrals compared to the area population"),
+       title = str_wrap(paste0("Distribution of ", borough," referrals compared to the area population"), 30),
        subtitle = "Referrals received between May 2023 and April 2026",
        caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
@@ -103,7 +103,7 @@ Lon_eth <- ggplot(plot_LON_eth, aes(x = `Ethnic group (8 categories)`,
                                "New referrals")) +
   labs(x = "Ethnic group",
        y = "Percentage",
-       title = "Distribution of South London total referrals compared to the area population",
+       title = str_wrap("Distribution of South London total referrals compared to the area population", 30),
        subtitle = "Referrals received between May 2023 and April 2026",
        caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
