@@ -42,9 +42,9 @@ htmltools::img(src = knitr::image_uri(paste0(here(), "/images/TU_logo_large.png"
 ## Executive Summary
 
 - Age at referral is skewed toward to lower age band, with patients age 12-17 being the highest group of referrals. This is significantly different to the population for this age band.
-- Ethnicity distribution of referrals shows a vastly different distribution to the population, so further exploration of this is necessary. There is an associated barrier in interpreting this, as 23% of referrals do not have a recorded ethnicity.
+- There is a barrier in interpreting ethnicity, as **23%** of referrals do not have a recorded ethnicity. This therefore makes the referrals distribution vastly different to the population.
 - Deprivation of the population largely follows the proportion of referrals received by decile.
-- A large proportion of referrals don't have a diagnosis, 45.7% of all referrals included. For those that do, Anorexia Nervosa is the most diagnosed condition at 15.4% of all referrals, 28.3% of all referrals with a diagnosis.
+- A large proportion of referrals don't have a diagnosis, **45.7%** of all referrals included. For those that do, Anorexia Nervosa is the most diagnosed condition at 15.4% of all referrals, 28.3% of all referrals with a diagnosis.
 
 :::
 
@@ -465,15 +465,25 @@ plot_LA_dep(unified_dep_LA_per, "Wandsworth")
 ## Data Quality
 A total of 45.7% of referrals do not receive a diagnosis.
 
-
 :::
 
 ## Breakdown of diagnoses
 At the South London level, there are a portion of referrals that do not have an associated diagnosis. For all others, the most frequent diagnosis given is Anorexia Nervosa. There are a cohort of referrals that receive a diagnosis not related to AED, which are grouped under "Other Diagnosis".
 
-```{r Diagnosis}
+:::{.panel-tabset}
+
+### Diagnoses chart
+```{r Diagnosis chart}
 
 Ref_diag
 
 ```
 
+### Data table
+```{r Diagnosis table}
+
+ref_diag_tbl
+
+```
+
+:::
