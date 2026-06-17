@@ -131,7 +131,7 @@ Lon_eth <- ggplot(plot_LON_eth, aes(x = `Ethnic group (8 categories)`,
 
 # Ethnic group for London table
 
-Lon_eth_tbl <- left_join(unified_eth_LON_per, ref_new_eth_tot, by = c("Upper tier local authorities" = "LAD16NM",
+Lon_eth_tbl <- left_join(unified_eth_LON_per, ref_new_eth_tot, by = c("Upper tier local authorities" = "Total",
                                                                       "Ethnic group (8 categories)" = "Ethnic_group")) |>
   ungroup() |>
   mutate(Ref_new = if_else(Referrals < 5,
