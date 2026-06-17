@@ -52,15 +52,21 @@ ggplot(plot_dep, aes(x = factor(`IMD Decile`),
 
 # Deprivation band by LA table
 
-LA_dep_tbl <- unified_dep_LA_per |>
+LA_dep_tbl <- left_join(unified_dep_LA_per, ref_new_dep_LA, by = c("Upper tier local authorities" = "LAD16NM",
+                                                                   "IMD Decile" = "IMD19dec")) |>
   ungroup() |>
+  mutate(Ref_new = if_else(Referrals < 5,
+                           NA_real_,
+                           round(Referrals / 5) * 5)) |>
   select(`Upper tier local authorities`,
          `IMD Decile`,
          Pop_per,
-         Ref_per) |>
+         Ref_per,
+         Ref_new) |>
   rename(Borough = `Upper tier local authorities`,
          Population = Pop_per,
-         Referrals = Ref_per) |>
+         Referrals = Ref_per,
+         `Rounded Referrals`= Ref_new) |>
   datatable(caption = "Distribution of South London Boroughs referrals compared to the area population",
             rownames = FALSE,
             options = list(initComplete = JS(sprintf("function(settings, json) {
@@ -122,13 +128,19 @@ Lon_dep <- ggplot(plot_LON_dep, aes(x = factor(`IMD Decile`),
 
 # Deprivation band for London table
 
-Lon_dep_tbl <- unified_dep_LON_per |>
+Lon_dep_tbl <- left_join(unified_dep_LON_per, ref_new_dep_tot, by = c("Upper tier local authorities" = "Total",
+                                                                      "IMD Decile" = "IMD19dec")) |>
   ungroup() |>
+  mutate(Ref_new = if_else(Referrals < 5,
+                           NA_real_,
+                           round(Referrals / 5) * 5)) |>
   select(`IMD Decile`,
          Pop_per,
-         Ref_per) |>
+         Ref_per,
+         Ref_new) |>
   rename(Population = Pop_per,
-         Referrals = Ref_per) |>
+         Referrals = Ref_per,
+         `Rounded Referrals`= Ref_new) |>
   datatable(caption = "Distribution of South London referrals compared to the area population",
             rownames = FALSE,
             options = list(initComplete = JS(sprintf("function(settings, json) {
