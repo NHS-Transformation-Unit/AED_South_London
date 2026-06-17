@@ -1,0 +1,79 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="V1a7oVAo91E6NRkmIKD5">
+    <mxGraphModel dx="2264" dy="1843" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=light-dark(#FFFFFF,#FFFFFF);" value="" vertex="1">
+          <mxGeometry height="500" width="960" x="-250" y="-10" as="geometry" />
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-17" edge="1" parent="1" source="MaUPozuyjEWVOc-uW0tH-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000,#000000);" target="MaUPozuyjEWVOc-uW0tH-16" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" value="MHS101Referrals&lt;div&gt;_Published&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="160" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-13" edge="1" parent="1" source="MaUPozuyjEWVOc-uW0tH-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=light-dark(#000000,#000000);">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="210" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-24" connectable="0" parent="MaUPozuyjEWVOc-uW0tH-13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=none;fontColor=light-dark(#000000,#000000);" value="RecordNumber" vertex="1">
+          <mxGeometry relative="1" x="-0.2923" y="1" as="geometry">
+            <mxPoint y="7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-5" parent="1" style="whiteSpace=wrap;html=1;rounded=1;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" value="MHS001MPI&lt;div&gt;_Published&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="-230" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-11" edge="1" parent="1" source="MaUPozuyjEWVOc-uW0tH-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=light-dark(#000000,#000000);strokeColor=light-dark(#000000,#000000);" target="MaUPozuyjEWVOc-uW0tH-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="70" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-27" connectable="0" parent="MaUPozuyjEWVOc-uW0tH-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=none;fontColor=light-dark(#000000,#000000);" value="UniqCareProfTeamLocalID&lt;div&gt;NHSEUniqSubmissionID&lt;/div&gt;&lt;div&gt;UniqMonthID&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.5316" y="1" as="geometry">
+            <mxPoint y="20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-7" parent="1" style="html=1;rounded=1;whiteSpace=wrap;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" value="MHS902ServiceTeamDetails&lt;div&gt;_Published&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="-230" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-18" edge="1" parent="1" source="MaUPozuyjEWVOc-uW0tH-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;strokeColor=light-dark(#000000,#000000);" target="MaUPozuyjEWVOc-uW0tH-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-26" connectable="0" parent="MaUPozuyjEWVOc-uW0tH-18" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=none;fontColor=light-dark(#000000,#000000);" value="UniqServReqID" vertex="1">
+          <mxGeometry relative="1" x="-0.2778" y="-3" as="geometry">
+            <mxPoint y="3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-9" parent="1" style="whiteSpace=wrap;html=1;rounded=1;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" value="MHS102ServiceTypeReferredTo&lt;div&gt;_Published&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="-230" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-14" parent="1" style="whiteSpace=wrap;html=1;rounded=1;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" value="MHS604PrimDiag&lt;div&gt;_Published&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="-230" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-15" edge="1" parent="1" source="MaUPozuyjEWVOc-uW0tH-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=light-dark(#000000,#000000);" target="MaUPozuyjEWVOc-uW0tH-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-25" connectable="0" parent="MaUPozuyjEWVOc-uW0tH-15" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=none;fontColor=light-dark(#000000,#000000);" value="Der_Person_ID&lt;div&gt;CodedDiagTimeStamp &amp;gt;&amp;nbsp;ReferralRequestReceivedDate&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.345" y="-2" as="geometry">
+            <mxPoint y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" value="Extracted data" vertex="1">
+          <mxGeometry height="60" width="200" x="480" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-21" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;fontColor=light-dark(#000000,#000000);" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Data joins in MHSDS&lt;/h1&gt;" vertex="1">
+          <mxGeometry height="50" width="850" x="-160" y="-10" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
