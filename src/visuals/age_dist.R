@@ -53,16 +53,22 @@ ggplot(plot_age, aes(x = Age_band,
 
 # Age band by LA table
 
-LA_age_tbl <- unified_age_LA_per |>
+LA_age_tbl <- left_join(unified_age_LA_per, ref_new_age_LA, by = c("Upper tier local authorities" = "LAD16NM",
+                                                                  "Age_band" = "Age_band")) |>
   ungroup() |>
+  mutate(Ref_new = if_else(Referrals < 5,
+                          NA_real_,
+                          round(Referrals / 5) * 5)) |>
   select(`Upper tier local authorities`,
          Age_band,
          Pop_per,
-         Ref_per) |>
+         Ref_per,
+         Ref_new) |>
   rename(Borough = `Upper tier local authorities`,
          `Age band` = Age_band,
          Population = Pop_per,
-         Referrals = Ref_per) |>
+         Referrals = Ref_per,
+         `Rounded Referrals`= Ref_new) |>
   datatable(caption = "Distribution of South London Boroughs referrals compared to the area population",
             rownames = FALSE,
             options = list(initComplete = JS(sprintf("function(settings, json) {
@@ -75,6 +81,7 @@ LA_age_tbl <- unified_age_LA_per |>
   formatPercentage(columns = c("Population",
                                "Referrals"),
                    digits = 1)
+
 
 
 # South London ------------------------------------------------------------
@@ -124,14 +131,20 @@ Lon_age <- ggplot(plot_LON_age, aes(x = Age_band,
 
 # Age band for London table
 
-Lon_age_tbl <- unified_age_LON_per |>
+Lon_age_tbl <- left_join(unified_age_LON_per, ref_new_age_tot, by = c("Upper tier local authorities" = "Total",
+                                                                    "Age_band" = "Age_band")) |>
   ungroup() |>
+  mutate(Ref_new = if_else(Referrals < 5,
+                           NA_real_,
+                           round(Referrals / 5) * 5)) |>
   select(Age_band,
          Pop_per,
-         Ref_per) |>
+         Ref_per,
+         Ref_new) |>
   rename(`Age band` = Age_band,
          Population = Pop_per,
-         Referrals = Ref_per) |>
+         Referrals = Ref_per,
+         `Rounded Referrals`= Ref_new) |>
   datatable(caption = "Distribution of South London referrals compared to the area population",
             rownames = FALSE,
             options = list(initComplete = JS(sprintf("function(settings, json) {
