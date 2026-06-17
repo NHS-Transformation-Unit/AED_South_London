@@ -4,13 +4,13 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="MaUPozuyjEWVOc-uW0tH-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=light-dark(#FFFFFF,#FFFFFF);" value="" vertex="1">
-          <mxGeometry height="500" width="960" x="-250" y="-10" as="geometry" />
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=light-dark(#000000,#000000);" value="" vertex="1">
+          <mxGeometry height="550" width="960" x="-250" y="-10" as="geometry" />
         </mxCell>
         <mxCell id="MaUPozuyjEWVOc-uW0tH-17" edge="1" parent="1" source="MaUPozuyjEWVOc-uW0tH-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=light-dark(#000000,#000000);" target="MaUPozuyjEWVOc-uW0tH-16" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="MaUPozuyjEWVOc-uW0tH-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" value="MHS101Referrals&lt;div&gt;_Published&lt;/div&gt;" vertex="1">
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#60a917;fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#2D7600;" value="MHS101Referrals&lt;div&gt;_Published&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="200" x="160" y="220" as="geometry" />
         </mxCell>
         <mxCell id="MaUPozuyjEWVOc-uW0tH-13" edge="1" parent="1" source="MaUPozuyjEWVOc-uW0tH-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=light-dark(#000000,#000000);">
@@ -67,11 +67,14 @@
             <mxPoint y="10" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="MaUPozuyjEWVOc-uW0tH-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" value="Extracted data" vertex="1">
+        <mxCell id="MaUPozuyjEWVOc-uW0tH-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=#006EAF;" value="Extracted data" vertex="1">
           <mxGeometry height="60" width="200" x="480" y="220" as="geometry" />
         </mxCell>
         <mxCell id="MaUPozuyjEWVOc-uW0tH-21" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;align=center;fontColor=light-dark(#000000,#000000);" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Data joins in MHSDS&lt;/h1&gt;" vertex="1">
           <mxGeometry height="50" width="850" x="-160" y="-10" as="geometry" />
+        </mxCell>
+        <mxCell id="QOKnAuf5o2uKmttKKpVq-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000,#000000);fillColor=light-dark(#FFFFFF,#FFFFFF);fontColor=light-dark(#000000,#000000);" value="&lt;b&gt;&lt;u&gt;Key&lt;/u&gt;&lt;/b&gt;&lt;div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;b&gt;&lt;u&gt;&lt;br&gt;&lt;/u&gt;&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(0, 153, 77));&quot;&gt;&lt;b&gt;Green&lt;/b&gt;&lt;/font&gt; - primary data source&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 0, 255));&quot;&gt;&lt;b&gt;Pink&lt;/b&gt;&lt;/font&gt; - additional data inclusion&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(0, 102, 204));&quot;&gt;&lt;b&gt;Blue&lt;/b&gt;&lt;/font&gt; - output&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;b&gt;Lines&lt;/b&gt; - data links and link criteria&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="220" x="480" y="420" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
