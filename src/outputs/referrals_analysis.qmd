@@ -44,13 +44,13 @@ htmltools::img(src = knitr::image_uri(paste0(here(), "/images/TU_logo_large.png"
 - Age at referral is skewed toward to lower age band, with patients age 12-17 being the highest group of referrals. This is significantly different to the population for this age band.
 - There is a barrier in interpreting ethnicity, as **23%** of referrals do not have a recorded ethnicity. This therefore makes the referrals distribution vastly different to the population.
 - Deprivation of the population largely follows the proportion of referrals received by decile.
-- A large proportion of referrals don't have a diagnosis, **45.7%** of all referrals included. For those that do, Anorexia Nervosa is the most diagnosed condition at 15.4% of all referrals, 28.3% of all referrals with a diagnosis.
+- A large proportion of referrals don't have a diagnosis, **43.9%** of all referrals included. For those that do, Anorexia Nervosa is the most diagnosed condition at 15.4% of all referrals, 28.3% of all referrals with a diagnosis.
 
 :::
 
 The NHS Transformation Unit have been commissioned by South London Mental Health Partnership to explore the referrals received into the Adult Eating Disorders service. The purpose was to assess the referrals received and how representative they are of the South London population.
 
-Referrals data has been collected from the Mental Health Services Data Set (MHSDS), and includes the demographic identifiers of age, ethnicity and deprivation decile for each patient.
+Referrals data has been collected from the Mental Health Services Data Set (MHSDS), and includes the demographic identifiers of age, ethnicity and deprivation decile for each patient. This data is the latest 36 months of data, May-23 to April-26.
 
 Population data has been taken from the [Office of National Statistics (ONS)](https://www.ons.gov.uk/datasets/create/filter-outputs/5c83361b-583d-43dc-8e9e-2ebfc035256d#get-data). This provides the population breakdown at each of the mentioned demographic indicators. The latest population figures available are from 2023.
 
@@ -59,12 +59,14 @@ Population data has been taken from the [Office of National Statistics (ONS)](ht
 
 The primary source of information is the `MHS101Referrals_Published` table in MHSDS, which contains all details relating to a patient referral. This is joined to `MHS001MPI_Published` table to include demographic data, and to `MHS102ServiceTypeReferredTo_Published` table and `MHS902ServiceTeamDetails_Published` table to include only AED referrals. New referrals are then identified in this.
 
-To include diagnosis, the new referrals are joined to `MHS604PrimDiag_Published`. This may include multiple diagnoses across different submission periods. The data join therefore includes a parameter where the diagnosis used is the one closest to the referral received date.
+In line with MHSDS publications, all numbers presented are rounded to the nearest multiple of 5, with anything less than 5 suppressed (unavailable for display). All percentages are reflective of raw numbers and not rounded values..
 
 <br>
 
 ## Referral Volumes
-Analysis of referral numbers each year and calculate the rate per population. Include analysis of percentage of referrals rejected. Heatmap of percentage of admissions for each SL borough to SL provider or going out of area.
+Referrals have been increasing financial year on financial year, with April-25 to March-26 showing 4045 new referrals. As with the increase in referrals, rejected referrals have also increased. This has however remained proportionate to the number of referrals received. In the financial year 2024/25, 8.7% of referrals were rejected. In 2025/26, 8.8% of referrals were rejected. The current data for 2026/27 show no variation on this theme, with April-26 showing a rejection rate of 9.4%.
+
+Comparing the total number of new referrals received with the population of South London gives a rate of 1.1 new referrals received per 1,000 population. Considering only the most recent complete financial year of new referrals (April-25 to March-26), this rate is slightly higher at 1.2 new referrals per 1,000 population.
 
 <br>
 
@@ -461,11 +463,15 @@ plot_LA_dep(unified_dep_LA_per, "Wandsworth")
 
 ## Methodology
 
+The addition of diagnosis is done by joining the new referrals to `MHS604PrimDiag_Published`. This may include multiple diagnoses across different submission periods. The data join therefore includes a parameter where the diagnosis used is the latest in the referral.
+
 ::: {.callout-warning}
 ## Data Quality
-A total of 45.7% of referrals do not receive a diagnosis.
+Using this methodology to link referrals to primary diagnosis results in **43.9%** of referrals not being matched.
 
 :::
+
+<br>
 
 ## Breakdown of diagnoses
 At the South London level, there are a portion of referrals that do not have an associated diagnosis. For all others, the most frequent diagnosis given is Anorexia Nervosa. There are a cohort of referrals that receive a diagnosis not related to AED, which are grouped under "Other Diagnosis".
