@@ -34,6 +34,8 @@ ref_diag_tbl <- ref_new_diag |>
   mutate(Diagnosed = if_else(Diagnosed < 5,
                            NA_real_,
                            round(Diagnosed / 5) * 5)) |>
+  select(Diagnosis,
+         Diagnosed) |>
   gt() |>
   tab_header(title = "Diagnosis of referrals") |>
   tab_style(style = list(cell_fill(color = palette_tu[1])),
