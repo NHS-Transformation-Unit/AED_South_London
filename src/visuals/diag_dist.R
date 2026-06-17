@@ -31,6 +31,9 @@ Ref_diag <- ggplot(ref_new_diag, aes(x = reorder(Diagnosis,Diagnosed),
 
 ref_diag_tbl <- ref_new_diag |>
   ungroup() |>
+  mutate(Diagnosed = if_else(Diagnosed < 5,
+                           NA_real_,
+                           round(Diagnosed / 5) * 5)) |>
   gt() |>
   tab_header(title = "Diagnosis of referrals") |>
   tab_style(style = list(cell_fill(color = palette_tu[1])),
