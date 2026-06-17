@@ -53,16 +53,22 @@ ggplot(plot_eth, aes(x = `Ethnic group (8 categories)`,
 
 # Ethnic group by LA table
 
-LA_eth_tbl <- unified_eth_LA_per |>
+LA_eth_tbl <- left_join(unified_eth_LA_per, ref_new_eth_LA, by = c("Upper tier local authorities" = "LAD16NM",
+                                                                   "Ethnic group (8 categories)" = "Ethnic_group")) |>
   ungroup() |>
+  mutate(Ref_new = if_else(Referrals < 5,
+                           NA_real_,
+                           round(Referrals / 5) * 5)) |>
   select(`Upper tier local authorities`,
          `Ethnic group (8 categories)`,
          Pop_per,
-         Ref_per) |>
+         Ref_per,
+         Ref_new) |>
   rename(Borough = `Upper tier local authorities`,
          `Ethnic group` = `Ethnic group (8 categories)`,
          Population = Pop_per,
-         Referrals = Ref_per) |>
+         Referrals = Ref_per,
+         `Rounded Referrals`= Ref_new) |>
   datatable(caption = "Distribution of South London Boroughs referrals compared to the area population",
             rownames = FALSE,
             options = list(initComplete = JS(sprintf("function(settings, json) {
@@ -125,14 +131,20 @@ Lon_eth <- ggplot(plot_LON_eth, aes(x = `Ethnic group (8 categories)`,
 
 # Ethnic group for London table
 
-Lon_eth_tbl <- unified_eth_LON_per |>
+Lon_eth_tbl <- left_join(unified_eth_LON_per, ref_new_eth_tot, by = c("Upper tier local authorities" = "LAD16NM",
+                                                                      "Ethnic group (8 categories)" = "Ethnic_group")) |>
   ungroup() |>
+  mutate(Ref_new = if_else(Referrals < 5,
+                           NA_real_,
+                           round(Referrals / 5) * 5)) |>
   select(`Ethnic group (8 categories)`,
          Pop_per,
-         Ref_per) |>
+         Ref_per,
+         Ref_new) |>
   rename(`Ethnic group` = `Ethnic group (8 categories)`,
          Population = Pop_per,
-         Referrals = Ref_per) |>
+         Referrals = Ref_per,
+         `Rounded Referrals`= Ref_new) |>
   datatable(caption = "Distribution of South London referrals compared to the area population",
             rownames = FALSE,
             options = list(initComplete = JS(sprintf("function(settings, json) {
