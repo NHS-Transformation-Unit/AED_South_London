@@ -11,7 +11,7 @@ plot_dep <- df |>
                names_to = "Series",
                values_to = "Percent")
 
-ggplot(plot_dep, aes(x = `IMD Decile`,
+ggplot(plot_dep, aes(x = factor(`IMD Decile`),
                      y = Percent,
                      fill = Series)) +
   geom_col(position = position_dodge(width = 0.8),
@@ -33,7 +33,6 @@ ggplot(plot_dep, aes(x = `IMD Decile`,
        caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
                      breaks = seq(0, 0.8, by = 0.1)) +
-  scale_x_discreet() +
   theme(text = element_text(family = "Franklin Gothic Book"),
         strip.background = element_rect(fill = palette_tu[1]),
         strip.text = element_text(colour = "black", size = 10),
@@ -85,7 +84,7 @@ plot_LON_dep <- unified_dep_LON_per |>
                names_to = "Series",
                values_to = "Percent")
 
-Lon_dep <- ggplot(plot_LON_dep, aes(x = `IMD Decile`,
+Lon_dep <- ggplot(plot_LON_dep, aes(x = factor(`IMD Decile`),
                                     y = Percent,
                                     fill = Series)) +
   geom_col(position = position_dodge(width = 0.8),
@@ -106,7 +105,6 @@ Lon_dep <- ggplot(plot_LON_dep, aes(x = `IMD Decile`,
        subtitle = "Referrals received between May 2023 and April 2026",
        caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  scale_x_discreet() +
   theme(text = element_text(family = "Franklin Gothic Book"),
         axis.text = element_text(size = 10),
         axis.text.x = element_text(angle = 0, vjust = 0.5, hjust = 1),
