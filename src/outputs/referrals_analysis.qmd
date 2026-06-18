@@ -59,7 +59,18 @@ Population data has been taken from the [Office of National Statistics (ONS)](ht
 
 The primary source of information is the `MHS101Referrals_Published` table in MHSDS, which contains all details relating to a patient referral. This is joined to `MHS001MPI_Published` table to include demographic data, and to `MHS102ServiceTypeReferredTo_Published` table and `MHS902ServiceTeamDetails_Published` table to include only AED referrals. New referrals are then identified in this.
 
-In line with MHSDS publications, all numbers presented are rounded to the nearest multiple of 5, with anything less than 5 suppressed (unavailable for display). All percentages are reflective of raw numbers and not rounded values..
+```{r data flow diagram, echo = FALSE}
+
+htmltools::img(src = knitr::image_uri(paste0(here(), "/images/MHSD_data_flow.png")),
+               alt = 'data flow diagram', 
+               width = "750px")
+
+```
+
+<br>
+
+In line with MHSDS publications, all numbers presented are rounded to the nearest multiple of 5, with anything less than 5 suppressed (unavailable for display). All percentages are reflective of raw numbers and not rounded values.
+
 
 <br>
 
