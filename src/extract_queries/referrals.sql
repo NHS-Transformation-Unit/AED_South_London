@@ -1,8 +1,15 @@
+--------------------------------------------------------------------------------
+-- Clear of sql environment
+--------------------------------------------------------------------------------
+
 IF OBJECT_ID('TempDB..#temp_referrals') IS NOT NULL DROP TABLE #temp_referrals
 IF OBJECT_ID('TempDB..#temp_new_refs') IS NOT NULL DROP TABLE #temp_new_refs
 IF OBJECT_ID('TempDB..#temp_new_refs_diags') IS NOT NULL DROP TABLE #temp_new_refs_diags
-IF OBJECT_ID('TempDB..#temp_newref_diag_flag') IS NOT NULL DROP TABLE #temp_newref_diag_flag
-IF OBJECT_ID('TempDB..#temp_newref_diag2') IS NOT NULL DROP TABLE #temp_newref_diag2
+
+
+--------------------------------------------------------------------------------
+-- Extraction of referrals table
+--------------------------------------------------------------------------------
 
 DECLARE @EndRP INT;
 DECLARE @StartRP INT;
@@ -134,6 +141,10 @@ WHERE [New_Order] = 1
 
 DROP TABLE #temp_referrals
 
+--------------------------------------------------------------------------------
+-- Join referrals to primary diagnosis
+--------------------------------------------------------------------------------
+
 SELECT nref.*
       ,REPLACE(DIAG.[PrimDiag],'.','') AS [PrimaryDiag]
       ,DIAG.[CodedDiagTimeStamp]
@@ -146,67 +157,14 @@ LEFT JOIN [Reporting_MESH_MHSDS].[MHS604PrimDiag_Published] AS DIAG
 ON nref.[Der_Person_ID] = DIAG.[Der_Person_ID]
 AND DIAG.[CodedDiagTimeStamp] >= nref.[ReferralRequestReceivedDate]
 
-DROP TABLE #temp_new_refs
-
 
 SELECT tnrd.*
       ,DIAGDESC.Description
-      ,CASE WHEN IDENT.AutismStatus IN ('1','2','3','4') THEN 1 
-            ELSE 0 END AS [AutismFlag]
-      ,CASE WHEN IDENT.LDStatus IN ('1','2','3','4') THEN 1 
-            ELSE 0 END AS [LDFlag]
-      ,ROW_NUMBER () OVER(PARTITION BY tnrd.[UniqServReqID], tnrd.[ReferralRequestReceivedDate] ORDER BY tnrd.[UniqMonthID] ASC) AS [EarliestFlag]
-      ,ROW_NUMBER () OVER(PARTITION BY tnrd.[UniqServReqID], tnrd.[ReferralRequestReceivedDate] ORDER BY tnrd.[UniqMonthID] DESC) AS [LatestFlag]
-
-
-INTO #temp_newref_diag_flag    
+      
 FROM #temp_new_refs_diags AS tnrd
 
 LEFT JOIN [UKHD_ICD10].[Codes_And_Titles_And_MetaData] AS DIAGDESC
         ON tnrd.[PrimaryDiag] = DIAGDESC.[Alt_Code]
         AND DIAGDESC.[ICD_Version] = 'ICD10 5th Edition'
-
-LEFT JOIN [Reporting_MESH_MHSDS].[MHS005PatInd_Published] AS IDENT
-        ON tnrd.[Der_Person_ID] = IDENT.[Der_Person_ID]
         
 WHERE [LatestDiag] = 1
-
-DROP TABLE #temp_new_refs_diags
-
-SELECT *
-FROM #temp_newref_diag_flag
-WHERE [LatestFlag] = 1
-
-
--------------------------------------------------------------------------------
---Use of SecDiag table for identify Autism, LD, ARFID and Binge
--- #temp_newref_diag2 has 2.7mill rows
--------------------------------------------------------------------------------
-
-
---IF OBJECT_ID('TempDB..#temp_newref_diag2') IS NOT NULL DROP TABLE #temp_newref_diag2
-
---SELECT tnrd.[Der_Person_ID]
---      ,tnrd.[ReferralRequestReceivedDate]
---      ,CASE WHEN LEFT(diag2.[SecDiag],3) = 'F84' THEN 1 
---            ELSE 0 END AS [AutismFlag]
---      ,CASE WHEN LEFT(diag2.[SecDiag],3) = 'F81' THEN 1 
---            ELSE 0 END AS [LDFlag]
---      ,CASE WHEN diag2.[SecDiag] = 'F5082' THEN 1 
---            ELSE 0 END AS [ARFIDFlag]
---      ,CASE WHEN diag2.[SecDiag] = 'F5081' THEN 1 
---            ELSE 0 END AS [BingeFlag]
---      ,ROW_NUMBER () OVER(PARTITION BY tnrd.[Der_Person_ID] ORDER BY tnrd.[ReferralRequestReceivedDate] DESC) AS [LatestRef]
-
-
---INTO #temp_newref_diag2    
---FROM #temp_new_refs_diags AS tnrd
-
---LEFT JOIN [Reporting_MESH_MHSDS].[MHS605SecDiag_Published] AS diag2
---        ON tnrd.[Der_Person_ID] = diag2.[Der_Person_ID]
---        AND tnrd.[ReferralRequestReceivedDate] >= diag2.[CodedDiagTimestamp]
-
---SELECT *
---FROM #temp_newref_diag2
---WHERE [LatestRef] = 1
-----------------------------------------------
