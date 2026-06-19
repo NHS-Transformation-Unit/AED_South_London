@@ -520,7 +520,7 @@ A referral may be identified by more than one of the flags, so the total identif
 
 :::
 
-```{r Diagnosis table}
+```{r Conditions table}
 
 ref_condition_tbl
 
