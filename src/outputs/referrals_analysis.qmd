@@ -504,3 +504,24 @@ ref_diag_tbl
 ```
 
 :::
+
+## Existing comorbidities
+
+A number of referrals analysed also have recorded comorbidities. These are considered in isolation for each condition, so patients with multiple identified conditions will be counted for each relevant row. There are 3 separate flags used to identify these conditions:
+
+- Status indicator (available for Autism and Learning Disabilities)
+- Recorded primary diagnosis
+- Recorded secondary diagnosis
+
+::: {.callout-information}
+## Row totals
+
+A referral may be identified by more than one of the flags, so the total identified column may not equal the sum of the separate flags.
+
+:::
+
+```{r Diagnosis table}
+
+ref_condition_tbl
+
+```
