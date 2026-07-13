@@ -1,4 +1,8 @@
 
+# Minimum referral date
+
+maxdate <- max(ref_new$ReferralRequestReceivedDate, na.rm = TRUE)
+
 # Add age bands to referrals
 
 ref_new_proc <- ref_new |>
