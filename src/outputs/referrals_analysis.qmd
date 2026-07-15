@@ -1,7 +1,7 @@
 ---
 title: "Analysis of Adult Eating Disorders Referrals - South London"
 author: "<a href='https://github.com/SiWickham/'>Simon Wickham</a><br><a href='https://github.com/ASW-Analyst/'>Andy Wilson</a><br><a href='https://transformationunit.nhs.uk/'>NHS Transformation Unit</a>"
-date: "06/11/2026"
+date: "07/15/2026"
 date-format: "DD MMMM YYYY"
 format: 
   html:
@@ -78,6 +78,8 @@ In line with MHSDS publications, all numbers presented are rounded to the neares
 Referrals have been increasing financial year on financial year, with April-25 to March-26 showing 4045 new referrals. As with the increase in referrals, rejected referrals have also increased. This has however remained proportionate to the number of referrals received. In the financial year 2024/25, 8.7% of referrals were rejected. In 2025/26, 8.8% of referrals were rejected. The current data for 2026/27 show no variation on this theme, with April-26 showing a rejection rate of 9.4%.
 
 Comparing the total number of new referrals received with the population of South London gives a rate of 1.1 new referrals received per 1,000 population. Considering only the most recent complete financial year of new referrals (April-25 to March-26), this rate is slightly higher at 1.2 new referrals per 1,000 population.
+
+There are referrals received for patients that are not South London residents. Across all referrals analysed, 92.5% are for South London residents. This is a proportion largely maintained over the years of data analysed, ranging between 91.6% and 92.8%. The rejection rates for South London and Non-South London residents is also comparable with both being 6.5% across all referrals.
 
 <br>
 
@@ -520,8 +522,87 @@ A referral may be identified by more than one of the flags, so the total identif
 
 :::
 
-```{r Conditions table}
+:::{.panel-tabset}
 
-ref_condition_tbl
+### Identified comorbidities
+
+:::{.panel-tabset}
+
+#### Year One
+```{r Year 1 conditions table}
+
+ref_cond_tbl1
 
 ```
+
+#### Year 2
+```{r Year 2 conditions table}
+
+ref_cond_tbl2
+
+```
+
+#### Year 3
+```{r Year 3 conditions table}
+
+ref_cond_tbl3
+
+```
+
+:::
+
+### Identified comorbidities - Pre referral
+
+:::{.panel-tabset}
+
+#### Year One
+```{r Year 1 conditions pre table}
+
+ref_cond_tbl1_pre
+
+```
+
+#### Year 2
+```{r Year 2 conditions pre table}
+
+ref_cond_tbl2_pre
+
+```
+
+#### Year 3
+```{r Year 3 conditions pre table}
+
+ref_cond_tbl3_pre
+
+```
+
+:::
+
+### Identified comorbidities - Post referral
+
+:::{.panel-tabset}
+
+#### Year One
+```{r Year 1 conditions post table}
+
+ref_cond_tbl1_post
+
+```
+
+#### Year 2
+```{r Year 2 conditions post table}
+
+ref_cond_tbl2_post
+
+```
+
+#### Year 3
+```{r Year 3 conditions post table}
+
+ref_cond_tbl3_post
+
+```
+
+:::
+
+:::
