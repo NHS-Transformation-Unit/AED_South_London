@@ -50,7 +50,7 @@ htmltools::img(src = knitr::image_uri(paste0(here(), "/images/TU_logo_large.png"
 
 The NHS Transformation Unit have been commissioned by South London Mental Health Partnership to explore the referrals received into the Adult Eating Disorders service. The purpose was to assess the referrals received and how representative they are of the South London population.
 
-Referrals data has been collected from the Mental Health Services Data Set (MHSDS), and includes the demographic identifiers of age, ethnicity and deprivation decile for each patient. This data is the latest 36 months of data, May-23 to April-26.
+Referrals data has been collected from the Mental Health Services Data Set (MHSDS), and includes the demographic identifiers of age, ethnicity and deprivation decile for each patient. This data is the latest 36 months of data, June-23 to May-26.
 
 Population data has been taken from the [Office of National Statistics (ONS)](https://www.ons.gov.uk/datasets/create/filter-outputs/5c83361b-583d-43dc-8e9e-2ebfc035256d#get-data). This provides the population breakdown at each of the mentioned demographic indicators. The latest population figures available are from 2023.
 
@@ -77,9 +77,12 @@ In line with MHSDS publications, all numbers presented are rounded to the neares
 ## Referral Volumes
 Referrals have been increasing financial year on financial year, with April-25 to March-26 showing 4045 new referrals. As with the increase in referrals, rejected referrals have also increased. This has however remained proportionate to the number of referrals received. In the financial year 2024/25, 8.7% of referrals were rejected. In 2025/26, 8.8% of referrals were rejected. The current data for 2026/27 show no variation on this theme, with April-26 showing a rejection rate of 9.4%.
 
-Comparing the total number of new referrals received with the population of South London gives a rate of 1.1 new referrals received per 1,000 population. Considering only the most recent complete financial year of new referrals (April-25 to March-26), this rate is slightly higher at 1.2 new referrals per 1,000 population.
-
 There are referrals received for patients that are not South London residents. Across all referrals analysed, 92.5% are for South London residents. This is a proportion largely maintained over the years of data analysed, ranging between 91.6% and 92.8%. The rejection rates for South London and Non-South London residents is also comparable with both being 6.5% across all referrals.
+
+Using estimated prevalence figures, it is possible to hypothesize how many referrals the service should expect to receive. Estimated prevalence has been generated using the [Adult Psychiatric Morbidity Survey of 2023/24](https://digital.nhs.uk/data-and-information/publications/statistical/adult-psychiatric-morbidity-survey/survey-of-mental-health-and-wellbeing-england-2023-24?utm_source=chatgpt.com) and the mental health of children and young people in England of 2023 [Wave 4 follow-up](
+https://digital.nhs.uk/data-and-information/publications/statistical/mental-health-of-children-and-young-people-in-england/2023-wave-4-follow-up/part-5-eating-problems-and-disorders).
+
+
 
 <br>
 
@@ -528,7 +531,7 @@ A referral may be identified by more than one of the flags, so the total identif
 
 :::{.panel-tabset}
 
-#### Year One
+#### Year 1
 ```{r Year 1 conditions table}
 
 ref_cond_tbl1
@@ -553,9 +556,11 @@ ref_cond_tbl3
 
 ### Identified comorbidities - Pre referral
 
+These tables do not include the status indicator flags.
+
 :::{.panel-tabset}
 
-#### Year One
+#### Year 1
 ```{r Year 1 conditions pre table}
 
 ref_cond_tbl1_pre
@@ -580,9 +585,11 @@ ref_cond_tbl3_pre
 
 ### Identified comorbidities - Post referral
 
+These tables do not include the status indicator flags.
+
 :::{.panel-tabset}
 
-#### Year One
+#### Year 1
 ```{r Year 1 conditions post table}
 
 ref_cond_tbl1_post
