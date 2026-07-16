@@ -6,7 +6,8 @@ Ref_diag <- ggplot(ref_new_diag, aes(x = reorder(Diagnosis,Diagnosed),
                                      fill = colour)) +
   geom_col() +
   scale_fill_identity() +
-  scale_y_discrete(labels = function(Diagnosis) str_wrap(Diagnosis, width = 20)) +
+  scale_x_discrete(labels = function(Diagnosis) str_wrap(Diagnosis, width = 20)) +
+  scale_y_continuous() +
   labs(x = "Diagnosis description",
        y = "Number of diagnoses",
        title = "Diagnosis received for all patients referred",
@@ -19,8 +20,8 @@ Ref_diag <- ggplot(ref_new_diag, aes(x = reorder(Diagnosis,Diagnosed),
         plot.title = element_text(size = 12, color = palette_tu[1]),
         plot.subtitle = element_text(size = 10),
         panel.background = element_rect(fill = "#ffffff"),
-        panel.grid.major.y = element_line(color = "#cecece", linewidth = 0.1),
-        panel.grid.minor.y = element_blank(),
+        panel.grid.major.x = element_line(color = "#cecece", linewidth = 0.1),
+        panel.grid.minor.x = element_blank(),
         axis.line = element_line(color = "#000000"),
         legend.position = "bottom",
         legend.text = element_text(size = 7.5)) +
