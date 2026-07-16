@@ -6,9 +6,9 @@
 ref_con_proc <- ref_con_flag  |>
   filter(New_referral == 1) |>
   mutate('Autism_con' = case_when(AutismStatus < 5 ~ 1,
-                              TRUE ~ 0),
+                                  TRUE ~ 0),
          'LD_con' = case_when(LDStatus < 5 ~ 1,
-                          TRUE ~ 0),
+                              TRUE ~ 0),
          'Diag_Time' = "Unknown",
          'DataYear' = case_when(ReferralRequestReceivedDate >= maxdate - years(1) ~ 'Y3',
                                 ReferralRequestReceivedDate >= maxdate - years(2) ~ 'Y2',
@@ -29,7 +29,8 @@ ref_prim_proc <- ref_prim_flag |>
                                 ReferralRequestReceivedDate >= maxdate - years(3) ~ 'Y1',
                                 TRUE ~ 'Y0'))|>
   group_by(Der_Person_ID,
-           DataYear) |>
+           DataYear,
+           Diag_Time) |>
   summarise('Autism_Diag' = sum(Autism_Prim_Diag, na.rm = TRUE),
             'LD_Diag' = sum(LD_Prim_Diag, na.rm = TRUE),
             'ADHD_Diag' = sum(ADHD_Prim_Diag, na.rm = TRUE),
@@ -39,23 +40,24 @@ ref_prim_proc <- ref_prim_flag |>
             'Anx_Dis_Diag' = sum(Anx_Dis_Prim_Diag, na.rm = TRUE),
             'Subs_Use_Dis_Diag' = sum(Subs_Use_Dis_Prim_Diag, na.rm = TRUE)) |>
   mutate('Autism_prim' = case_when(Autism_Diag > 0 ~ 1,
-                              TRUE ~ 0),
+                                   TRUE ~ 0),
          'LD_prim' = case_when(LD_Diag > 0 ~ 1,
-                          TRUE ~ 0),
-         'ADHD_prim' = case_when(ADHD_Diag > 0 ~ 1,
-                            TRUE ~ 0),
-         'Pers_Dis_prim' = case_when(Pers_Dis_Diag > 0 ~ 1,
-                              TRUE ~ 0),
-         'PTSD_prim' = case_when(PTSD_Diag > 0 ~ 1,
-                            TRUE ~ 0),
-         'Major_Dep_Dis_prim' = case_when(Major_Dep_Dis_Diag > 0 ~ 1,
-                                     TRUE ~ 0),
-         'Anx_Dis_prim' = case_when(Anx_Dis_Diag > 0 ~ 1,
                                TRUE ~ 0),
+         'ADHD_prim' = case_when(ADHD_Diag > 0 ~ 1,
+                                 TRUE ~ 0),
+         'Pers_Dis_prim' = case_when(Pers_Dis_Diag > 0 ~ 1,
+                                     TRUE ~ 0),
+         'PTSD_prim' = case_when(PTSD_Diag > 0 ~ 1,
+                                 TRUE ~ 0),
+         'Major_Dep_Dis_prim' = case_when(Major_Dep_Dis_Diag > 0 ~ 1,
+                                          TRUE ~ 0),
+         'Anx_Dis_prim' = case_when(Anx_Dis_Diag > 0 ~ 1,
+                                    TRUE ~ 0),
          'Subs_Use_Dis_prim' = case_when(Subs_Use_Dis_Diag > 0 ~ 1,
-                                   TRUE ~ 0)) |>
+                                         TRUE ~ 0)) |>
   select(Der_Person_ID,
          DataYear,
+         Diag_Time,
          Autism_prim,
          LD_prim,
          ADHD_prim,
@@ -80,7 +82,8 @@ ref_sec_proc <- ref_sec_flag |>
                                 ReferralRequestReceivedDate >= maxdate - years(3) ~ 'Y1',
                                 TRUE ~ 'Y0'))|>
   group_by(Der_Person_ID,
-           DataYear) |>
+           DataYear,
+           Diag_Time) |>
   summarise('Autism_Diag' = sum(Autism_Sec_Diag, na.rm = TRUE),
             'LD_Diag' = sum(LD_Sec_Diag, na.rm = TRUE),
             'ADHD_Diag' = sum(ADHD_Sec_Diag, na.rm = TRUE),
@@ -107,6 +110,7 @@ ref_sec_proc <- ref_sec_flag |>
                                         TRUE ~ 0)) |>
   select(Der_Person_ID,
          DataYear,
+         Diag_Time,
          Autism_sec,
          LD_sec,
          ADHD_sec,
@@ -146,9 +150,23 @@ ref_con_all <- left_join(ref_con_conprim, ref_sec_proc, by = c("Der_Person_ID" =
                                     TRUE ~ 0),
          'Subs_Use_Dis_flag' = case_when(Subs_Use_Dis_prim == 1 ~ 1,
                                          Subs_Use_Dis_sec == 1 ~ 1,
-                                         TRUE ~ 0)) |>
+                                         TRUE ~ 0),
+         'Con_flag'= case_when(Autism_flag == 1 ~ 1,
+                               LD_flag == 1 ~ 1,
+                               ADHD_flag == 1 ~ 1,
+                               Pers_Dis_flag == 1 ~ 1,
+                               PTSD_flag == 1 ~ 1,
+                               Major_Dep_Dis_flag == 1 ~ 1,
+                               Anx_Dis_flag == 1 ~ 1,
+                               Subs_Use_Dis_flag == 1 ~ 1,
+                               TRUE ~ 0),
+         'DiagTime' = case_when(Diag_Time.x == "Diag_Pre_Ref" ~ "Diag_Pre_Ref",
+                                Diag_Time.y == "Diag_Pre_Ref" ~ "Diag_Pre_Ref",
+                                TRUE ~ "Diag_Post_Ref")) |>
   select(Der_Person_ID,
          DataYear,
+         DiagTime,
+         Con_flag,
          Autism_flag,
          LD_flag,
          ADHD_flag,
@@ -174,7 +192,8 @@ ref_con_all <- left_join(ref_con_conprim, ref_sec_proc, by = c("Der_Person_ID" =
          Anx_Dis_prim,
          Anx_Dis_sec,
          Subs_Use_Dis_prim,
-         Subs_Use_Dis_sec)
+         Subs_Use_Dis_sec) |>
+  filter(Con_flag == 1)
 
 
 # Condition summaries
@@ -302,156 +321,10 @@ condition_summary <- rbind(autism_summary,
                            sub_use_dis_summary)
 
 
+# Pre referral ------------------------------------------------------------
 
-# Pre-referral diagnosis --------------------------------------------------
-
-# Summarise primary diagnosed conditions
-
-ref_con_conprim_pre <- ref_prim_flag |>
-  filter(Diag_Time == "Diag_Pre_Ref") |>
-  mutate('DataYear' = case_when(ReferralRequestReceivedDate >= maxdate - years(1) ~ 'Y3',
-                                ReferralRequestReceivedDate >= maxdate - years(2) ~ 'Y2',
-                                ReferralRequestReceivedDate >= maxdate - years(3) ~ 'Y1',
-                                TRUE ~ 'Y0'))|>
-  group_by(Der_Person_ID,
-           DataYear) |>
-  summarise('Autism_Diag' = sum(Autism_Prim_Diag, na.rm = TRUE),
-            'LD_Diag' = sum(LD_Prim_Diag, na.rm = TRUE),
-            'ADHD_Diag' = sum(ADHD_Prim_Diag, na.rm = TRUE),
-            'Pers_Dis_Diag' = sum(Pers_Dis_Prim_Diag, na.rm = TRUE),
-            'PTSD_Diag' = sum(PTSD_Prim_Diag, na.rm = TRUE),
-            'Major_Dep_Dis_Diag' = sum(Major_Dep_Dis_Prim_Diag, na.rm = TRUE),
-            'Anx_Dis_Diag' = sum(Anx_Dis_Prim_Diag, na.rm = TRUE),
-            'Subs_Use_Dis_Diag' = sum(Subs_Use_Dis_Prim_Diag, na.rm = TRUE)) |>
-  mutate('Autism_prim' = case_when(Autism_Diag > 0 ~ 1,
-                                   TRUE ~ 0),
-         'LD_prim' = case_when(LD_Diag > 0 ~ 1,
-                               TRUE ~ 0),
-         'ADHD_prim' = case_when(ADHD_Diag > 0 ~ 1,
-                                 TRUE ~ 0),
-         'Pers_Dis_prim' = case_when(Pers_Dis_Diag > 0 ~ 1,
-                                     TRUE ~ 0),
-         'PTSD_prim' = case_when(PTSD_Diag > 0 ~ 1,
-                                 TRUE ~ 0),
-         'Major_Dep_Dis_prim' = case_when(Major_Dep_Dis_Diag > 0 ~ 1,
-                                          TRUE ~ 0),
-         'Anx_Dis_prim' = case_when(Anx_Dis_Diag > 0 ~ 1,
-                                    TRUE ~ 0),
-         'Subs_Use_Dis_prim' = case_when(Subs_Use_Dis_Diag > 0 ~ 1,
-                                         TRUE ~ 0)) |>
-  select(Der_Person_ID,
-         DataYear,
-         Autism_prim,
-         LD_prim,
-         ADHD_prim,
-         Pers_Dis_prim,
-         PTSD_prim,
-         Major_Dep_Dis_prim,
-         Anx_Dis_prim,
-         Subs_Use_Dis_prim)
-
-
-# Summarise secondary diagnosed conditions
-
-ref_sec_proc_pre <- ref_sec_flag |>
-  filter(Diag_Time == "Diag_Pre_Ref") |>
-  mutate('DataYear' = case_when(ReferralRequestReceivedDate >= maxdate - years(1) ~ 'Y3',
-                                ReferralRequestReceivedDate >= maxdate - years(2) ~ 'Y2',
-                                ReferralRequestReceivedDate >= maxdate - years(3) ~ 'Y1',
-                                TRUE ~ 'Y0'))|>
-  group_by(Der_Person_ID,
-           DataYear) |>
-  summarise('Autism_Diag' = sum(Autism_Sec_Diag, na.rm = TRUE),
-            'LD_Diag' = sum(LD_Sec_Diag, na.rm = TRUE),
-            'ADHD_Diag' = sum(ADHD_Sec_Diag, na.rm = TRUE),
-            'Pers_Dis_Diag' = sum(Pers_Dis_Sec_Diag, na.rm = TRUE),
-            'PTSD_Diag' = sum(PTSD_Sec_Diag, na.rm = TRUE),
-            'Major_Dep_Dis_Diag' = sum(Major_Dep_Dis_Sec_Diag, na.rm = TRUE),
-            'Anx_Dis_Diag' = sum(Anx_Dis_Sec_Diag, na.rm = TRUE),
-            'Subs_Use_Dis_Diag' = sum(Subs_Use_Dis_Sec_Diag, na.rm = TRUE)) |>
-  mutate('Autism_sec' = case_when(Autism_Diag > 0 ~ 1,
-                                  TRUE ~ 0),
-         'LD_sec' = case_when(LD_Diag > 0 ~ 1,
-                              TRUE ~ 0),
-         'ADHD_sec' = case_when(ADHD_Diag > 0 ~ 1,
-                                TRUE ~ 0),
-         'Pers_Dis_sec' = case_when(Pers_Dis_Diag > 0 ~ 1,
-                                    TRUE ~ 0),
-         'PTSD_sec' = case_when(PTSD_Diag > 0 ~ 1,
-                                TRUE ~ 0),
-         'Major_Dep_Dis_sec' = case_when(Major_Dep_Dis_Diag > 0 ~ 1,
-                                         TRUE ~ 0),
-         'Anx_Dis_sec' = case_when(Anx_Dis_Diag > 0 ~ 1,
-                                   TRUE ~ 0),
-         'Subs_Use_Dis_sec' = case_when(Subs_Use_Dis_Diag > 0 ~ 1,
-                                        TRUE ~ 0)) |>
-  select(Der_Person_ID,
-         DataYear,
-         Autism_sec,
-         LD_sec,
-         ADHD_sec,
-         Pers_Dis_sec,
-         PTSD_sec,
-         Major_Dep_Dis_sec,
-         Anx_Dis_sec,
-         Subs_Use_Dis_sec)
-
-
-# Join to referrals conditions and primary diagnosis
-
-ref_con_all_pre <- left_join(ref_con_conprim_pre, ref_sec_proc_pre, by = c("Der_Person_ID" = "Der_Person_ID",
-                                                                           "DataYear" = "DataYear")) |>
-  mutate('Autism_flag' = case_when(Autism_prim == 1 ~ 1,
-                                   Autism_sec == 1 ~ 1,
-                                   TRUE ~ 0),
-         'LD_flag' = case_when(LD_prim == 1 ~ 1,
-                               LD_sec == 1 ~ 1,
-                               TRUE ~ 0),
-         'ADHD_flag' = case_when(ADHD_prim == 1 ~ 1,
-                                 ADHD_sec == 1 ~ 1,
-                                 TRUE ~ 0),
-         'Pers_Dis_flag' = case_when(Pers_Dis_prim == 1 ~ 1,
-                                     Pers_Dis_sec == 1 ~ 1,
-                                     TRUE ~ 0),
-         'PTSD_flag' = case_when(PTSD_prim == 1 ~ 1,
-                                 PTSD_sec == 1 ~ 1,
-                                 TRUE ~ 0),
-         'Major_Dep_Dis_flag' = case_when(Major_Dep_Dis_prim == 1 ~ 1,
-                                          Major_Dep_Dis_sec == 1 ~ 1,
-                                          TRUE ~ 0),
-         'Anx_Dis_flag' = case_when(Anx_Dis_prim == 1 ~ 1,
-                                    Anx_Dis_sec == 1 ~ 1,
-                                    TRUE ~ 0),
-         'Subs_Use_Dis_flag' = case_when(Subs_Use_Dis_prim == 1 ~ 1,
-                                         Subs_Use_Dis_sec == 1 ~ 1,
-                                         TRUE ~ 0)) |>
-  select(Der_Person_ID,
-         DataYear,
-         Autism_flag,
-         LD_flag,
-         ADHD_flag,
-         Pers_Dis_flag,
-         PTSD_flag,
-         Major_Dep_Dis_flag,
-         Anx_Dis_flag,
-         Subs_Use_Dis_flag,
-         Autism_prim,
-         Autism_sec,
-         LD_prim,
-         LD_sec,
-         ADHD_prim,
-         ADHD_sec,
-         Pers_Dis_prim,
-         Pers_Dis_sec,
-         PTSD_prim,
-         PTSD_sec,
-         Major_Dep_Dis_prim,
-         Major_Dep_Dis_sec,
-         Anx_Dis_prim,
-         Anx_Dis_sec,
-         Subs_Use_Dis_prim,
-         Subs_Use_Dis_sec)
-
+ref_con_all_pre <- ref_con_all |>
+  filter(DiagTime == "Diag_Pre_Ref")
 
 # Condition summaries
 
@@ -568,155 +441,10 @@ condition_summary_pre <- rbind(autism_summary_pre,
                                sub_use_dis_summary_pre)
 
 
-# Post-referral diagnosis --------------------------------------------------
+# Post Referral -----------------------------------------------------------
 
-# Summarise primary diagnosed conditions
-
-ref_con_conprim_post <- ref_prim_flag |>
-  filter(Diag_Time == "Diag_Post_Ref") |>
-  mutate('DataYear' = case_when(ReferralRequestReceivedDate >= maxdate - years(1) ~ 'Y3',
-                                ReferralRequestReceivedDate >= maxdate - years(2) ~ 'Y2',
-                                ReferralRequestReceivedDate >= maxdate - years(3) ~ 'Y1',
-                                TRUE ~ 'Y0'))|>
-  group_by(Der_Person_ID,
-           DataYear) |>
-  summarise('Autism_Diag' = sum(Autism_Prim_Diag, na.rm = TRUE),
-            'LD_Diag' = sum(LD_Prim_Diag, na.rm = TRUE),
-            'ADHD_Diag' = sum(ADHD_Prim_Diag, na.rm = TRUE),
-            'Pers_Dis_Diag' = sum(Pers_Dis_Prim_Diag, na.rm = TRUE),
-            'PTSD_Diag' = sum(PTSD_Prim_Diag, na.rm = TRUE),
-            'Major_Dep_Dis_Diag' = sum(Major_Dep_Dis_Prim_Diag, na.rm = TRUE),
-            'Anx_Dis_Diag' = sum(Anx_Dis_Prim_Diag, na.rm = TRUE),
-            'Subs_Use_Dis_Diag' = sum(Subs_Use_Dis_Prim_Diag, na.rm = TRUE)) |>
-  mutate('Autism_prim' = case_when(Autism_Diag > 0 ~ 1,
-                                   TRUE ~ 0),
-         'LD_prim' = case_when(LD_Diag > 0 ~ 1,
-                               TRUE ~ 0),
-         'ADHD_prim' = case_when(ADHD_Diag > 0 ~ 1,
-                                 TRUE ~ 0),
-         'Pers_Dis_prim' = case_when(Pers_Dis_Diag > 0 ~ 1,
-                                     TRUE ~ 0),
-         'PTSD_prim' = case_when(PTSD_Diag > 0 ~ 1,
-                                 TRUE ~ 0),
-         'Major_Dep_Dis_prim' = case_when(Major_Dep_Dis_Diag > 0 ~ 1,
-                                          TRUE ~ 0),
-         'Anx_Dis_prim' = case_when(Anx_Dis_Diag > 0 ~ 1,
-                                    TRUE ~ 0),
-         'Subs_Use_Dis_prim' = case_when(Subs_Use_Dis_Diag > 0 ~ 1,
-                                         TRUE ~ 0)) |>
-  select(Der_Person_ID,
-         DataYear,
-         Autism_prim,
-         LD_prim,
-         ADHD_prim,
-         Pers_Dis_prim,
-         PTSD_prim,
-         Major_Dep_Dis_prim,
-         Anx_Dis_prim,
-         Subs_Use_Dis_prim)
-
-
-# Summarise secondary diagnosed conditions
-
-ref_sec_proc_post <- ref_sec_flag |>
-  filter(Diag_Time == "Diag_Post_Ref") |>
-  mutate('DataYear' = case_when(ReferralRequestReceivedDate >= maxdate - years(1) ~ 'Y3',
-                                ReferralRequestReceivedDate >= maxdate - years(2) ~ 'Y2',
-                                ReferralRequestReceivedDate >= maxdate - years(3) ~ 'Y1',
-                                TRUE ~ 'Y0'))|>
-  group_by(Der_Person_ID,
-           DataYear) |>
-  summarise('Autism_Diag' = sum(Autism_Sec_Diag, na.rm = TRUE),
-            'LD_Diag' = sum(LD_Sec_Diag, na.rm = TRUE),
-            'ADHD_Diag' = sum(ADHD_Sec_Diag, na.rm = TRUE),
-            'Pers_Dis_Diag' = sum(Pers_Dis_Sec_Diag, na.rm = TRUE),
-            'PTSD_Diag' = sum(PTSD_Sec_Diag, na.rm = TRUE),
-            'Major_Dep_Dis_Diag' = sum(Major_Dep_Dis_Sec_Diag, na.rm = TRUE),
-            'Anx_Dis_Diag' = sum(Anx_Dis_Sec_Diag, na.rm = TRUE),
-            'Subs_Use_Dis_Diag' = sum(Subs_Use_Dis_Sec_Diag, na.rm = TRUE)) |>
-  mutate('Autism_sec' = case_when(Autism_Diag > 0 ~ 1,
-                                  TRUE ~ 0),
-         'LD_sec' = case_when(LD_Diag > 0 ~ 1,
-                              TRUE ~ 0),
-         'ADHD_sec' = case_when(ADHD_Diag > 0 ~ 1,
-                                TRUE ~ 0),
-         'Pers_Dis_sec' = case_when(Pers_Dis_Diag > 0 ~ 1,
-                                    TRUE ~ 0),
-         'PTSD_sec' = case_when(PTSD_Diag > 0 ~ 1,
-                                TRUE ~ 0),
-         'Major_Dep_Dis_sec' = case_when(Major_Dep_Dis_Diag > 0 ~ 1,
-                                         TRUE ~ 0),
-         'Anx_Dis_sec' = case_when(Anx_Dis_Diag > 0 ~ 1,
-                                   TRUE ~ 0),
-         'Subs_Use_Dis_sec' = case_when(Subs_Use_Dis_Diag > 0 ~ 1,
-                                        TRUE ~ 0)) |>
-  select(Der_Person_ID,
-         DataYear,
-         Autism_sec,
-         LD_sec,
-         ADHD_sec,
-         Pers_Dis_sec,
-         PTSD_sec,
-         Major_Dep_Dis_sec,
-         Anx_Dis_sec,
-         Subs_Use_Dis_sec)
-
-
-# Join to referrals conditions and primary diagnosis
-
-ref_con_all_post <- left_join(ref_con_conprim_post, ref_sec_proc_post, by = c("Der_Person_ID" = "Der_Person_ID",
-                                                                              "DataYear" = "DataYear")) |>
-  mutate('Autism_flag' = case_when(Autism_prim == 1 ~ 1,
-                                   Autism_sec == 1 ~ 1,
-                                   TRUE ~ 0),
-         'LD_flag' = case_when(LD_prim == 1 ~ 1,
-                               LD_sec == 1 ~ 1,
-                               TRUE ~ 0),
-         'ADHD_flag' = case_when(ADHD_prim == 1 ~ 1,
-                                 ADHD_sec == 1 ~ 1,
-                                 TRUE ~ 0),
-         'Pers_Dis_flag' = case_when(Pers_Dis_prim == 1 ~ 1,
-                                     Pers_Dis_sec == 1 ~ 1,
-                                     TRUE ~ 0),
-         'PTSD_flag' = case_when(PTSD_prim == 1 ~ 1,
-                                 PTSD_sec == 1 ~ 1,
-                                 TRUE ~ 0),
-         'Major_Dep_Dis_flag' = case_when(Major_Dep_Dis_prim == 1 ~ 1,
-                                          Major_Dep_Dis_sec == 1 ~ 1,
-                                          TRUE ~ 0),
-         'Anx_Dis_flag' = case_when(Anx_Dis_prim == 1 ~ 1,
-                                    Anx_Dis_sec == 1 ~ 1,
-                                    TRUE ~ 0),
-         'Subs_Use_Dis_flag' = case_when(Subs_Use_Dis_prim == 1 ~ 1,
-                                         Subs_Use_Dis_sec == 1 ~ 1,
-                                         TRUE ~ 0)) |>
-  select(Der_Person_ID,
-         DataYear,
-         Autism_flag,
-         LD_flag,
-         ADHD_flag,
-         Pers_Dis_flag,
-         PTSD_flag,
-         Major_Dep_Dis_flag,
-         Anx_Dis_flag,
-         Subs_Use_Dis_flag,
-         Autism_prim,
-         Autism_sec,
-         LD_prim,
-         LD_sec,
-         ADHD_prim,
-         ADHD_sec,
-         Pers_Dis_prim,
-         Pers_Dis_sec,
-         PTSD_prim,
-         PTSD_sec,
-         Major_Dep_Dis_prim,
-         Major_Dep_Dis_sec,
-         Anx_Dis_prim,
-         Anx_Dis_sec,
-         Subs_Use_Dis_prim,
-         Subs_Use_Dis_sec)
-
+ref_con_all_post <- ref_con_all |>
+  filter(DiagTime == "Diag_Post_Ref")
 
 # Condition summaries
 
@@ -831,3 +559,4 @@ condition_summary_post <- rbind(autism_summary_post,
                                 major_dep_dis_summary_post,
                                 anx_dis_summary_post,
                                 sub_use_dis_summary_post)
+
