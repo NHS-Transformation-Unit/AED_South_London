@@ -82,7 +82,11 @@ There are referrals received for patients that are not South London residents. A
 Using estimated prevalence figures, it is possible to hypothesize how many referrals the service should expect to receive. Estimated prevalence has been generated using the [Adult Psychiatric Morbidity Survey of 2023/24](https://digital.nhs.uk/data-and-information/publications/statistical/adult-psychiatric-morbidity-survey/survey-of-mental-health-and-wellbeing-england-2023-24?utm_source=chatgpt.com) and the mental health of children and young people in England of 2023 [Wave 4 follow-up](
 https://digital.nhs.uk/data-and-information/publications/statistical/mental-health-of-children-and-young-people-in-england/2023-wave-4-follow-up/part-5-eating-problems-and-disorders).
 
+```{r Prevalence table}
 
+prev_tbl
+
+```
 
 <br>
 
