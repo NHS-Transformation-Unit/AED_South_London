@@ -40,4 +40,7 @@ ref_diag_tbl <- ref_new_diag |>
   gt() |>
   tab_header(title = "Diagnosis of referrals") |>
   tab_style(style = list(cell_fill(color = palette_tu[1])),
-            locations = cells_column_labels(everything()))
+            locations = cells_column_labels(everything())) |>
+  fmt_number(columns = c(`Diagnosed`),
+             decimals = 0,
+             use_seps = TRUE)
