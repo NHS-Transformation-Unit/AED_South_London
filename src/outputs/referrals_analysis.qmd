@@ -1,7 +1,7 @@
 ---
 title: "Analysis of Adult Eating Disorders Referrals - South London"
 author: "<a href='https://github.com/SiWickham/'>Simon Wickham</a><br><a href='https://github.com/ASW-Analyst/'>Andy Wilson</a><br><a href='https://transformationunit.nhs.uk/'>NHS Transformation Unit</a>"
-date: "07/15/2026"
+date: "07/24/2026"
 date-format: "DD MMMM YYYY"
 format: 
   html:
@@ -75,12 +75,12 @@ In line with MHSDS publications, all numbers presented are rounded to the neares
 <br>
 
 ## Referral Volumes
-Referrals have been increasing financial year on financial year, with April-25 to March-26 showing 4045 new referrals. As with the increase in referrals, rejected referrals have also increased. This has however remained proportionate to the number of referrals received. In the financial year 2024/25, 8.7% of referrals were rejected. In 2025/26, 8.8% of referrals were rejected. The current data for 2026/27 show no variation on this theme, with April-26 showing a rejection rate of 9.4%.
+Referrals have been increasing financial year on financial year, with April-25 to March-26 showing 4045 new referrals. As with the increase in referrals, rejected referrals have also increased. This has however remained proportionate to the number of referrals received. In the financial year 2024/25, 8.7% of referrals were rejected. In 2025/26, 8.8% of referrals were rejected. The current data for 2026/27 show slight reduction on this theme, with April-26 to May-26 showing a rejection rate of 7.5%.
 
-There are referrals received for patients that are not South London residents. Across all referrals analysed, 92.5% are for South London residents. This is a proportion largely maintained over the years of data analysed, ranging between 91.6% and 92.8%. The rejection rates for South London and Non-South London residents is also comparable with both being 6.5% across all referrals.
+There are referrals received for patients that are not South London residents. Across all referrals analysed, 92.5% are for South London residents. This is a proportion largely maintained over the years of data analysed, ranging between 91.6% and 92.8%. The rejection rates for South London are comparable to the whole dataset, with the current rejection rate for 2026/27 at 7.4%. Non-South London residents for the same time period is 8.3%.
 
-Using estimated prevalence figures, it is possible to hypothesize how many referrals the service should expect to receive. Estimated prevalence has been generated using the [Adult Psychiatric Morbidity Survey of 2023/24](https://digital.nhs.uk/data-and-information/publications/statistical/adult-psychiatric-morbidity-survey/survey-of-mental-health-and-wellbeing-england-2023-24?utm_source=chatgpt.com) and the mental health of children and young people in England of 2023 [Wave 4 follow-up](
-https://digital.nhs.uk/data-and-information/publications/statistical/mental-health-of-children-and-young-people-in-england/2023-wave-4-follow-up/part-5-eating-problems-and-disorders).
+To set the number of referrals into context, it is important to understand how they compare to the population and the estimate prevalenceof eating disorders within this population. The estimated prevalence from the [Adult Psychiatric Morbidity Survey of 2023/24](https://digital.nhs.uk/data-and-information/publications/statistical/adult-psychiatric-morbidity-survey/survey-of-mental-health-and-wellbeing-england-2023-24?utm_source=chatgpt.com) and the mental health of children and young people in England of 2023 [Wave 4 follow-up](
+https://digital.nhs.uk/data-and-information/publications/statistical/mental-health-of-children-and-young-people-in-england/2023-wave-4-follow-up/part-5-eating-problems-and-disorders) have been applied to the population of South London to estimate the population in each age group with an eating disorder. We then apply an assumption to 20% of this population will require a Tier 3 service.
 
 ```{r Prevalence table}
 
