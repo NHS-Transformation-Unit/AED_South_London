@@ -22,6 +22,7 @@ knitr::opts_chunk$set(
 library(here)
 
 source(paste0(here(),"/src/AED_Process_Pipeline.R"))
+source(paste0(here(),"/src/outputs/download.R"))
 ```
 
 ```{r tu logo, echo = FALSE}
@@ -107,7 +108,13 @@ The referrals data is heavily skewed to the younger age range, with 41% of refer
 ### Comparative bar chart
 ```{r London age distribution}
 
-Lon_age
+#| results: asis
+
+downloadable_plot(
+  plot = Lon_age,
+  data = plot_LON_age,
+  name = "london-age-distribution"
+)
 
 ```
 
@@ -133,84 +140,298 @@ LA_age_tbl
 ### Bexley chart
 ```{r Borough age distribution_Bexley}
 
-plot_LA_age(unified_age_LA_per, "Bexley")
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Bexley"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Bexley"
+  ),
+
+  name = "bexley-age-distribution"
+)
 
 ```
 
 ### Bromley chart
 ```{r Borough age distribution_Bromley}
 
-plot_LA_age(unified_age_LA_per, "Bromley")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Bromley"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Bromley"
+  ),
+
+  name = "bromley-age-distribution"
+)
+
 
 ```
 
 ### Croydon chart
 ```{r Borough age distribution_Croydon}
 
-plot_LA_age(unified_age_LA_per, "Croydon")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Croydon"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Croydon"
+  ),
+
+  name = "Croydon-age-distribution"
+)
+
 
 ```
 
 ### Greenwich chart
 ```{r Borough age distribution_Greenwich}
 
-plot_LA_age(unified_age_LA_per, "Greenwich")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Greenwich"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Greenwich"
+  ),
+
+  name = "Greenwich-age-distribution"
+)
+
 
 ```
 
 ### Kingston upon Thames chart
 ```{r Borough age distribution_Kingston upon Thames}
 
-plot_LA_age(unified_age_LA_per, "Kingston upon Thames")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Kingston upon Thames"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Kingston upon Thames"
+  ),
+
+  name = "Kingston-upon-Thames-age-distribution"
+)
+
 
 ```
 
 ### Lambeth chart
 ```{r Borough age distribution_Lambeth}
 
-plot_LA_age(unified_age_LA_per, "Lambeth")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Lambeth"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Lambeth"
+  ),
+
+  name = "Lambeth-age-distribution"
+)
+
 
 ```
 
 ### Lewisham chart
 ```{r Borough age distribution_Lewisham}
 
-plot_LA_age(unified_age_LA_per, "Lewisham")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Lewisham"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Lewisham"
+  ),
+
+  name = "Lewisham-age-distribution"
+)
+
 
 ```
 
 ### Merton chart
 ```{r Borough age distribution_Merton}
 
-plot_LA_age(unified_age_LA_per, "Merton")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Merton"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Merton"
+  ),
+
+  name = "Merton-age-distribution"
+)
+
 
 ```
 
 ### Richmond upon Thames chart
 ```{r Borough age distribution_Richmond upon Thames}
 
-plot_LA_age(unified_age_LA_per, "Richmond upon Thames")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Richmond upon Thames"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Richmond upon Thames"
+  ),
+
+  name = "Richmond-upon-Thames-age-distribution"
+)
+
 
 ```
 
 ### Southwark chart
 ```{r Borough age distribution_Southwark}
 
-plot_LA_age(unified_age_LA_per, "Southwark")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Southwark"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Southwark"
+  ),
+
+  name = "Southwark-age-distribution"
+)
+
 
 ```
 
 ### Sutton chart
 ```{r Borough age distribution_Sutton}
 
-plot_LA_age(unified_age_LA_per, "Sutton")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Sutton"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Sutton"
+  ),
+
+  name = "Sutton-age-distribution"
+)
+
 
 ```
 
 ### Wandsworth chart
 ```{r Borough age distribution_Wandsworth}
 
-plot_LA_age(unified_age_LA_per, "Wandsworth")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Wandsworth"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Wandsworth"
+  ),
+
+  name = "Wandsworth-age-distribution"
+)
+
 
 ```
 
@@ -231,7 +452,13 @@ The referrals data is significantly different to the population data. This is li
 ### Comparative bar chart
 ```{r London ethnicity distribution}
 
-Lon_eth
+#| results: asis
+
+downloadable_plot(
+  plot = Lon_eth,
+  data = plot_LON_eth,
+  name = "london-eth-distribution"
+)
 
 ```
 
@@ -257,84 +484,288 @@ LA_eth_tbl
 ### Bexley chart
 ```{r Borough ethnicity distribution_Bexley}
 
-plot_LA_eth(unified_eth_LA_per, "Bexley")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Bexley"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Bexley"
+  ),
+
+  name = "Bexley-eth-distribution"
+)
 
 ```
 
 ### Bromley chart
 ```{r Borough ethnicity distribution_Bromley}
 
-plot_LA_eth(unified_eth_LA_per, "Bromley")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Bromley"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Bromley"
+  ),
+
+  name = "Bromley-eth-distribution"
+)
 
 ```
 
 ### Croydon chart
 ```{r Borough ethnicity distribution_Croydon}
 
-plot_LA_eth(unified_eth_LA_per, "Croydon")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Croydon"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Croydon"
+  ),
+
+  name = "Croydon-eth-distribution"
+)
 
 ```
 
 ### Greenwich chart
 ```{r Borough ethnicity distribution_Greenwich}
 
-plot_LA_eth(unified_eth_LA_per, "Greenwich")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Greenwich"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Greenwich"
+  ),
+
+  name = "Greenwich-eth-distribution"
+)
 
 ```
 
 ### Kingston upon Thames chart
 ```{r Borough ethnicity distribution_Kingston upon Thames}
 
-plot_LA_eth(unified_eth_LA_per, "Kingston upon Thames")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Kingston upon Thames"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Kingston upon Thames"
+  ),
+
+  name = "Kingston-upon-Thames-eth-distribution"
+)
 
 ```
 
 ### Lambeth chart
 ```{r Borough ethnicity distribution_Lambeth}
 
-plot_LA_eth(unified_eth_LA_per, "Lambeth")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Lambeth"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Lambeth"
+  ),
+
+  name = "Lambeth-eth-distribution"
+)
 
 ```
 
 ### Lewisham chart
 ```{r Borough ethnicity distribution_Lewisham}
 
-plot_LA_eth(unified_eth_LA_per, "Lewisham")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Lewisham"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Lewisham"
+  ),
+
+  name = "Lewisham-eth-distribution"
+)
 
 ```
 
 ### Merton chart
 ```{r Borough ethnicity distribution_Merton}
 
-plot_LA_eth(unified_eth_LA_per, "Merton")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Merton"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Merton"
+  ),
+
+  name = "Merton-eth-distribution"
+)
 
 ```
 
 ### Richmond upon Thames chart
 ```{r Borough ethnicity distribution_Richmond upon Thames}
 
-plot_LA_eth(unified_eth_LA_per, "Richmond upon Thames")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Richmond upon Thames"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Richmond upon Thames"
+  ),
+
+  name = "Richmond-upon-Thames-eth-distribution"
+)
 
 ```
 
 ### Southwark chart
 ```{r Borough ethnicity distribution_Southwark}
 
-plot_LA_eth(unified_eth_LA_per, "Southwark")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Southwark"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Southwark"
+  ),
+
+  name = "Southwark-eth-distribution"
+)
 
 ```
 
 ### Sutton chart
 ```{r Borough ethnicity distribution_Sutton}
 
-plot_LA_eth(unified_eth_LA_per, "Sutton")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Sutton"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Sutton"
+  ),
+
+  name = "Sutton-eth-distribution"
+)
 
 ```
 
 ### Wandsworth chart
 ```{r Borough ethnicity distribution_Wandsworth}
 
-plot_LA_eth(unified_eth_LA_per, "Wandsworth")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Wandsworth"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Wandsworth"
+  ),
+
+  name = "Wandsworth-eth-distribution"
+)
 
 ```
 
@@ -355,7 +786,13 @@ The referrals data roughly follows the pattern of the population, with slight de
 ### Comparative bar chart
 ```{r London deprivation distribution}
 
-Lon_dep
+#| results: asis
+
+downloadable_plot(
+  plot = Lon_dep,
+  data = plot_LON_dep,
+  name = "london-dep-distribution"
+)
 
 ```
 
@@ -391,84 +828,288 @@ LA_dep_tbl
 ### Bexley chart
 ```{r Borough deprivation distribution_Bexley}
 
-plot_LA_dep(unified_dep_LA_per, "Bexley")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Bexley"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Bexley"
+  ),
+
+  name = "Bexley-dep-distribution"
+)
 
 ```
 
 ### Bromley chart
 ```{r Borough deprivation distribution_Bromley}
 
-plot_LA_dep(unified_dep_LA_per, "Bromley")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Bromley"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Bromley"
+  ),
+
+  name = "Bromley-dep-distribution"
+)
 
 ```
 
 ### Croydon chart
 ```{r Borough deprivation distribution_Croydon}
 
-plot_LA_dep(unified_dep_LA_per, "Croydon")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Croydon"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Croydon"
+  ),
+
+  name = "Croydon-dep-distribution"
+)
 
 ```
 
 ### Greenwich chart
 ```{r Borough deprivation distribution_Greenwich}
 
-plot_LA_dep(unified_dep_LA_per, "Greenwich")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Greenwich"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Greenwich"
+  ),
+
+  name = "Greenwich-dep-distribution"
+)
 
 ```
 
 ### Kingston upon Thames chart
 ```{r Borough deprivation distribution_Kingston upon Thames}
 
-plot_LA_dep(unified_dep_LA_per, "Kingston upon Thames")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Kingston upon Thames"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Kingston upon Thames"
+  ),
+
+  name = "Kingston-upon-Thames-dep-distribution"
+)
 
 ```
 
 ### Lambeth chart
 ```{r Borough deprivation distribution_Lambeth}
 
-plot_LA_dep(unified_dep_LA_per, "Lambeth")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Lambeth"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Lambeth"
+  ),
+
+  name = "Lambath-dep-distribution"
+)
 
 ```
 
 ### Lewisham chart
 ```{r Borough deprivation distribution_Lewisham}
 
-plot_LA_dep(unified_dep_LA_per, "Lewisham")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Lewisham"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Lewisham"
+  ),
+
+  name = "Lewisham-dep-distribution"
+)
 
 ```
 
 ### Merton chart
 ```{r Borough deprivation distribution_Merton}
 
-plot_LA_dep(unified_dep_LA_per, "Merton")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Merton"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Merton"
+  ),
+
+  name = "Merton-dep-distribution"
+)
 
 ```
 
 ### Richmond upon Thames chart
 ```{r Borough deprivation distribution_Richmond upon Thames}
 
-plot_LA_dep(unified_dep_LA_per, "Richmond upon Thames")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Richmond upon Thames"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Richmond upon Thames"
+  ),
+
+  name = "Richmond-upon-Thames-dep-distribution"
+)
 
 ```
 
 ### Southwark chart
 ```{r Borough deprivation distribution_Southwark}
 
-plot_LA_dep(unified_dep_LA_per, "Southwark")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Southwark"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Southwark"
+  ),
+
+  name = "Southwark-dep-distribution"
+)
 
 ```
 
 ### Sutton chart
 ```{r Borough deprivation distribution_Sutton}
 
-plot_LA_dep(unified_dep_LA_per, "Sutton")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Sutton"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Sutton"
+  ),
+
+  name = "Sutton-dep-distribution"
+)
 
 ```
 
 ### Wandsworth chart
 ```{r Borough deprivation distribution_Wandsworth}
 
-plot_LA_dep(unified_dep_LA_per, "Wandsworth")
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Wandsworth"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Wandsworth"
+  ),
+
+  name = "Wandsworth-dep-distribution"
+)
 
 ```
 
@@ -501,7 +1142,13 @@ At the South London level, there are a portion of referrals that do not have an 
 ### Diagnoses chart
 ```{r Diagnosis chart}
 
-Ref_diag
+#| results: asis
+
+downloadable_plot(
+  plot = Ref_diag,
+  data = ref_new_diag,
+  name = "diagnosis-distribution"
+)
 
 ```
 
