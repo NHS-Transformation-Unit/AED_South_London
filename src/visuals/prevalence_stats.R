@@ -33,7 +33,7 @@ prev_tbl <- left_join(prev_pop, ref_new_age_tot, by = c("Age_band" = "Age_band")
   rename("Age band" = "Age_band",
          "Estimate Prevalence" = "Estimate_Prevalence",
          "Estimate Population" = "Estimate_Population",
-         "Requiring T3 Service Referrals" = "T3_referral",
+         "Requiring T3 Service Referrals (12 months)" = "T3_referral",
          "36 months of Referrals" = "Referrals") |>
   gt() |>
   fmt_number(columns = c(`Population`, `Estimate Population`, `Requiring T3 Service Referrals`, `36 months of Referrals`),
