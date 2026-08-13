@@ -1,15 +1,20 @@
 
 # Borough -----------------------------------------------------------------
 
+get_LA_eth_data <- function(df, borough) {
+  
+  df |>
+    filter(`Upper tier local authorities` == borough) |>
+    pivot_longer(cols = c(Pop_per, Ref_per),
+                 names_to = "Series",
+                 values_to = "Percent")
+}
+
 plot_LA_eth <- function(df, borough) {
 
 # Ethnic group by LAD distribution
 
-plot_eth <- df |>
-  filter(`Upper tier local authorities` == borough) |>
-  pivot_longer(cols = c(Pop_per, Ref_per),
-               names_to = "Series",
-               values_to = "Percent")
+plot_eth <- get_LA_eth_data(df, borough)
 
 ggplot(plot_eth, aes(x = `Ethnic group (8 categories)`,
                      y = Percent,
