@@ -1,15 +1,20 @@
 
 # Borough -----------------------------------------------------------------
 
+get_LA_age_data <- function(df, borough) {
+  
+  df |>
+    filter(`Upper tier local authorities` == borough) |>
+    pivot_longer(cols = c(Pop_per, Ref_per),
+                 names_to = "Series",
+                 values_to = "Percent")
+}
+
 plot_LA_age <- function(df, borough) {
 
 # Age band by LAD distribution
 
-plot_age <- df |>
-  filter(`Upper tier local authorities` == borough) |>
-  pivot_longer(cols = c(Pop_per, Ref_per),
-               names_to = "Series",
-               values_to = "Percent")
+plot_age <- get_LA_age_data(df, borough)
 
 ggplot(plot_age, aes(x = Age_band,
                      y = Percent,
