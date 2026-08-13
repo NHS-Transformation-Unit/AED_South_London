@@ -72,6 +72,9 @@ htmltools::img(src = knitr::image_uri(paste0(here(), "/images/MHSD_data_flow.png
 
 In line with MHSDS publications, all numbers presented are rounded to the nearest multiple of 5, with anything less than 5 suppressed (unavailable for display). All percentages are reflective of raw numbers and not rounded values.
 
+### Confidence intervals
+
+Where appropriate, confidence intervals (black lines) have been added to referrals bars. These add additional context to the difference between the referrals and the population. If the population bar end is between the confidence intervals, there is no statistical difference between the values. When the population bar is outside of the confidence intervals (higher or lower), it means the values are meaningfully different and worth further investigation or action.
 
 <br>
 
