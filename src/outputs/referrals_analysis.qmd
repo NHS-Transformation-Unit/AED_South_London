@@ -79,7 +79,7 @@ Where appropriate, confidence intervals (black lines) have been added to referra
 <br>
 
 ## Referral Volumes
-Referrals have been increasing financial year on financial year, with April-25 to March-26 showing 4045 new referrals. As with the increase in referrals, rejected referrals have also increased. This has however remained proportionate to the number of referrals received. In the financial year 2024/25, 8.7% of referrals were rejected. In 2025/26, 8.8% of referrals were rejected. The current data for 2026/27 show slight reduction on this theme, with April-26 to May-26 showing a rejection rate of 7.5%.
+Referrals have been increasing year on year, with 4060 in the latest 12 months of data. The first year of data shows 3185 referrlas, resulting in a 27% increase in new referrals. As with the increase in referrals, rejected referrals have also increased. This has however remained proportionate to the number of referrals received. In the financial year 2024/25, 8.7% of referrals were rejected. In 2025/26, 8.8% of referrals were rejected. The current data for 2026/27 show slight reduction on this theme, with April-26 to May-26 showing a rejection rate of 7.5%.
 
 There are referrals received for patients that are not South London residents. Across all referrals analysed, 92.5% are for South London residents. This is a proportion largely maintained over the years of data analysed, ranging between 91.6% and 92.8%. The rejection rates for South London are comparable to the whole dataset, with the current rejection rate for 2026/27 at 7.4%. Non-South London residents for the same time period is 8.3%.
 
