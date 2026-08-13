@@ -1,15 +1,20 @@
 
 # Borough -----------------------------------------------------------------
 
+get_LA_dep_data <- function(df, borough) {
+  
+  df |>
+    filter(`Upper tier local authorities` == borough) |>
+    pivot_longer(cols = c(Pop_per, Ref_per),
+                 names_to = "Series",
+                 values_to = "Percent")
+}
+
 plot_LA_dep <- function(df, borough) {
 
 # Deprivation band by LAD distribution
 
-plot_dep <- df |>
-  filter(`Upper tier local authorities` == borough) |>
-  pivot_longer(cols = c(Pop_per, Ref_per),
-               names_to = "Series",
-               values_to = "Percent")
+plot_dep <- get_LA_dep_data(df, borough)
 
 ggplot(plot_dep, aes(x = factor(`IMD Decile`),
                      y = Percent,
