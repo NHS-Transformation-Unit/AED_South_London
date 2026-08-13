@@ -54,3 +54,25 @@ a {
 .toc.float-toc {
     margin-bottom: 20px;
 }
+
+.download-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.download-buttons button {
+  border: 1px solid #999;
+  background: #407EC9;
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.download-buttons button:hover {
+  background: #f2f2f2;
+  color: #407EC9
+}
