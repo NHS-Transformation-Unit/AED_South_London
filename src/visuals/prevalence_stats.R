@@ -36,7 +36,7 @@ prev_tbl <- left_join(prev_pop, ref_new_age_tot, by = c("Age_band" = "Age_band")
          "Requiring T3 Service Referrals (12 months)" = "T3_referral",
          "36 months of Referrals" = "Referrals") |>
   gt() |>
-  fmt_number(columns = c(`Population`, `Estimate Population`, `Requiring T3 Service Referrals`, `36 months of Referrals`),
+  fmt_number(columns = c(`Population`, `Estimate Population`, `Requiring T3 Service Referrals (12 months)`, `36 months of Referrals`),
              decimals = 0,
              use_seps = TRUE) |>
   fmt_percent(columns = c(`Estimate Prevalence`),
