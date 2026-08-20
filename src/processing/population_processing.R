@@ -57,6 +57,21 @@ pop_eth_tot <- pop_proc |>
   rename("Upper tier local authorities" = "Total")
 
 
+# Gender of population
+
+pop_gen_LA <- pop_proc |>
+  group_by(`Upper tier local authorities`,
+           `Sex (2 categories)`) |>
+  summarise('Population' = sum(`Observation`, na.rm = TRUE))
+
+pop_gen_tot <- pop_proc |>
+  mutate("Total" = "London") |>
+  group_by(Total,
+           `Sex (2 categories)`) |>
+  summarise('Population' = sum(`Observation`, na.rm = TRUE)) |>
+  rename("Upper tier local authorities" = "Total")
+
+
 
 # Totals ------------------------------------------------------------------
 
@@ -95,3 +110,17 @@ pop_eth_tot_per <- left_join(pop_eth_tot, pop_tot, by = c('Upper tier local auth
 
 
 pop_eth_per <- rbind(pop_eth_LA_per,pop_eth_tot_per)
+
+
+
+# Gender - Population percentages --------------------------------------
+
+pop_gen_LA_per <- left_join(pop_gen_LA, pop_LA, by = c('Upper tier local authorities' = 'Upper tier local authorities')) |>
+  mutate("Percentage" = Population/LAD_Population)
+
+pop_gen_tot_per <- left_join(pop_gen_tot, pop_tot, by = c('Upper tier local authorities' = 'Upper tier local authorities')) |>
+  mutate("Percentage" = Population/LAD_Population)
+
+
+pop_gen_per <- rbind(pop_gen_LA_per,pop_gen_tot_per)
+
