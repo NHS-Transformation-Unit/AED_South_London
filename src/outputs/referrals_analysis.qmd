@@ -1,7 +1,7 @@
 ---
 title: "Analysis of Adult Eating Disorders Referrals - South London"
 author: "<a href='https://github.com/SiWickham/'>Simon Wickham</a><br><a href='https://github.com/ASW-Analyst/'>Andy Wilson</a><br><a href='https://transformationunit.nhs.uk/'>NHS Transformation Unit</a>"
-date: "07/24/2026"
+date: "08/20/2026"
 date-format: "DD MMMM YYYY"
 format: 
   html:
@@ -51,7 +51,7 @@ htmltools::img(src = knitr::image_uri(paste0(here(), "/images/TU_logo_large.png"
 
 The NHS Transformation Unit have been commissioned by South London Mental Health Partnership to explore the referrals received into the Adult Eating Disorders service. The purpose was to assess the referrals received and how representative they are of the South London population.
 
-Referrals data has been collected from the Mental Health Services Data Set (MHSDS), and includes the demographic identifiers of age, ethnicity and deprivation decile for each patient. This data is the latest 36 months of data, June-23 to May-26.
+Referrals data has been collected from the Mental Health Services Data Set (MHSDS), and includes the demographic identifiers of age, ethnicity and deprivation decile for each patient. This data is the latest 36 months of data, `r format(mindate,"%b-%y")` to `r format(maxdate,"%b-%y")`.
 
 Population data has been taken from the [Office of National Statistics (ONS)](https://www.ons.gov.uk/datasets/create/filter-outputs/5c83361b-583d-43dc-8e9e-2ebfc035256d#get-data). This provides the population breakdown at each of the mentioned demographic indicators. The latest population figures available are from 2023.
 
@@ -79,15 +79,16 @@ Where appropriate, confidence intervals (black lines) have been added to referra
 <br>
 
 ## Referral Volumes
-Referrals have been increasing year on year, with 4060 in the latest 12 months of data. The first year of data shows 3185 referrlas, resulting in a 27% increase in new referrals. As with the increase in referrals, rejected referrals have also increased. This has however remained proportionate to the number of referrals received. In the financial year 2024/25, 8.7% of referrals were rejected. In 2025/26, 8.8% of referrals were rejected. The current data for 2026/27 show slight reduction on this theme, with April-26 to May-26 showing a rejection rate of 7.5%.
+Referrals have been increasing year on year, with 4060 in the latest 12 months of data. The first year of data shows 3185 referrlas, resulting in a 27% increase in new referrals. As with the increase in referrals, rejected referrals have also increased. This has however remained proportionate to the number of referrals received. In the financial year 2024/25, 8.7% of referrals were rejected. In 2025/26, 8.8% of referrals were rejected. The current data for 2026/27 show slight reduction on this theme, with April-26 to `r format(maxdate,"%b-%y")` showing a rejection rate of 7.5%.
 
 There are referrals received for patients that are not South London residents. There are 1145 referrals analysed that were referred from outside the South London ICBs, 87% of which were from the ICBs of Central East ICB, North East London ICB, West and North London ICB and Surrey and Sussex ICB. Across all referrals analysed, 92.5% are for South London residents. This is a proportion largely maintained over the years of data analysed, ranging between 91.6% and 92.8%. The rejection rates for South London are comparable to the whole dataset, with the current rejection rate for 2026/27 at 7.4%. Non-South London residents for the same time period is 8.3%.
 
+To set the number of referrals into context, it is important to understand how they compare to the population and the estimate prevalence of eating disorders within this population. 
 
 :::{.panel-tabset}
 
 ### Prevalence Table
-To set the number of referrals into context, it is important to understand how they compare to the population and the estimate prevalence of eating disorders within this population. The estimated prevalence from the [Adult Psychiatric Morbidity Survey of 2023/24](https://digital.nhs.uk/data-and-information/publications/statistical/adult-psychiatric-morbidity-survey/survey-of-mental-health-and-wellbeing-england-2023-24?utm_source=chatgpt.com) and the mental health of children and young people in England of 2023 [Wave 4 follow-up](
+The estimated prevalence from the [Adult Psychiatric Morbidity Survey of 2023/24](https://digital.nhs.uk/data-and-information/publications/statistical/adult-psychiatric-morbidity-survey/survey-of-mental-health-and-wellbeing-england-2023-24?utm_source=chatgpt.com) and the mental health of children and young people in England of 2023 [Wave 4 follow-up](
 https://digital.nhs.uk/data-and-information/publications/statistical/mental-health-of-children-and-young-people-in-england/2023-wave-4-follow-up/part-5-eating-problems-and-disorders) have been applied to the population of South London to estimate the population in each age group with an eating disorder. We then apply an assumption to 20% of this population will require a Tier 3 service.
 
 :::{.panel-tabset}
@@ -1185,6 +1186,339 @@ downloadable_plot(
   ),
 
   name = "Wandsworth-dep-distribution"
+)
+
+```
+
+:::
+
+:::
+
+## Gender
+
+:::{.panel-tabset}
+
+## South London
+The volume of referrals received is vastly different to the population. Over 87% of referrals received are for female patients, compared to the representative population of 51.9%.
+
+:::{.panel-tabset}
+
+### Comparative bar chart
+```{r London gender distribution}
+
+#| results: asis
+
+downloadable_plot(
+  plot = Lon_gen,
+  data = plot_LON_gen,
+  name = "london-gen-distribution"
+)
+
+```
+
+### Data table
+```{r London gender table}
+
+Lon_gen_tbl
+```
+
+:::
+
+## Boroughs
+The high proportion of female patients is replicated at every borough, female patients representing between 79.5% and 92.0% of the included referrals. The variation in the female population is much tighter between boroughs, ranging from 51.4% and 52.5%.
+
+:::{.panel-tabset}
+
+### Data table
+```{r Borough gender table}
+
+LA_gen_tbl
+```
+
+### Bexley chart
+```{r Borough gender distribution_Bexley}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Bexley"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Bexley"
+  ),
+
+  name = "Bexley-gen-distribution"
+)
+
+```
+
+### Bromley chart
+```{r Borough gender distribution_Bromley}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Bromley"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Bromley"
+  ),
+
+  name = "Bromley-gen-distribution"
+)
+
+```
+
+### Croydon chart
+```{r Borough gender distribution_Croydon}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Croydon"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Croydon"
+  ),
+
+  name = "Croydon-gen-distribution"
+)
+
+```
+
+### Greenwich chart
+```{r Borough gender distribution_Greenwich}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Greenwich"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Greenwich"
+  ),
+
+  name = "Greenwich-gen-distribution"
+)
+
+```
+
+### Kingston upon Thames chart
+```{r Borough gender distribution_Kingston upon Thames}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Kingston upon Thames"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Kingston upon Thames"
+  ),
+
+  name = "Kingston-upon-Thames-dep-distribution"
+)
+
+```
+
+### Lambeth chart
+```{r Borough gender distribution_Lambeth}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Lambeth"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Lambeth"
+  ),
+
+  name = "Lambath-gen-distribution"
+)
+
+```
+
+### Lewisham chart
+```{r Borough gender distribution_Lewisham}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Lewisham"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Lewisham"
+  ),
+
+  name = "Lewisham-gen-distribution"
+)
+
+```
+
+### Merton chart
+```{r Borough gender distribution_Merton}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Merton"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Merton"
+  ),
+
+  name = "Merton-gen-distribution"
+)
+
+```
+
+### Richmond upon Thames chart
+```{r Borough gender distribution_Richmond upon Thames}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Richmond upon Thames"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Richmond upon Thames"
+  ),
+
+  name = "Richmond-upon-Thames-gen-distribution"
+)
+
+```
+
+### Southwark chart
+```{r Borough gender distribution_Southwark}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Southwark"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Southwark"
+  ),
+
+  name = "Southwark-gen-distribution"
+)
+
+```
+
+### Sutton chart
+```{r Borough gender distribution_Sutton}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Sutton"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Sutton"
+  ),
+
+  name = "Sutton-gen-distribution"
+)
+
+```
+
+### Wandsworth chart
+```{r Borough gender distribution_Wandsworth}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Wandsworth"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Wandsworth"
+  ),
+
+  name = "Wandsworth-gen-distribution"
 )
 
 ```
