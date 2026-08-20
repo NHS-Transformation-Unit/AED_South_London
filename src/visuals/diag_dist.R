@@ -11,7 +11,7 @@ Ref_diag <- ggplot(ref_new_diag, aes(x = reorder(Diagnosis,Diagnosed),
   labs(x = "Diagnosis description",
        y = "Number of diagnoses",
        title = "Diagnosis received for all patients referred",
-       subtitle = "Referrals received between May 2023 and April 2026",
+       subtitle = paste("Referrals received between ",format(mindate,"%b-%y")," and ",format(maxdate,"%b-%y")),
        caption = "Source: Mental Health Services Data Set") +
   theme(text = element_text(family = "Franklin Gothic Book"),
         axis.text = element_text(size = 10),
