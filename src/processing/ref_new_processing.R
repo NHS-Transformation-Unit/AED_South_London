@@ -2,6 +2,7 @@
 # Minimum referral date
 
 maxdate <- max(ref_new$ReferralRequestReceivedDate, na.rm = TRUE)
+mindate <- max(ref_new$ReferralRequestReceivedDate, na.rm = TRUE) - years(3) +1
 
 # Add age bands to referrals
 
@@ -39,7 +40,11 @@ ref_new_proc <- ref_new |>
          'DataYear' = case_when(ReferralRequestReceivedDate >= maxdate - years(1) ~ 'Y3',
                                 ReferralRequestReceivedDate >= maxdate - years(2) ~ 'Y2',
                                 ReferralRequestReceivedDate >= maxdate - years(3) ~ 'Y1',
-                                TRUE ~ 'Y0'))
+                                TRUE ~ 'Y0'),
+         'Gender_group' = case_when(Gender == '1' ~ 'Male',
+                                    Gender == '2' ~ 'Female',
+                                    Gender == '9' ~ 'Indeterminate',
+                                    TRUE ~ 'Not Known'))
 
 
 # Age banding of population
@@ -94,6 +99,24 @@ ref_new_dep_tot <- ref_new_proc |>
   mutate("Total" = "London") |>
   group_by(Total,
            IMD19dec) |>
+  summarise('Referrals' = sum(New_referral, na.rm = TRUE))
+
+
+# Gender of population
+
+ref_new_gen_LA <- ref_new_proc |>
+  filter(SL_Resident_Flag == 'SL Resident',
+         Rejected_Flag == 0) |>
+  group_by(LAD16NM,
+           Gender_group) |>
+  summarise('Referrals' = sum(New_referral, na.rm = TRUE))
+
+ref_new_gen_tot <- ref_new_proc |>
+  filter(SL_Resident_Flag == 'SL Resident',
+         Rejected_Flag == 0) |>
+  mutate("Total" = "London") |>
+  group_by(Total,
+           Gender_group) |>
   summarise('Referrals' = sum(New_referral, na.rm = TRUE))
 
 
@@ -176,6 +199,21 @@ ref_new_dep_tot_per <- left_join(ref_new_dep_tot,ref_new_tot,by = c('Total'='Tot
 
 
 ref_new_dep_per <- rbind(ref_new_dep_LA_per, ref_new_dep_tot_per)
+
+
+# DGender - Percentage and Errors -------------------------------------
+
+ref_new_gen_LA_per <- left_join(ref_new_gen_LA,ref_new_LA,by = c('LAD16NM'='LAD16NM')) |>
+  mutate('Percentage' = Referrals/LAD_total,
+         'Confidence' = Percentage - (((2*Referrals) + (1.96^2) - (1.96*sqrt((1.96^2) + (4*Referrals*(1-Percentage)))))/(2*(LAD_total+(1.96^2)))))
+
+ref_new_gen_tot_per <- left_join(ref_new_gen_tot,ref_new_tot,by = c('Total'='Total')) |>
+  mutate('Percentage' = Referrals/LAD_total,
+         'Confidence' = Percentage - (((2*Referrals) + (1.96^2) - (1.96*sqrt((1.96^2) + (4*Referrals*(1-Percentage)))))/(2*(LAD_total+(1.96^2))))) |>
+  rename("LAD16NM" = "Total")
+
+
+ref_new_gen_per <- rbind(ref_new_gen_LA_per, ref_new_gen_tot_per)
 
 
 # Ethnicity - Percentage and Errors ----------------------------------------
