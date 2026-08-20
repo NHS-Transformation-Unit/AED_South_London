@@ -40,6 +40,26 @@ unified_eth_LON_per <- unified_eth_per |>
   filter(`Upper tier local authorities` == "London")
 
 
+# Merge of gender population data with referrals for comparison
+
+unified_gen_per <- left_join(pop_gen_per, ref_new_gen_per, by = c("Upper tier local authorities" = "LAD16NM",
+                                                                  "Sex (2 categories)" = "Gender_group")) |>
+  rename("Pop_per" = "Percentage.x",
+         "Ref_per" = "Percentage.y") |>
+  select(`Upper tier local authorities`,
+         `Sex (2 categories)`,
+         `Pop_per`,
+         `Ref_per`,
+         `Confidence`)
+
+
+unified_gen_LA_per <- unified_gen_per |>
+  filter(`Upper tier local authorities` != "London")
+
+unified_gen_LON_per <- unified_gen_per |>
+  filter(`Upper tier local authorities` == "London")
+
+
 # Merge of deprivation population data with referrals for comparison
 
 unified_dep_per <- left_join(pop_dep_per, ref_new_dep_per, by = c("Upper tier local authorities" = "LAD16NM",
