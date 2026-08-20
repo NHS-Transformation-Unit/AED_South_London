@@ -35,7 +35,11 @@ ref_new_proc <- ref_new |>
                                     Ethnic_Category_Main_Desc == 'Any other ethnic group' ~ 'Other ethnic group',
                                     Ethnic_Category_Main_Desc == 'Not stated' ~ 'Does not apply',
                                     Ethnic_Category_Main_Desc == 'Not known' ~ 'Does not apply'),
-         IMD19dec = as.numeric(IMD19dec))
+         IMD19dec = as.numeric(IMD19dec),
+         'DataYear' = case_when(ReferralRequestReceivedDate >= maxdate - years(1) ~ 'Y3',
+                                ReferralRequestReceivedDate >= maxdate - years(2) ~ 'Y2',
+                                ReferralRequestReceivedDate >= maxdate - years(3) ~ 'Y1',
+                                TRUE ~ 'Y0'))
 
 
 # Age banding of population
@@ -54,6 +58,25 @@ ref_new_age_tot <- ref_new_proc |>
   group_by(Total,
            Age_band) |>
   summarise('Referrals' = sum(New_referral, na.rm = TRUE))
+
+ref_new_age_tot_yr <- ref_new_proc |>
+  filter(SL_Resident_Flag == 'SL Resident',
+         Rejected_Flag == 0,
+         DataYear != 'Y0') |>
+  mutate("Total" = "London") |>
+  group_by(Total,
+           Age_band,
+           DataYear) |>
+  summarise('Referrals' = sum(New_referral, na.rm = TRUE))
+
+ref_new_age_tot_yr1 <- ref_new_age_tot_yr |>
+  filter(DataYear =='Y1')
+
+ref_new_age_tot_yr2 <- ref_new_age_tot_yr |>
+  filter(DataYear =='Y2')
+
+ref_new_age_tot_yr3 <- ref_new_age_tot_yr |>
+  filter(DataYear =='Y3')
 
 
 # Deprivation banding of population
