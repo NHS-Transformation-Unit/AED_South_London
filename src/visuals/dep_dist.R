@@ -34,7 +34,7 @@ ggplot(plot_dep, aes(x = factor(`IMD Decile`),
   labs(x = "IMD Decile",
        y = "Percentage",
        title = paste0("Distribution of ", borough," referrals compared to the area population"),
-       subtitle = "Referrals received between May 2023 and April 2026",
+       subtitle = paste("Referrals received between ",format(mindate,"%b-%y")," and ",format(maxdate,"%b-%y")),
        caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
                      breaks = seq(0, 0.8, by = 0.1)) +
@@ -113,7 +113,7 @@ Lon_dep <- ggplot(plot_LON_dep, aes(x = factor(`IMD Decile`),
   labs(x = "IMD Decile",
        y = "Percentage",
        title = "Distribution of South London total referrals compared to the area population",
-       subtitle = "Referrals received between May 2023 and April 2026",
+       subtitle = paste("Referrals received between ",format(mindate,"%b-%y")," and ",format(maxdate,"%b-%y")),
        caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   theme(text = element_text(family = "Franklin Gothic Book"),
