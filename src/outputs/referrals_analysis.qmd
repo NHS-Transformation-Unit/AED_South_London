@@ -83,8 +83,15 @@ Referrals have been increasing year on year, with 4060 in the latest 12 months o
 
 There are referrals received for patients that are not South London residents. There are 1145 referrals analysed that were referred from outside the South London ICBs, 87% of which were from the ICBs of Central East ICB, North East London ICB, West and North London ICB and Surrey and Sussex ICB. Across all referrals analysed, 92.5% are for South London residents. This is a proportion largely maintained over the years of data analysed, ranging between 91.6% and 92.8%. The rejection rates for South London are comparable to the whole dataset, with the current rejection rate for 2026/27 at 7.4%. Non-South London residents for the same time period is 8.3%.
 
+
+:::{.panel-tabset}
+
+### Prevalence Table
 To set the number of referrals into context, it is important to understand how they compare to the population and the estimate prevalence of eating disorders within this population. The estimated prevalence from the [Adult Psychiatric Morbidity Survey of 2023/24](https://digital.nhs.uk/data-and-information/publications/statistical/adult-psychiatric-morbidity-survey/survey-of-mental-health-and-wellbeing-england-2023-24?utm_source=chatgpt.com) and the mental health of children and young people in England of 2023 [Wave 4 follow-up](
 https://digital.nhs.uk/data-and-information/publications/statistical/mental-health-of-children-and-young-people-in-england/2023-wave-4-follow-up/part-5-eating-problems-and-disorders) have been applied to the population of South London to estimate the population in each age group with an eating disorder. We then apply an assumption to 20% of this population will require a Tier 3 service.
+
+:::{.panel-tabset}
+#### All data
 
 ```{r Prevalence table}
 
@@ -92,13 +99,71 @@ prev_tbl
 
 ```
 
+#### Year 1
+
+```{r Prevalence table year 1}
+
+prev_tbl_y1
+
+```
+
+#### Year 2
+
+```{r Prevalence table year 2}
+
+prev_tbl_y2
+
+```
+
+#### Year 3
+
+```{r Prevalence table year 3}
+
+prev_tbl_y3
+
+```
+
+:::
+
+### BEAT Report Prevalence
 Additional prevalence estimates are available from the charity [BEAT](https://www.beateatingdisorders.org.uk/get-information-and-support/about-eating-disorders/how-many-people-eating-disorder-uk/eating-disorder-statistics/). As with the previous prevalence estimates, we then apply an assumption of 20% to estimate those requiring a Tier 3 service.
+
+:::{.panel-tabset}
+#### All data
 
 ```{r BEAT table}
 
 prev_beat_tbl
 
 ```
+
+#### Year 1
+
+```{r BEAT table year 1}
+
+prev_beat_tbl_y1
+
+```
+
+#### Year 2
+
+```{r BEAT table year 2}
+
+prev_beat_tbl_y2
+
+```
+
+#### Year 3
+
+```{r BEAT table year 3}
+
+prev_beat_tbl_y3
+
+```
+
+:::
+
+:::
 
 <br>
 
