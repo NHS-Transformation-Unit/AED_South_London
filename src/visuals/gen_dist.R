@@ -34,7 +34,7 @@ plot_LA_gen <- function(df, borough) {
     labs(x = "Gender group",
          y = "Percentage",
          title = str_wrap(paste0("Distribution of ", borough," referrals compared to the area population"), 60),
-         subtitle = "Referrals received between May 2023 and April 2026",
+         subtitle = paste("Referrals received between ",format(mindate,"%b-%y")," and ",format(maxdate,"%b-%y")),
          caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
     scale_y_continuous(labels = scales::percent_format(accuracy = 1),
                        breaks = seq(0, 0.8, by = 0.1)) +
@@ -115,7 +115,7 @@ Lon_gen <- ggplot(plot_LON_gen, aes(x = `Sex (2 categories)`,
   labs(x = "Gender group",
        y = "Percentage",
        title = str_wrap("Distribution of South London total referrals compared to the area population", 60),
-       subtitle = "Referrals received between May 2023 and April 2026",
+       subtitle = paste("Referrals received between ",format(mindate,"%b-%y")," and ",format(maxdate,"%b-%y")),
        caption = "Source: Mental Health Services Data Set and Office of National Statistics") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   scale_x_discrete(labels = function(Diagnosis) str_wrap(Diagnosis, width = 35)) +
