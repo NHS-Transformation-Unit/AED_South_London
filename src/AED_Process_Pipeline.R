@@ -40,4 +40,5 @@ source(paste0(here(),"/src/visuals/age_dist.R"))
 source(paste0(here(),"/src/visuals/diag_dist.R"))
 source(paste0(here(),"/src/visuals/dep_dist.R"))
 source(paste0(here(),"/src/visuals/eth_dist.R"))
+source(paste0(here(),"/src/visuals/gen_dist.R"))
 
