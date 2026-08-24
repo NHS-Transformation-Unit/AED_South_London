@@ -44,13 +44,11 @@ downloadable_plot <- function(
   
   
   # --------------------------------------------------
-  # Save PNG
+  # Create temporary PNG
   # --------------------------------------------------
   
-  png_file <- file.path(
-    "downloads",
-    paste0(name, ".png")
-  )
+  png_file <- tempfile(
+    fileext = ".png")
   
   ggplot2::ggsave(
     filename = png_file,
@@ -60,22 +58,37 @@ downloadable_plot <- function(
     dpi = dpi
   )
   
+  # --------------------------------------------------
+  # Convert PNG to embedded URI
+  # --------------------------------------------------
+  
+  png_uri <- base64enc::dataURI(
+    file = png_file,
+    mime = "image/png"
+  )
+  
   
   # --------------------------------------------------
-  # Save data
+  # Convert data to embedded CSV
   # --------------------------------------------------
+  
+  csv_uri <- NULL
   
   if (!is.null(data)) {
     
-    csv_file <- file.path(
-      "downloads",
-      paste0(name, ".csv")
+    csv_file <- tempfile(
+      fileext = ".csv"
     )
     
     utils::write.csv(
       data,
       csv_file,
       row.names = FALSE
+    )
+    
+    csv_uri <- base64enc::dataURI(
+      file = csv_file,
+      mime = "text/csv"
     )
   }
   
@@ -94,9 +107,11 @@ downloadable_plot <- function(
   html <- paste0(
     '<div class="download-buttons">',
     
-    '<a href="downloads/',
+    '<a href="',
+    png_uri,
+    '" download="',
     name,
-    '.png" download>',
+    '.png">',
     '<button type="button">',
     'Download PNG',
     '</button>',
@@ -104,9 +119,11 @@ downloadable_plot <- function(
     
     if (!is.null(data)) {
       paste0(
-        '<a href="downloads/',
+        '<a href="',
+        csv_uri,
+        '" download="',
         name,
-        '.csv" download>',
+        '.csv">',
         '<button type="button">',
         'Download data',
         '</button>',
