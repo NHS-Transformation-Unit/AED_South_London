@@ -12,15 +12,15 @@ prev_pop <- data.frame(pop_tot_per$Age_band,
                                                0.013/0.448,       # research prevalence / proportion of existing diagnoses as Anorexia, atypical anorexia or bulimia
                                                0.013/0.448,       # research prevalence / proportion of existing diagnoses as Anorexia, atypical anorexia or bulimia
                                                0.013/0.448),      # research prevalence / proportion of existing diagnoses as Anorexia, atypical anorexia or bulimia
-                       BEAT_Prevalence = c(0.043/0.488,       # research prevalence / proportion of existing diagnoses as Anorexia, atypical anorexia or bulimia
-                                           0.081/0.488,       # research prevalence / proportion of existing diagnoses as Anorexia, atypical anorexia or bulimia
-                                           0.026,       # BEAT prevalence
-                                           0.026,       # BEAT prevalence
-                                           0.026,       # BEAT prevalence
-                                           0.026,       # BEAT prevalence
-                                           0.026,       # BEAT prevalence
-                                           0.026,       # BEAT prevalence
-                                           0.026)) |>   # BEAT prevalence
+                       BEAT_Prevalence = c(0.026,       # BEAT prevalence
+                                           0.055,       # BEAT prevalence
+                                           0.055,       # BEAT prevalence
+                                           0.055,       # BEAT prevalence
+                                           0.055,       # BEAT prevalence
+                                           0.055,       # BEAT prevalence
+                                           0.055,       # BEAT prevalence
+                                           0.055,       # BEAT prevalence
+                                           0.055)) |>   # BEAT prevalence
   
   filter(pop_tot_per.Age_band != "Under 12") |>
   mutate(Estimate_Population = pop_tot_per.Population * Estimate_Prevalence,
