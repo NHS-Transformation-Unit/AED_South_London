@@ -1200,7 +1200,7 @@ downloadable_plot(
 :::{.panel-tabset}
 
 ## South London
-The volume of referrals received is vastly different to the population. Over 87% of referrals received are for female patients, compared to the representative population of 51.9%.
+The volume of referrals received is vastly different to the population. Over 87% of referrals received are for female patients, compared to the representative population of 51.9%. A total of 1.9% of South London referrals are missing here, as the gender is recorded as "Unknown", and therefore doesn't have a category in the population for comparison.
 
 :::{.panel-tabset}
 
