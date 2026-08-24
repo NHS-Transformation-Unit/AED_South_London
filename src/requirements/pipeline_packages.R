@@ -15,7 +15,8 @@ pipeline_packages <- c("readxl",
               "ggplot2",
               "gt",
               "DT",
-              "scales")
+              "scales",
+              "base64enc")
 
 # load_packages function --------------------------------------------------
 
