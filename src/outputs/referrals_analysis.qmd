@@ -5,6 +5,7 @@ date: "08/20/2026"
 date-format: "DD MMMM YYYY"
 format: 
   html:
+    embed-resources: true
     toc: true
     toc-depth: 2
     toc-location: left
