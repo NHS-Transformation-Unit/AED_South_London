@@ -88,6 +88,38 @@ LA_age_tbl <- left_join(unified_age_LA_per, ref_new_age_LA, by = c("Upper tier l
                    digits = 1)
 
 
+# Age band by SL table
+
+SL_age_tbl <- left_join(unified_age_SL_per, ref_new_age_SL, by = c("Upper tier local authorities" = "SL Side",
+                                                                   "Age_band" = "Age_band")) |>
+  ungroup() |>
+  mutate(Ref_new = if_else(Referrals < 5,
+                           NA_real_,
+                           round(Referrals / 5) * 5)) |>
+  select(`Upper tier local authorities`,
+         Age_band,
+         Pop_per,
+         Ref_per,
+         Ref_new) |>
+  rename(Borough = `Upper tier local authorities`,
+         `Age band` = Age_band,
+         Population = Pop_per,
+         Referrals = Ref_per,
+         `Rounded Referrals`= Ref_new) |>
+  datatable(caption = "Distribution of South London referrals compared to the area population",
+            rownames = FALSE,
+            options = list(initComplete = JS(sprintf("function(settings, json) {
+                                                                                $(this.api().table().header()).find('th').css({
+                                                                                'background-color': '%s',
+                                                                                'color': 'white'
+                                                                                });
+                                                     }",
+                                                     palette_tu[1])))) |>
+  formatPercentage(columns = c("Population",
+                               "Referrals"),
+                   digits = 1)
+
+
 
 # South London ------------------------------------------------------------
 
