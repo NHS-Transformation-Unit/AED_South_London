@@ -24,7 +24,15 @@ pop_proc <- population_data |>
                                                "Merton",
                                                "Richmond upon Thames",
                                                "Sutton",
-                                               "Wandsworth"))
+                                               "Wandsworth")) |>
+  mutate('SL Side' = case_when(`Upper tier local authorities` %in% c("Bexley",
+                                                                     "Bromley",
+                                                                     "Greenwich",
+                                                                     "Lambeth",
+                                                                     "Lewisham",
+                                                                     "Southwark",
+                                                                     "Croydon") ~ 'South East',
+                               TRUE ~ 'South West'))
 
 
 # Age banding of population
@@ -33,6 +41,12 @@ pop_age_LA <- pop_proc |>
   group_by(`Upper tier local authorities`,
            Age_band) |>
   summarise('Population' = sum(`Observation`, na.rm = TRUE))
+
+pop_age_SL <- pop_proc |>
+  group_by(`SL Side`,
+           Age_band) |>
+  summarise('Population' = sum(`Observation`, na.rm = TRUE)) |>
+  rename("Upper tier local authorities" = "SL Side")
 
 pop_age_tot <- pop_proc |>
   mutate("Total" = "London") |>
@@ -49,6 +63,12 @@ pop_eth_LA <- pop_proc |>
            `Ethnic group (8 categories)`) |>
   summarise('Population' = sum(`Observation`, na.rm = TRUE))
 
+pop_eth_SL <- pop_proc |>
+  group_by(`SL Side`,
+           `Ethnic group (8 categories)`) |>
+  summarise('Population' = sum(`Observation`, na.rm = TRUE)) |>
+  rename("Upper tier local authorities" = "SL Side")
+
 pop_eth_tot <- pop_proc |>
   mutate("Total" = "London") |>
   group_by(Total,
@@ -63,6 +83,12 @@ pop_gen_LA <- pop_proc |>
   group_by(`Upper tier local authorities`,
            `Sex (2 categories)`) |>
   summarise('Population' = sum(`Observation`, na.rm = TRUE))
+
+pop_gen_SL <- pop_proc |>
+  group_by(`SL Side`,
+           `Sex (2 categories)`) |>
+  summarise('Population' = sum(`Observation`, na.rm = TRUE)) |>
+  rename("Upper tier local authorities" = "SL Side")
 
 pop_gen_tot <- pop_proc |>
   mutate("Total" = "London") |>
@@ -79,6 +105,11 @@ pop_LA <- pop_proc |>
   group_by(`Upper tier local authorities`) |>
   summarise('LAD_Population' = sum(`Observation`, na.rm = TRUE))
 
+pop_SL <- pop_proc |>
+  group_by(`SL Side`) |>
+  summarise('LAD_Population' = sum(`Observation`, na.rm = TRUE)) |>
+  rename("Upper tier local authorities" = "SL Side")
+
 pop_tot <- pop_proc |>
   mutate("Total" = "London") |>
   group_by(Total) |>
@@ -92,11 +123,14 @@ pop_tot <- pop_proc |>
 pop_LA_per <- left_join(pop_age_LA, pop_LA, by = c('Upper tier local authorities' = 'Upper tier local authorities')) |>
   mutate("Percentage" = Population/LAD_Population)
 
+pop_SL_per <- left_join(pop_age_SL, pop_SL, by = c('Upper tier local authorities' = 'Upper tier local authorities')) |>
+  mutate("Percentage" = Population/LAD_Population)
+
 pop_tot_per <- left_join(pop_age_tot, pop_tot, by = c('Upper tier local authorities' = 'Upper tier local authorities')) |>
   mutate("Percentage" = Population/LAD_Population)
 
 
-pop_age_per <- rbind(pop_LA_per,pop_tot_per)
+pop_age_per <- rbind(pop_LA_per,pop_SL_per,pop_tot_per)
 
 
 
@@ -105,11 +139,14 @@ pop_age_per <- rbind(pop_LA_per,pop_tot_per)
 pop_eth_LA_per <- left_join(pop_eth_LA, pop_LA, by = c('Upper tier local authorities' = 'Upper tier local authorities')) |>
   mutate("Percentage" = Population/LAD_Population)
 
+pop_eth_SL_per <- left_join(pop_eth_SL, pop_SL, by = c('Upper tier local authorities' = 'Upper tier local authorities')) |>
+  mutate("Percentage" = Population/LAD_Population)
+
 pop_eth_tot_per <- left_join(pop_eth_tot, pop_tot, by = c('Upper tier local authorities' = 'Upper tier local authorities')) |>
   mutate("Percentage" = Population/LAD_Population)
 
 
-pop_eth_per <- rbind(pop_eth_LA_per,pop_eth_tot_per)
+pop_eth_per <- rbind(pop_eth_LA_per,pop_eth_SL_per,pop_eth_tot_per)
 
 
 
@@ -118,9 +155,12 @@ pop_eth_per <- rbind(pop_eth_LA_per,pop_eth_tot_per)
 pop_gen_LA_per <- left_join(pop_gen_LA, pop_LA, by = c('Upper tier local authorities' = 'Upper tier local authorities')) |>
   mutate("Percentage" = Population/LAD_Population)
 
+pop_gen_SL_per <- left_join(pop_gen_SL, pop_SL, by = c('Upper tier local authorities' = 'Upper tier local authorities')) |>
+  mutate("Percentage" = Population/LAD_Population)
+
 pop_gen_tot_per <- left_join(pop_gen_tot, pop_tot, by = c('Upper tier local authorities' = 'Upper tier local authorities')) |>
   mutate("Percentage" = Population/LAD_Population)
 
 
-pop_gen_per <- rbind(pop_gen_LA_per,pop_gen_tot_per)
+pop_gen_per <- rbind(pop_gen_LA_per,pop_gen_SL_per,pop_gen_tot_per)
 
