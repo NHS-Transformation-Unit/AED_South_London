@@ -183,7 +183,7 @@ The referrals data is heavily skewed to the younger age range, with 41% of refer
 
 :::{.panel-tabset}
 
-### Comparative bar chart
+### South London chart
 ```{r London age distribution}
 
 #| results: asis
@@ -196,10 +196,62 @@ downloadable_plot(
 
 ```
 
-### Data table
+### South West chart
+```{r Borough age distribution_SW_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_SL_per,
+    borough = "South West"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_SL_per,
+    "South West"
+  ),
+
+  name = "south-west-age-distribution"
+)
+
+```
+
+### South East chart
+```{r Borough age distribution_SE_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_SL_per,
+    borough = "South East"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_SL_per,
+    "South East"
+  ),
+
+  name = "south-east-age-distribution"
+)
+
+```
+
+### South London Data table
 ```{r London age table}
 
 Lon_age_tbl
+```
+
+### South East and South West Data table
+```{r SE-SW age table}
+
+SL_age_tbl
 ```
 
 :::
@@ -527,7 +579,7 @@ The referrals data is significantly different to the population data. This is li
 
 :::{.panel-tabset}
 
-### Comparative bar chart
+### South London chart
 ```{r London ethnicity distribution}
 
 #| results: asis
@@ -540,12 +592,64 @@ downloadable_plot(
 
 ```
 
-### Data table
+### South West chart
+```{r Borough eth distribution_SW_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_SL_per,
+    borough = "South West"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_SL_per,
+    "South West"
+  ),
+
+  name = "south-west-eth-distribution"
+)
+
+```
+
+### South East chart
+```{r Borough eth distribution_SE_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_SL_per,
+    borough = "South East"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_SL_per,
+    "South East"
+  ),
+
+  name = "south-east-eth-distribution"
+)
+
+```
+
+### South London Data table
 ```{r London ethnicity table}
 
 Lon_eth_tbl
 ```
 
+
+### South East and South West Data table
+```{r SE-SW eth table}
+
+SL_eth_tbl
+```
 :::
 
 ## Boroughs
@@ -861,7 +965,7 @@ The referrals data roughly follows the pattern of the population, with slight de
 
 :::{.panel-tabset}
 
-### Comparative bar chart
+### South London chart
 ```{r London deprivation distribution}
 
 #| results: asis
@@ -874,12 +978,63 @@ downloadable_plot(
 
 ```
 
-### Data table
+### South West chart
+```{r Borough dep distribution_SW_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_SL_per,
+    borough = "South West"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_SL_per,
+    "South West"
+  ),
+
+  name = "south-west-dep-distribution"
+)
+
+```
+
+### South East chart
+```{r Borough dep distribution_SE_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_SL_per,
+    borough = "South East"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_SL_per,
+    "South East"
+  ),
+
+  name = "south-east-dep-distribution"
+)
+
+```
+
+### South London Data table
 ```{r London deprivation table}
 
 Lon_dep_tbl
 ```
 
+### South East and South West Data table
+```{r SE-SW dep table}
+
+SL_dep_tbl
+```
 :::
 
 ## Boroughs
@@ -1204,7 +1359,7 @@ The volume of referrals received is vastly different to the population. Over 87%
 
 :::{.panel-tabset}
 
-### Comparative bar chart
+### South London chart
 ```{r London gender distribution}
 
 #| results: asis
@@ -1217,10 +1372,62 @@ downloadable_plot(
 
 ```
 
-### Data table
+### South West chart
+```{r Borough gen distribution_SW_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_SL_per,
+    borough = "South West"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_SL_per,
+    "South West"
+  ),
+
+  name = "south-west-gen-distribution"
+)
+
+```
+
+### South East chart
+```{r Borough gen distribution_SE_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_SL_per,
+    borough = "South East"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_SL_per,
+    "South East"
+  ),
+
+  name = "south-east-gen-distribution"
+)
+
+```
+
+### South London Data table
 ```{r London gender table}
 
 Lon_gen_tbl
+```
+
+### South East and South West Data table
+```{r SE-SW gen table}
+
+SL_gen_tbl
 ```
 
 :::
