@@ -14,7 +14,13 @@ unified_age_per <- left_join(pop_age_per, ref_new_per, by = c("Upper tier local 
 
 
 unified_age_LA_per <- unified_age_per |>
-  filter(`Upper tier local authorities` != "London")
+  filter(!`Upper tier local authorities` %in% c("London",
+                                                "South East",
+                                                "South West"))
+
+unified_age_SL_per <- unified_age_per |>
+  filter(`Upper tier local authorities` %in% c("South East",
+                                               "South West"))
 
 unified_age_LON_per <- unified_age_per |>
   filter(`Upper tier local authorities` == "London")
@@ -34,7 +40,13 @@ unified_eth_per <- left_join(pop_eth_per, ref_new_eth_per, by = c("Upper tier lo
 
 
 unified_eth_LA_per <- unified_eth_per |>
-  filter(`Upper tier local authorities` != "London")
+  filter(!`Upper tier local authorities` %in% c("London",
+                                                "South East",
+                                                "South West"))
+
+unified_eth_SL_per <- unified_eth_per |>
+  filter(`Upper tier local authorities` %in% c("South East",
+                                               "South West"))
 
 unified_eth_LON_per <- unified_eth_per |>
   filter(`Upper tier local authorities` == "London")
@@ -54,7 +66,13 @@ unified_gen_per <- left_join(pop_gen_per, ref_new_gen_per, by = c("Upper tier lo
 
 
 unified_gen_LA_per <- unified_gen_per |>
-  filter(`Upper tier local authorities` != "London")
+  filter(!`Upper tier local authorities` %in% c("London",
+                                                "South East",
+                                                "South West"))
+
+unified_gen_SL_per <- unified_gen_per |>
+  filter(`Upper tier local authorities` %in% c("South East",
+                                               "South West"))
 
 unified_gen_LON_per <- unified_gen_per |>
   filter(`Upper tier local authorities` == "London")
@@ -74,7 +92,13 @@ unified_dep_per <- left_join(pop_dep_per, ref_new_dep_per, by = c("Upper tier lo
 
 
 unified_dep_LA_per <- unified_dep_per |>
-  filter(`Upper tier local authorities` != "London")
+  filter(!`Upper tier local authorities` %in% c("London",
+                                                "South East",
+                                                "South West"))
+
+unified_dep_SL_per <- unified_dep_per |>
+  filter(`Upper tier local authorities` %in% c("South East",
+                                               "South West"))
 
 unified_dep_LON_per <- unified_dep_per |>
   filter(`Upper tier local authorities` == "London")
