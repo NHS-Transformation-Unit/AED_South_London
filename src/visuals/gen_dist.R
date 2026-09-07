@@ -90,7 +90,7 @@ LA_gen_tbl <- left_join(unified_gen_LA_per, ref_new_gen_LA, by = c("Upper tier l
 
 # Gender group by SL table
 
-SL_gen_tbl <- left_join(unified_gen_SLA_per, ref_new_gen_SL, by = c("Upper tier local authorities" = "SL Side",
+SL_gen_tbl <- left_join(unified_gen_SL_per, ref_new_gen_SL, by = c("Upper tier local authorities" = "SL Side",
                                                                    "Sex (2 categories)" = "Gender_group")) |>
   ungroup() |>
   mutate(Ref_new = if_else(Referrals < 5,
