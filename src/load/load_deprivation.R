@@ -1,5 +1,5 @@
 
-deprivation_data <- read_csv(here("src",
+deprivation_data <- read_csv(here("data",
                                  "reference_data",
                                  "Deprivation.csv")) |>
   filter(`Local Authority District code (2024)` %in% c('E09000004', # Bexley
