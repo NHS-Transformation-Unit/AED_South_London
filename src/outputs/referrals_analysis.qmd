@@ -1,0 +1,1884 @@
+---
+title: "Analysis of Adult Eating Disorders Referrals - South London"
+author: "<a href='https://github.com/SiWickham/'>Simon Wickham</a><br><a href='https://github.com/ASW-Analyst/'>Andy Wilson</a><br><a href='https://transformationunit.nhs.uk/'>NHS Transformation Unit</a>"
+date: "08/20/2026"
+date-format: "DD MMMM YYYY"
+format: 
+  html:
+    embed-resources: true
+    toc: true
+    toc-depth: 2
+    toc-location: left
+    self-contained: true
+    css: ../config/tu_theme.css
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  out.width = '100%'
+)
+library(here)
+
+source(paste0(here(),"/src/AED_Process_Pipeline.R"))
+source(paste0(here(),"/src/outputs/download.R"))
+```
+
+```{r tu logo, echo = FALSE}
+
+htmltools::img(src = knitr::image_uri(paste0(here(), "/images/TU_logo_large.png")), 
+               alt = 'logo', 
+               style = 'position:absolute; top:0; right:5%; padding:10px;',
+               width = "180px",
+               heigth = "180px")
+
+```
+
+
+# Introduction
+***
+
+::: {.callout-tip}
+## Executive Summary
+
+- Age at referral is skewed toward to lower age band, with patients age 12-17 being the highest group of referrals. This is significantly different to the population for this age band.
+- There is a barrier in interpreting ethnicity, as **23%** of referrals do not have a recorded ethnicity. This therefore makes the referrals distribution vastly different to the population.
+- Deprivation of the population largely follows the proportion of referrals received by decile.
+- A large proportion of referrals don't have a diagnosis, **43.9%** of all referrals included. For those that do, Anorexia Nervosa is the most diagnosed condition at 15.4% of all referrals, 28.3% of all referrals with a diagnosis.
+
+:::
+
+The NHS Transformation Unit have been commissioned by South London Mental Health Partnership to explore the referrals received into the Adult Eating Disorders service. The purpose was to assess the referrals received and how representative they are of the South London population.
+
+Referrals data has been collected from the Mental Health Services Data Set (MHSDS), and includes the demographic identifiers of age, ethnicity and deprivation decile for each patient. This data is the latest 36 months of data, `r format(mindate,"%b-%y")` to `r format(maxdate,"%b-%y")`.
+
+Population data has been taken from the [Office of National Statistics (ONS)](https://www.ons.gov.uk/datasets/create/filter-outputs/5c83361b-583d-43dc-8e9e-2ebfc035256d#get-data). This provides the population breakdown at each of the mentioned demographic indicators. The latest population figures available are from 2023.
+
+
+## Methodology
+
+The primary source of information is the `MHS101Referrals_Published` table in MHSDS, which contains all details relating to a patient referral. This is joined to `MHS001MPI_Published` table to include demographic data, and to `MHS102ServiceTypeReferredTo_Published` table and `MHS902ServiceTeamDetails_Published` table to include only AED referrals. New referrals are then identified in this.
+
+```{r data flow diagram, echo = FALSE}
+
+htmltools::img(src = knitr::image_uri(paste0(here(), "/images/MHSD_data_flow.png")),
+               alt = 'data flow diagram', 
+               width = "750px")
+
+```
+
+<br>
+
+In line with MHSDS publications, all numbers presented are rounded to the nearest multiple of 5, with anything less than 5 suppressed (unavailable for display). All percentages are reflective of raw numbers and not rounded values.
+
+### Confidence intervals
+
+Where appropriate, confidence intervals (black lines) have been added to referrals bars. These add additional context to the difference between the referrals and the population. If the population bar end is between the confidence intervals, there is no statistical difference between the values. When the population bar is outside of the confidence intervals (higher or lower), it means the values are meaningfully different and worth further investigation or action.
+
+<br>
+
+## Referral Volumes
+Referrals have been increasing year on year, with 4060 in the latest 12 months of data. The first year of data shows 3185 referrlas, resulting in a 27% increase in new referrals. As with the increase in referrals, rejected referrals have also increased. This has however remained proportionate to the number of referrals received. In the financial year 2024/25, 8.7% of referrals were rejected. In 2025/26, 8.8% of referrals were rejected. The current data for 2026/27 show slight reduction on this theme, with April-26 to `r format(maxdate,"%b-%y")` showing a rejection rate of 7.5%.
+
+There are referrals received for patients that are not South London residents. There are 1145 referrals analysed that were referred from outside the South London ICBs, 87% of which were from the ICBs of Central East ICB, North East London ICB, West and North London ICB and Surrey and Sussex ICB. Across all referrals analysed, 92.5% are for South London residents. This is a proportion largely maintained over the years of data analysed, ranging between 91.6% and 92.8%. The rejection rates for South London are comparable to the whole dataset, with the current rejection rate for 2026/27 at 7.4%. Non-South London residents for the same time period is 8.3%.
+
+To set the number of referrals into context, it is important to understand how they compare to the population and the estimate prevalence of eating disorders within this population. 
+
+:::{.panel-tabset}
+
+### Prevalence Table
+The estimated prevalence from the [Adult Psychiatric Morbidity Survey of 2023/24](https://digital.nhs.uk/data-and-information/publications/statistical/adult-psychiatric-morbidity-survey/survey-of-mental-health-and-wellbeing-england-2023-24?utm_source=chatgpt.com) and the mental health of children and young people in England of 2023 [Wave 4 follow-up](
+https://digital.nhs.uk/data-and-information/publications/statistical/mental-health-of-children-and-young-people-in-england/2023-wave-4-follow-up/part-5-eating-problems-and-disorders) have been applied to the population of South London to estimate the population in each age group with an eating disorder. We then apply an assumption to 20% of this population will require a Tier 3 service.
+
+:::{.panel-tabset}
+#### All data
+
+```{r Prevalence table}
+
+prev_tbl
+
+```
+
+#### Year 1
+
+```{r Prevalence table year 1}
+
+prev_tbl_y1
+
+```
+
+#### Year 2
+
+```{r Prevalence table year 2}
+
+prev_tbl_y2
+
+```
+
+#### Year 3
+
+```{r Prevalence table year 3}
+
+prev_tbl_y3
+
+```
+
+:::
+
+### BEAT Report Prevalence
+Additional prevalence estimates are available from the charity [BEAT](https://www.beateatingdisorders.org.uk/get-information-and-support/about-eating-disorders/how-many-people-eating-disorder-uk/eating-disorder-statistics/). As with the previous prevalence estimates, we then apply an assumption of 20% to estimate those requiring a Tier 3 service.
+
+:::{.panel-tabset}
+#### All data
+
+```{r BEAT table}
+
+prev_beat_tbl
+
+```
+
+#### Year 1
+
+```{r BEAT table year 1}
+
+prev_beat_tbl_y1
+
+```
+
+#### Year 2
+
+```{r BEAT table year 2}
+
+prev_beat_tbl_y2
+
+```
+
+#### Year 3
+
+```{r BEAT table year 3}
+
+prev_beat_tbl_y3
+
+```
+
+:::
+
+:::
+
+<br>
+
+# Demographics
+***
+
+## Age
+
+The age has been taken from the referrals and population data, and grouped into bands that align with the service requirements. This includes bands aged 12-17, 18-25, then 10 year bands thereafter.
+
+:::{.panel-tabset}
+
+## South London
+The referrals data is heavily skewed to the younger age range, with 41% of referrals being in the 12-17 year age band and 67% of all referrals received for patients aged between 12-25. The representation reduces with each age band after 12-17 years.
+
+:::{.panel-tabset}
+
+### South London chart
+```{r London age distribution}
+
+#| results: asis
+
+downloadable_plot(
+  plot = Lon_age,
+  data = plot_LON_age,
+  name = "london-age-distribution"
+)
+
+```
+
+### South West chart
+```{r Borough age distribution_SW_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_SL_per,
+    borough = "South West"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_SL_per,
+    "South West"
+  ),
+
+  name = "south-west-age-distribution"
+)
+
+```
+
+### South East chart
+```{r Borough age distribution_SE_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_SL_per,
+    borough = "South East"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_SL_per,
+    "South East"
+  ),
+
+  name = "south-east-age-distribution"
+)
+
+```
+
+### South London Data table
+```{r London age table}
+
+Lon_age_tbl
+```
+
+### South East and South West Data table
+```{r SE-SW age table}
+
+SL_age_tbl
+```
+
+:::
+
+## Boroughs
+The South London distribution is replicated at the borough level. The population distributions for Lambeth and Southwark differ from the South London profile, as their highest referral age band is 18-25.
+
+:::{.panel-tabset}
+
+### Data table
+```{r Borough age table}
+
+LA_age_tbl
+```
+
+### Bexley chart
+```{r Borough age distribution_Bexley}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Bexley"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Bexley"
+  ),
+
+  name = "bexley-age-distribution"
+)
+
+```
+
+### Bromley chart
+```{r Borough age distribution_Bromley}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Bromley"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Bromley"
+  ),
+
+  name = "bromley-age-distribution"
+)
+
+
+```
+
+### Croydon chart
+```{r Borough age distribution_Croydon}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Croydon"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Croydon"
+  ),
+
+  name = "Croydon-age-distribution"
+)
+
+
+```
+
+### Greenwich chart
+```{r Borough age distribution_Greenwich}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Greenwich"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Greenwich"
+  ),
+
+  name = "Greenwich-age-distribution"
+)
+
+
+```
+
+### Kingston upon Thames chart
+```{r Borough age distribution_Kingston upon Thames}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Kingston upon Thames"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Kingston upon Thames"
+  ),
+
+  name = "Kingston-upon-Thames-age-distribution"
+)
+
+
+```
+
+### Lambeth chart
+```{r Borough age distribution_Lambeth}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Lambeth"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Lambeth"
+  ),
+
+  name = "Lambeth-age-distribution"
+)
+
+
+```
+
+### Lewisham chart
+```{r Borough age distribution_Lewisham}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Lewisham"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Lewisham"
+  ),
+
+  name = "Lewisham-age-distribution"
+)
+
+
+```
+
+### Merton chart
+```{r Borough age distribution_Merton}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Merton"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Merton"
+  ),
+
+  name = "Merton-age-distribution"
+)
+
+
+```
+
+### Richmond upon Thames chart
+```{r Borough age distribution_Richmond upon Thames}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Richmond upon Thames"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Richmond upon Thames"
+  ),
+
+  name = "Richmond-upon-Thames-age-distribution"
+)
+
+
+```
+
+### Southwark chart
+```{r Borough age distribution_Southwark}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Southwark"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Southwark"
+  ),
+
+  name = "Southwark-age-distribution"
+)
+
+
+```
+
+### Sutton chart
+```{r Borough age distribution_Sutton}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Sutton"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Sutton"
+  ),
+
+  name = "Sutton-age-distribution"
+)
+
+
+```
+
+### Wandsworth chart
+```{r Borough age distribution_Wandsworth}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_age,
+
+  plot_args = list(
+    df = unified_age_LA_per,
+    borough = "Wandsworth"
+  ),
+
+  data = get_LA_age_data(
+    unified_age_LA_per,
+    "Wandsworth"
+  ),
+
+  name = "Wandsworth-age-distribution"
+)
+
+
+```
+
+:::
+
+:::
+
+
+## Ethnicity
+
+:::{.panel-tabset}
+
+## South London
+The referrals data is significantly different to the population data. This is likely due to there being no recorded ethnic group for 22.5% of the South London referrals.
+
+:::{.panel-tabset}
+
+### South London chart
+```{r London ethnicity distribution}
+
+#| results: asis
+
+downloadable_plot(
+  plot = Lon_eth,
+  data = plot_LON_eth,
+  name = "london-eth-distribution"
+)
+
+```
+
+### South West chart
+```{r Borough eth distribution_SW_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_SL_per,
+    borough = "South West"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_SL_per,
+    "South West"
+  ),
+
+  name = "south-west-eth-distribution"
+)
+
+```
+
+### South East chart
+```{r Borough eth distribution_SE_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_SL_per,
+    borough = "South East"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_SL_per,
+    "South East"
+  ),
+
+  name = "south-east-eth-distribution"
+)
+
+```
+
+### South London Data table
+```{r London ethnicity table}
+
+Lon_eth_tbl
+```
+
+
+### South East and South West Data table
+```{r SE-SW eth table}
+
+SL_eth_tbl
+```
+:::
+
+## Boroughs
+The South London distribution is replicated at the borough level. Wandsworth has the highest proportion of referrals without a recorded ethnicity, 38.6%, while Southwark has the lowest, 14.2%.
+
+:::{.panel-tabset}
+
+### Data table
+```{r Borough ethnicity table}
+
+LA_eth_tbl
+```
+
+### Bexley chart
+```{r Borough ethnicity distribution_Bexley}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Bexley"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Bexley"
+  ),
+
+  name = "Bexley-eth-distribution"
+)
+
+```
+
+### Bromley chart
+```{r Borough ethnicity distribution_Bromley}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Bromley"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Bromley"
+  ),
+
+  name = "Bromley-eth-distribution"
+)
+
+```
+
+### Croydon chart
+```{r Borough ethnicity distribution_Croydon}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Croydon"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Croydon"
+  ),
+
+  name = "Croydon-eth-distribution"
+)
+
+```
+
+### Greenwich chart
+```{r Borough ethnicity distribution_Greenwich}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Greenwich"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Greenwich"
+  ),
+
+  name = "Greenwich-eth-distribution"
+)
+
+```
+
+### Kingston upon Thames chart
+```{r Borough ethnicity distribution_Kingston upon Thames}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Kingston upon Thames"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Kingston upon Thames"
+  ),
+
+  name = "Kingston-upon-Thames-eth-distribution"
+)
+
+```
+
+### Lambeth chart
+```{r Borough ethnicity distribution_Lambeth}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Lambeth"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Lambeth"
+  ),
+
+  name = "Lambeth-eth-distribution"
+)
+
+```
+
+### Lewisham chart
+```{r Borough ethnicity distribution_Lewisham}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Lewisham"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Lewisham"
+  ),
+
+  name = "Lewisham-eth-distribution"
+)
+
+```
+
+### Merton chart
+```{r Borough ethnicity distribution_Merton}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Merton"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Merton"
+  ),
+
+  name = "Merton-eth-distribution"
+)
+
+```
+
+### Richmond upon Thames chart
+```{r Borough ethnicity distribution_Richmond upon Thames}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Richmond upon Thames"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Richmond upon Thames"
+  ),
+
+  name = "Richmond-upon-Thames-eth-distribution"
+)
+
+```
+
+### Southwark chart
+```{r Borough ethnicity distribution_Southwark}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Southwark"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Southwark"
+  ),
+
+  name = "Southwark-eth-distribution"
+)
+
+```
+
+### Sutton chart
+```{r Borough ethnicity distribution_Sutton}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Sutton"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Sutton"
+  ),
+
+  name = "Sutton-eth-distribution"
+)
+
+```
+
+### Wandsworth chart
+```{r Borough ethnicity distribution_Wandsworth}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_eth,
+
+  plot_args = list(
+    df = unified_eth_LA_per,
+    borough = "Wandsworth"
+  ),
+
+  data = get_LA_eth_data(
+    unified_eth_LA_per,
+    "Wandsworth"
+  ),
+
+  name = "Wandsworth-eth-distribution"
+)
+
+```
+
+:::
+
+:::
+
+
+## Deprivation
+
+:::{.panel-tabset}
+
+## South London
+The referrals data roughly follows the pattern of the population, with slight deviations.
+
+:::{.panel-tabset}
+
+### South London chart
+```{r London deprivation distribution}
+
+#| results: asis
+
+downloadable_plot(
+  plot = Lon_dep,
+  data = plot_LON_dep,
+  name = "london-dep-distribution"
+)
+
+```
+
+### South West chart
+```{r Borough dep distribution_SW_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_SL_per,
+    borough = "South West"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_SL_per,
+    "South West"
+  ),
+
+  name = "south-west-dep-distribution"
+)
+
+```
+
+### South East chart
+```{r Borough dep distribution_SE_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_SL_per,
+    borough = "South East"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_SL_per,
+    "South East"
+  ),
+
+  name = "south-east-dep-distribution"
+)
+
+```
+
+### South London Data table
+```{r London deprivation table}
+
+Lon_dep_tbl
+```
+
+### South East and South West Data table
+```{r SE-SW dep table}
+
+SL_dep_tbl
+```
+:::
+
+## Boroughs
+The South London distribution is replicated at the borough level. For the most part, each borough follows a distribution for referrals relative to its population, however some boroughs have a stand out decile that is significantly different to the population:
+<br>
+- Bexley decile 5
+<br>
+- Lambeth decile 2
+<br>
+- Merton decile 8
+<br>
+- Richmond decile 8
+<br>
+- Wandsworth decile 4
+
+:::{.panel-tabset}
+
+### Data table
+```{r Borough deprivation table}
+
+LA_dep_tbl
+```
+
+### Bexley chart
+```{r Borough deprivation distribution_Bexley}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Bexley"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Bexley"
+  ),
+
+  name = "Bexley-dep-distribution"
+)
+
+```
+
+### Bromley chart
+```{r Borough deprivation distribution_Bromley}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Bromley"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Bromley"
+  ),
+
+  name = "Bromley-dep-distribution"
+)
+
+```
+
+### Croydon chart
+```{r Borough deprivation distribution_Croydon}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Croydon"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Croydon"
+  ),
+
+  name = "Croydon-dep-distribution"
+)
+
+```
+
+### Greenwich chart
+```{r Borough deprivation distribution_Greenwich}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Greenwich"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Greenwich"
+  ),
+
+  name = "Greenwich-dep-distribution"
+)
+
+```
+
+### Kingston upon Thames chart
+```{r Borough deprivation distribution_Kingston upon Thames}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Kingston upon Thames"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Kingston upon Thames"
+  ),
+
+  name = "Kingston-upon-Thames-dep-distribution"
+)
+
+```
+
+### Lambeth chart
+```{r Borough deprivation distribution_Lambeth}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Lambeth"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Lambeth"
+  ),
+
+  name = "Lambath-dep-distribution"
+)
+
+```
+
+### Lewisham chart
+```{r Borough deprivation distribution_Lewisham}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Lewisham"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Lewisham"
+  ),
+
+  name = "Lewisham-dep-distribution"
+)
+
+```
+
+### Merton chart
+```{r Borough deprivation distribution_Merton}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Merton"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Merton"
+  ),
+
+  name = "Merton-dep-distribution"
+)
+
+```
+
+### Richmond upon Thames chart
+```{r Borough deprivation distribution_Richmond upon Thames}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Richmond upon Thames"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Richmond upon Thames"
+  ),
+
+  name = "Richmond-upon-Thames-dep-distribution"
+)
+
+```
+
+### Southwark chart
+```{r Borough deprivation distribution_Southwark}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Southwark"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Southwark"
+  ),
+
+  name = "Southwark-dep-distribution"
+)
+
+```
+
+### Sutton chart
+```{r Borough deprivation distribution_Sutton}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Sutton"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Sutton"
+  ),
+
+  name = "Sutton-dep-distribution"
+)
+
+```
+
+### Wandsworth chart
+```{r Borough deprivation distribution_Wandsworth}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_dep,
+
+  plot_args = list(
+    df = unified_dep_LA_per,
+    borough = "Wandsworth"
+  ),
+
+  data = get_LA_dep_data(
+    unified_dep_LA_per,
+    "Wandsworth"
+  ),
+
+  name = "Wandsworth-dep-distribution"
+)
+
+```
+
+:::
+
+:::
+
+## Gender
+
+:::{.panel-tabset}
+
+## South London
+The volume of referrals received is vastly different to the population. Over 87% of referrals received are for female patients, compared to the representative population of 51.9%. A total of 1.9% of South London referrals are missing here, as the gender is recorded as "Unknown", and therefore doesn't have a category in the population for comparison.
+
+:::{.panel-tabset}
+
+### South London chart
+```{r London gender distribution}
+
+#| results: asis
+
+downloadable_plot(
+  plot = Lon_gen,
+  data = plot_LON_gen,
+  name = "london-gen-distribution"
+)
+
+```
+
+### South West chart
+```{r Borough gen distribution_SW_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_SL_per,
+    borough = "South West"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_SL_per,
+    "South West"
+  ),
+
+  name = "south-west-gen-distribution"
+)
+
+```
+
+### South East chart
+```{r Borough gen distribution_SE_London}
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_SL_per,
+    borough = "South East"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_SL_per,
+    "South East"
+  ),
+
+  name = "south-east-gen-distribution"
+)
+
+```
+
+### South London Data table
+```{r London gender table}
+
+Lon_gen_tbl
+```
+
+### South East and South West Data table
+```{r SE-SW gen table}
+
+SL_gen_tbl
+```
+
+:::
+
+## Boroughs
+The high proportion of female patients is replicated at every borough, female patients representing between 79.5% and 92.0% of the included referrals. The variation in the female population is much tighter between boroughs, ranging from 51.4% and 52.5%.
+
+:::{.panel-tabset}
+
+### Data table
+```{r Borough gender table}
+
+LA_gen_tbl
+```
+
+### Bexley chart
+```{r Borough gender distribution_Bexley}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Bexley"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Bexley"
+  ),
+
+  name = "Bexley-gen-distribution"
+)
+
+```
+
+### Bromley chart
+```{r Borough gender distribution_Bromley}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Bromley"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Bromley"
+  ),
+
+  name = "Bromley-gen-distribution"
+)
+
+```
+
+### Croydon chart
+```{r Borough gender distribution_Croydon}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Croydon"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Croydon"
+  ),
+
+  name = "Croydon-gen-distribution"
+)
+
+```
+
+### Greenwich chart
+```{r Borough gender distribution_Greenwich}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Greenwich"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Greenwich"
+  ),
+
+  name = "Greenwich-gen-distribution"
+)
+
+```
+
+### Kingston upon Thames chart
+```{r Borough gender distribution_Kingston upon Thames}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Kingston upon Thames"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Kingston upon Thames"
+  ),
+
+  name = "Kingston-upon-Thames-dep-distribution"
+)
+
+```
+
+### Lambeth chart
+```{r Borough gender distribution_Lambeth}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Lambeth"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Lambeth"
+  ),
+
+  name = "Lambath-gen-distribution"
+)
+
+```
+
+### Lewisham chart
+```{r Borough gender distribution_Lewisham}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Lewisham"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Lewisham"
+  ),
+
+  name = "Lewisham-gen-distribution"
+)
+
+```
+
+### Merton chart
+```{r Borough gender distribution_Merton}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Merton"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Merton"
+  ),
+
+  name = "Merton-gen-distribution"
+)
+
+```
+
+### Richmond upon Thames chart
+```{r Borough gender distribution_Richmond upon Thames}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Richmond upon Thames"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Richmond upon Thames"
+  ),
+
+  name = "Richmond-upon-Thames-gen-distribution"
+)
+
+```
+
+### Southwark chart
+```{r Borough gender distribution_Southwark}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Southwark"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Southwark"
+  ),
+
+  name = "Southwark-gen-distribution"
+)
+
+```
+
+### Sutton chart
+```{r Borough gender distribution_Sutton}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Sutton"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Sutton"
+  ),
+
+  name = "Sutton-gen-distribution"
+)
+
+```
+
+### Wandsworth chart
+```{r Borough gender distribution_Wandsworth}
+
+
+#| results: asis
+
+downloadable_plot(
+  plot_function = plot_LA_gen,
+
+  plot_args = list(
+    df = unified_gen_LA_per,
+    borough = "Wandsworth"
+  ),
+
+  data = get_LA_gen_data(
+    unified_gen_LA_per,
+    "Wandsworth"
+  ),
+
+  name = "Wandsworth-gen-distribution"
+)
+
+```
+
+:::
+
+:::
+
+<br>
+
+# Diagnoses
+***
+
+## Methodology
+
+The addition of diagnosis is done by joining the new referrals to `MHS604PrimDiag_Published`. This may include multiple diagnoses across different submission periods. The data join therefore includes a parameter where the diagnosis used is the latest in the referral.
+
+::: {.callout-warning}
+## Data Quality
+Using this methodology to link referrals to primary diagnosis results in **43.9%** of referrals not being matched.
+
+:::
+
+<br>
+
+## Breakdown of diagnoses
+At the South London level, there are a portion of referrals that do not have an associated diagnosis. For all others, the most frequent diagnosis given is Anorexia Nervosa. There are a cohort of referrals that receive a diagnosis not related to AED, which are grouped under "Other Diagnosis".
+
+:::{.panel-tabset}
+
+### Diagnoses chart
+```{r Diagnosis chart}
+
+#| results: asis
+
+downloadable_plot(
+  plot = Ref_diag,
+  data = ref_new_diag,
+  name = "diagnosis-distribution"
+)
+
+```
+
+### Data table
+```{r Diagnosis table}
+
+ref_diag_tbl
+
+```
+
+:::
+
+## Existing comorbidities
+
+A number of referrals analysed also have recorded comorbidities. These are considered in isolation for each condition, so patients with multiple identified conditions will be counted for each relevant row. There are 3 separate flags used to identify these conditions:
+
+- Status indicator (available for Autism and Learning Disabilities)
+- Recorded primary diagnosis
+- Recorded secondary diagnosis
+
+::: {.callout-warning}
+## Row totals
+
+A referral may be identified by more than one of the flags, so the total identified column may not equal the sum of the separate flags.
+
+:::
+
+:::{.panel-tabset}
+
+### Identified comorbidities
+
+:::{.panel-tabset}
+
+#### Year 1
+```{r Year 1 conditions table}
+
+ref_cond_tbl1
+
+```
+
+#### Year 2
+```{r Year 2 conditions table}
+
+ref_cond_tbl2
+
+```
+
+#### Year 3
+```{r Year 3 conditions table}
+
+ref_cond_tbl3
+
+```
+
+:::
+
+### Identified comorbidities - Pre referral
+
+These tables do not include the status indicator flags.
+
+:::{.panel-tabset}
+
+#### Year 1
+```{r Year 1 conditions pre table}
+
+ref_cond_tbl1_pre
+
+```
+
+#### Year 2
+```{r Year 2 conditions pre table}
+
+ref_cond_tbl2_pre
+
+```
+
+#### Year 3
+```{r Year 3 conditions pre table}
+
+ref_cond_tbl3_pre
+
+```
+
+:::
+
+### Identified comorbidities - Post referral
+
+These tables do not include the status indicator flags.
+
+:::{.panel-tabset}
+
+#### Year 1
+```{r Year 1 conditions post table}
+
+ref_cond_tbl1_post
+
+```
+
+#### Year 2
+```{r Year 2 conditions post table}
+
+ref_cond_tbl2_post
+
+```
+
+#### Year 3
+```{r Year 3 conditions post table}
+
+ref_cond_tbl3_post
+
+```
+
+:::
+
+:::
