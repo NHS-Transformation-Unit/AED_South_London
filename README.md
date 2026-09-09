@@ -1,6 +1,6 @@
 <img src="images/TU_logo_large.png" alt="TU logo" width="200" align="right"/>
 
-# South Longond Partnerships - Adult Eating Disorders analysis
+# South London Partnerships - Adult Eating Disorders analysis
 
 This repository contains the code to analyse the Adult Eating Disorders requiring a Tier 3 service relative to the South London population.
 
